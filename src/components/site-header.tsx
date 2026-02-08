@@ -41,14 +41,14 @@ export default function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <div className="font-outfit flex w-full flex-col bg-[#FDFCFB]">
+    <div className="font-outfit flex w-full flex-col">
       {/* 1. ANNOUNCEMENT BAR */}
-      <div className="w-full overflow-hidden border-b border-[#7a5d50] bg-[#8B6B5C] py-2 whitespace-nowrap select-none lg:py-2.5">
+      <div className="w-full overflow-hidden border-b border-primary bg-primary py-2 whitespace-nowrap select-none lg:py-2.5">
         <div className="animate-marquee inline-block">
           {[1, 2, 3, 4].map((i) => (
             <span
               key={i}
-              className="mx-6 text-[10px] font-medium tracking-[0.15em] text-white/95 lg:mx-12 lg:text-[11px] lg:tracking-[0.2em]"
+              className="mx-6 text-[10px] font-medium tracking-[0.15em] text-primary-foreground/95 lg:mx-12 lg:text-[11px] lg:tracking-[0.2em]"
             >
               Best Deals At Checkout &nbsp; • &nbsp; Cod Available
             </span>
@@ -70,12 +70,12 @@ export default function SiteHeader() {
                     size="icon"
                     className="h-auto w-auto p-0 transition-transform hover:scale-110 lg:hidden"
                   >
-                    <Menu className="h-6 w-6 stroke-[1.5] text-[#5C4033]" />
+                    <Menu className="h-6 w-6 stroke-[1.5] text-foreground" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent
                   side="left"
-                  className="w-70 border-r-[#EAE3DF] bg-[#FDFCFB] p-0"
+                  className="w-70 border-r-border bg-background p-0"
                 >
                   <SheetTitle className="sr-only">Menu</SheetTitle>
                   <nav className="mt-12 flex flex-col">
@@ -83,7 +83,7 @@ export default function SiteHeader() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className="border-b border-[#EAE3DF]/40 px-8 py-4 text-[12px] font-bold tracking-[0.15em] text-[#4A4A4A]"
+                        className="border-b border-border/40 px-8 py-4 text-[12px] font-bold tracking-[0.15em] text-muted-foreground"
                       >
                         {item.name}
                       </Link>
@@ -96,7 +96,7 @@ export default function SiteHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="hidden p-0 text-[#5C4033] transition-transform hover:scale-110 lg:flex"
+                className="hidden p-0 text-foreground transition-transform hover:scale-110 lg:flex"
               >
                 <Search className="h-5.5 w-5.5 stroke-[1.2]" />
               </Button>
@@ -107,7 +107,7 @@ export default function SiteHeader() {
               href="/"
               className="group flex flex-col items-center no-underline"
             >
-              <div className="mb-1 hidden text-[#8B6B5C] transition-transform duration-500 group-hover:scale-105 lg:block">
+              <div className="mb-1 hidden text-primary transition-transform duration-500 group-hover:scale-105 lg:block">
                 {/* <svg width="24" height="24" viewBox="0 0 40 40" fill="none">
                   <path
                     d="M20 5L35 12.5V27.5L20 35L5 27.5V12.5L20 5Z"
@@ -117,7 +117,7 @@ export default function SiteHeader() {
                   <circle cx="20" cy="20" r="3.5" fill="currentColor" />
                 </svg> */}
               </div>
-              <span className="lg:text-5.5 text-[15px] leading-none font-medium tracking-[0.25em] text-[#5C4033] uppercase lg:tracking-[0.3em]">
+              <span className="lg:text-5.5 text-[15px] leading-none font-medium tracking-[0.25em] text-foreground uppercase lg:tracking-[0.3em]">
                 FLICKERS & FLAME
               </span>
             </Link>
@@ -128,7 +128,7 @@ export default function SiteHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="p-0 text-[#5C4033] transition-transform hover:scale-110 lg:hidden"
+                className="p-0 text-foreground transition-transform hover:scale-110 lg:hidden"
               >
                 <Search className="h-5 w-5 stroke-[1.5]" />
               </Button>
@@ -136,7 +136,7 @@ export default function SiteHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="hidden p-0 text-[#5C4033] transition-transform hover:scale-110 lg:flex"
+                className="hidden p-0 text-foreground transition-transform hover:scale-110 lg:flex"
               >
                 <User className="h-5.5 w-5.5 stroke-[1.2]" />
               </Button>
@@ -144,7 +144,7 @@ export default function SiteHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="p-0 text-[#5C4033] transition-transform hover:scale-110"
+                className="p-0 text-foreground transition-transform hover:scale-110"
               >
                 <ShoppingBag className="h-5 w-5 stroke-[1.5] lg:h-5.5 lg:w-5.5" />
               </Button>
@@ -164,13 +164,13 @@ export default function SiteHeader() {
                         "relative py-1 text-[11px] font-bold tracking-[0.25em] transition-colors duration-300",
                         isActive
                           ? "text-black"
-                          : "text-[#4A4A4A] hover:text-[#8B6B5C]"
+                          : "text-muted-foreground hover:text-primary"
                       )}
                     >
                       {item.name}
                       <span
                         className={cn(
-                          "absolute -bottom-0.5 left-0 h-[1.2px] bg-[#8B6B5C] transition-all duration-300 ease-in-out",
+                          "absolute -bottom-0.5 left-0 h-[1.2px] bg-primary transition-all duration-300 ease-in-out",
                           isActive ? "w-full" : "w-0 group-hover:w-full"
                         )}
                       />
@@ -179,12 +179,12 @@ export default function SiteHeader() {
                     {/* Submenu Dropdown */}
                     {item.submenu && (
                       <ul className="invisible absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                        <div className="min-w-50 border border-[#EAE3DF] bg-white py-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+                        <div className="min-w-50 border border-border bg-popover py-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
                           {item.submenu.map((sub) => (
                             <li key={sub}>
                               <Link
                                 href="#"
-                                className="block px-6 py-2.5 text-[10px] font-semibold tracking-[0.2em] text-[#5C4033] transition-colors hover:bg-[#FDFCFB] hover:text-[#8B6B5C]"
+                                className="block px-6 py-2.5 text-[10px] font-semibold tracking-[0.2em] text-foreground transition-colors hover:bg-accent hover:text-primary"
                               >
                                 {sub}
                               </Link>
