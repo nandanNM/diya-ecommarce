@@ -95,3 +95,55 @@ export interface Variant {
       priceData?: PriceData;
   }
 }
+
+export interface LineItem {
+  _id: string;
+  productId: string;
+  name: string; // simpler name for local use
+  productName?: {
+      original?: string;
+      translated?: string;
+  };
+  image?: string; // simpler image for local use
+  mediaItem?: {
+      url: string;
+      altText?: string;
+  };
+  quantity: number;
+  price?: {
+      amount: string;
+      formattedConvertedAmount: string;
+  };
+  fullPrice?: {
+      amount: string;
+      formattedConvertedAmount: string;
+  };
+  descriptionLines?: Array<{
+    name?: {
+      original?: string;
+      translated?: string;
+    }
+    colorInfo?: {
+      original?: string;
+      translated?: string;
+    };
+    plainText?: {
+      original?: string;
+      translated?: string;
+    };
+  }>;
+  url?: string;
+  availability?: {
+      quantityAvailable?: number;
+      status?: string;
+  };
+}
+
+export interface Cart {
+  _id: string;
+  lineItems: LineItem[];
+  subtotal?: {
+      amount: string;
+      formattedConvertedAmount: string;
+  };
+}

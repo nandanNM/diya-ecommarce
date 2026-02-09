@@ -16,9 +16,9 @@ import { useState } from "react";
 import ProductMedia from "./ProductMedia";
 import ProductOptions from "./ProductOptions";
 import ProductPrice from "./ProductPrice";
-import AddToCartButton from "@/components/AddToCartButton";
-import BackInStockNotificationButton from "@/components/BackInStockNotificationButton";
-import BuyNowButton from "@/components/BuyNowButton";
+import AddToCartButton from "@/features/cart/add-to-cart-button";
+import BackInStockNotificationButton from "@/features/products/back-in-stock-notification-button";
+import BuyNowButton from "@/features/cart/buy-now-button";
 
 interface ProductDetailsProps {
   product: Product;
@@ -106,7 +106,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         {inStock ? (
           <div className="flex items-center gap-2.5">
             <AddToCartButton
-              className="w-full"
+              className="flex-1"
               product={product}
               selectedOptions={selectedOptions}
               disabled={availableQuantityExceeded || quantity < 1}
@@ -117,6 +117,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               selectedOptions={selectedOptions}
               disabled={availableQuantityExceeded || quantity < 1}
               quantity={quantity}
+              className="flex-1"
             />
           </div>
         ) : (

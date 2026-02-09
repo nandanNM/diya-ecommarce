@@ -1,8 +1,8 @@
-import HeroSlider from "@/components/hero-slider";
-import OurImpact from "@/components/our-impact";
-import ShopPage from "@/components/shop-page";
-import Testimonials from "@/components/testimonials";
-import TrustBadges from "@/components/trust-badges";
+import HeroSlider from "@/features/home/hero-slider";
+import OurImpact from "@/features/home/our-impact";
+import ShopPage from "@/features/shop/components/shop-page";
+import Testimonials from "@/features/home/testimonials";
+import TrustBadges from "@/features/home/trust-badges";
 
 export default function Home() {
   return (

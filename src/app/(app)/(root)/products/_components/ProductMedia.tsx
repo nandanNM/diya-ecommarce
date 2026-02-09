@@ -1,4 +1,4 @@
-import WixImage from "@/components/WixImage";
+import WixImage from "@/components/common/wix-image";
 import { cn } from "@/lib/utils";
 import { MediaItem } from "@/lib/types";
 import { PlayIcon } from "lucide-react";
@@ -85,7 +85,7 @@ function MediaPreview({ mediaItem, isSelected, onSelect }: MediaPreviewProps) {
       )}
     >
       <WixImage
-        mediaIdentifier={imageUrl || resolvedThumbnailUrl}
+        mediaIdentifier={imageUrl || resolvedThumbnailUrl||""}
         alt={mediaItem.image?.altText || mediaItem.video?.files?.[0].altText}
         width={100}
         height={100}

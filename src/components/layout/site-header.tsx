@@ -11,6 +11,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import ShoppingCartButton from "@/features/cart/shopping-cart-button";
 
 const NAV_ITEMS = [
   { name: "HOME", href: "/" },
@@ -141,13 +142,10 @@ export default function SiteHeader() {
                 <User className="h-5.5 w-5.5 stroke-[1.2]" />
               </Button>
 
-              <Button
-                variant="ghost"
-                size="icon"
+              <ShoppingCartButton
+                initialData={null}
                 className="p-0 text-foreground transition-transform hover:scale-110"
-              >
-                <ShoppingBag className="h-5 w-5 stroke-[1.5] lg:h-5.5 lg:w-5.5" />
-              </Button>
+              />
             </div>
           </div>
 

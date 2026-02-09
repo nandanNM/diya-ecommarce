@@ -1,4 +1,4 @@
-import DiscountBadge from "@/components/DiscountBadge";
+import DiscountBadge from "@/components/common/discount-badge";
 import { cn } from "@/lib/utils";
 import { Product, Variant } from "@/lib/types";
 

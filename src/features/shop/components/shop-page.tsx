@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ProductCard } from "./product-card";
+import { ProductCard } from "@/features/products/product-card";
 
 const CATEGORIES = [
   {

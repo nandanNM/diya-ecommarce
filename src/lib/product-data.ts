@@ -4,7 +4,7 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     _id: "1",
     name: "Handcrafted Bamboo Lamp",
-    slug: "handcrafted-bamboo-lamp",
+    slug: "1",
     description:
       "<p>Illuminate your home with this sustainable, handcrafted bamboo lamp. Perfect for adding a warm, natural touch to any room.</p>",
     media: {
@@ -19,7 +19,7 @@ export const MOCK_PRODUCTS: Product[] = [
         {
           _id: "m2",
           image: {
-            url: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000",
+            url: "https://static.wixstatic.com/media/67fd73_7975d405c750420d9de3ba48c213fd22~mv2.jpg/v1/fill/w_720,h_720,al_c,lg_1,q_85,enc_auto/67fd73_7975d405c750420d9de3ba48c213fd22~mv2.jpg",
             altText: "Bamboo Lamp Detail",
           },
         },
@@ -42,6 +42,14 @@ export const MOCK_PRODUCTS: Product[] = [
           { description: "Small", value: "S", inStock: true },
           { description: "Medium", value: "M", inStock: true },
           { description: "Large", value: "L", inStock: true },
+        ],
+      },
+      {
+        name: "Color",
+        optionType: OptionType.color,
+        choices: [
+          { description: "White", value: "#ffffff", inStock: true, },
+          { description: "Terracotta", value: "#e2725b", inStock: true },
         ],
       },
     ],
