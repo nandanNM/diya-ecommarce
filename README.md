@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🕯️ Diya - Handcrafted Scented Candles
 
-## Getting Started
+![Diya Hero](/images/diya-screenshot-desktop.webp)
 
-First, run the development server:
+> **"Light a Diya, light up a memory."**
+
+**Diya** is a premium e-commerce platform for handcrafted scented candles, made with love by engineering students. We blend tradition with modern aesthetics to bring you fragrances that evoke nostalgia, peace, and celebration.
+
+---
+
+## ✨ Features
+
+- **🛍️ Seamless Shopping Experience**: Browse our exclusive collection of scented candles with detailed descriptions and imagery.
+- **🛒 Dynamic Cart**: Robust shopping cart management using `Zustand` with local storage persistence.
+- **💬 WhatsApp Checkout**: Direct-to-consumer checkout flow integrated with WhatsApp for a personalized purchase experience.
+- **🏷️ Smart Pricing**: Automatic discount calculation and dynamic badges for items on sale.
+- **📱 Responsive Design**: Fully optimized for mobile, tablet, and desktop viewing.
+- **⚡ Fast & SEO Optimized**: Built with Next.js 14 for lightning-fast performance and SEO best practices.
+
+---
+
+## 🚀 Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [Shadcn UI](https://ui.shadcn.com/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Images**: [ImageKit.io](https://imagekit.io/)
+
+---
+
+## 🎨 Product Showcase
+
+Here are some of our signature creations:
+
+| **Pahli Baarish** (Petrichor) | **Waadi** (Mountain Mist) | **Mogra** (Evening Bloom) |
+| :---: | :---: | :---: |
+| <img src="https://ik.imagekit.io/codernandan/product/pahli-baarish/pahli-baarish-s1.jpeg" width="200" /> | <img src="https://ik.imagekit.io/codernandan/product/waadi/waadi-s1.jpeg" width="200" /> | <img src="https://ik.imagekit.io/codernandan/product/mogra/mogra-s4.jpeg" width="200" /> |
+| *Bottled monsoon rain.* | *A ticket to the Himalayas.* | *The scent of an Indian summer.* |
+
+| **Lavender** (Sleep Lullaby) | **Parijaat** (Autumn Nostalgia) | **Saada** (Unscented) |
+| :---: | :---: | :---: |
+| <img src="https://ik.imagekit.io/codernandan/product/lavender/lavender-s1.jpeg" width="200" /> | <img src="https://ik.imagekit.io/codernandan/product/parijaat/parijaat-s1.jpeg" width="200" /> | <img src="https://ik.imagekit.io/codernandan/product/saada/saada-s1.jpeg" width="200" /> |
+| *Your personal "Off" button.* | *The magic of October mornings.* | *Pure light, simply you.* |
+
+---
+
+## 🛠️ Getting Started
+
+Follow these steps to run the project locally:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/diya.git
+    cd diya
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    pnpm install
+    ```
+
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    # or
+    pnpm dev
+    ```
+
+4.  **Open in Browser:**
+    Navigate to [http://localhost:3000](http://localhost:3000) to see the application running.
+
+---
+
+## 📂 Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+src/
+├── app/              # Next.js App Router pages and layouts
+├── components/       # Reusable UI components (buttons, badges, etc.)
+├── features/         # Feature-specific components (cart, shop, home)
+├── data/             # Static data files (products.ts)
+├── lib/              # Utility functions and types
+├── store/            # Global state management (useCartStore)
+└── config/           # Site configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 👥 Authors
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Diya Team** - *Handcrafting memories.*
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**© 2024 Diya.** All rights reserved.
