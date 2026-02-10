@@ -19,6 +19,14 @@ import {
   ArrowRight,
   Zap,
   TrendingUp,
+  FlaskConical,
+  FlaskConicalIcon,
+  Leaf,
+  LeafIcon,
+  Music2Icon,
+  Brain,
+  Hand,
+  TrendingDown,
 } from "lucide-react";
 import {
   motion,
@@ -29,6 +37,7 @@ import {
   type Variants,
 } from "framer-motion";
 import { buildSrc, Video } from "@imagekit/next";
+import Link from "next/link";
 
 export default function AboutUsSPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -74,75 +83,72 @@ export default function AboutUsSPage() {
 
   const services = [
     {
-      icon: <Pen className="h-6 w-6" />,
+      icon: <FlaskConicalIcon className="h-6 w-6" />,
       secondaryIcon: (
         <Sparkles className="absolute -top-1 -right-1 h-4 w-4 text-[#A9BBC8]" />
       ),
-      title: "Interior",
+      title: "Chemistry",
       description:
-        "Transform your living spaces with our expert interior design services. We blend functionality and aesthetics to create spaces that reflect your unique style and personality.",
+"We approach candles like a lab experiment. The ratio of wax to fragrance oil is calculated precisely to ensure the scent fills your room without giving you a headache.",
       position: "left",
     },
     {
-      icon: <Home className="h-6 w-6" />,
+      icon: <Music2Icon className="h-6 w-6" />,
       secondaryIcon: (
         <CheckCircle className="absolute -top-1 -right-1 h-4 w-4 text-[#A9BBC8]" />
       ),
-      title: "Exterior",
+      title: "The Sound",
       description:
-        "Make a lasting impression with stunning exterior designs that enhance curb appeal and create harmonious connections between architecture and landscape.",
+"Our signature Crackling Wooden Wick isn't just for looks. When lit, it creates a soft crackling sound, mimicking a tiny fireplace or the sound of rain.",
       position: "left",
     },
     {
-      icon: <PenTool className="h-6 w-6" />,
+      icon: <Hand className="h-6 w-6" />,
       secondaryIcon: (
         <Star className="absolute -top-1 -right-1 h-4 w-4 text-[#A9BBC8]" />
       ),
-      title: "Design",
+      title: "Small Batch",
       description:
-        "Our innovative design process combines creativity with practicality, resulting in spaces that are both beautiful and functional for everyday living.",
-      position: "left",
+"Mass production feels empty. We make candles in small batches of 10-15 at a time, ensuring quality control that big brands can't match.",      position: "left",
     },
     {
-      icon: <PaintBucket className="h-6 w-6" />,
+      icon: <LeafIcon className="h-6 w-6" />,
       secondaryIcon: (
         <Sparkles className="absolute -top-1 -right-1 h-4 w-4 text-[#A9BBC8]" />
       ),
-      title: "Decoration",
+      title: "Pure Soy Wax",
       description:
-        "Elevate your space with our curated decoration services. From color schemes to textiles and accessories, we perfect every detail to bring your vision to life.",
+"Most market candles use Paraffin (a byproduct of petrol). We use 100% Natural Soy Wax. It burns cleaner, longer, and is better for the planet.",
       position: "right",
     },
     {
-      icon: <Ruler className="h-6 w-6" />,
+      icon: <Brain className="h-6 w-6" />,
       secondaryIcon: (
         <CheckCircle className="absolute -top-1 -right-1 h-4 w-4 text-[#A9BBC8]" />
       ),
-      title: "Planning",
+      title: "Nostalgia First",
       description:
-        "Our meticulous planning process ensures every project runs smoothly from concept to completion, with careful attention to timelines, budgets, and requirements.",
-      position: "right",
+"We don't do generic Vanilla. We capture moments—the smell of wet mud (Petrichor), winter mornings (Parijaat), and hill stations (Waadi).",      position: "right",
     },
     {
       icon: <Building2 className="h-6 w-6" />,
       secondaryIcon: (
         <Star className="absolute -top-1 -right-1 h-4 w-4 text-[#A9BBC8]" />
       ),
-      title: "Execution",
+      title: "Student Run",
       description:
-        "Watch your dream space come to life through our flawless execution. Our skilled team handles every aspect of implementation with precision and care.",
-      position: "right",
+"When you buy a DIYA candle, you aren't funding a CEO's third home. You are funding our tuition, our experiments, and our dream.",      position: "right",
     },
   ];
 
   const stats = [
-    { icon: <Award />, value: 150, label: "Projects Completed", suffix: "+" },
-    { icon: <Users />, value: 1200, label: "Happy Clients", suffix: "+" },
-    { icon: <Calendar />, value: 12, label: "Years Experience", suffix: "" },
+    { icon: <Award />, value: 50, label: "Prototypes Tested", suffix: "+" },
+    { icon: <Users />, value: 100, label: "Hand Poured", suffix: "%" },
+    { icon: <Calendar />, value: 8, label: "Engineers", suffix: "" },
     {
-      icon: <TrendingUp />,
-      value: 98,
-      label: "Satisfaction Rate",
+      icon: <TrendingDown />,
+      value: 0,
+      label: "Toxins Rate",
       suffix: "%",
     },
   ];
@@ -222,10 +228,7 @@ export default function AboutUsSPage() {
           className="mx-auto mb-16 max-w-2xl text-center text-muted-foreground"
           variants={itemVariants}
         >
-          We are a passionate team of designers and architects dedicated to
-          creating beautiful, functional spaces that inspire and elevate
-          everyday living. With attention to detail and commitment to
-          excellence, we transform visions into reality.
+         We are a team of engineering students who realized that in the race of deadlines, we forgot how to pause. DIYA is our experiment to engineer 'Sukoon' (Peace) for you.
         </motion.p>
 
         <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -403,13 +406,15 @@ export default function AboutUsSPage() {
               Let's create something beautiful together.
             </p>
           </div>
+          <Link href="/">
           <motion.button
-            className="flex items-center gap-2 rounded-lg bg-[#88734C] px-6 py-3 font-medium text-white transition-colors hover:bg-[#88734C]/90"
+            className="flex cursor-pointer items-center gap-2 rounded-lg bg-[#88734C] px-6 py-3 font-medium text-white transition-colors hover:bg-[#88734C]/90"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Get Started <ArrowRight className="h-4 w-4" />
           </motion.button>
+          </Link>
         </motion.div>
       </motion.div>
     </section>

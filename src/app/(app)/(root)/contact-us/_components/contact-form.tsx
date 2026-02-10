@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label"; 
+import LoadingButton from "@/components/ui/loading-button";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -109,13 +110,13 @@ export default function ContactForm() {
           className="mt-2 h-36 w-full resize-none"
         />
       </div>
-      <Button
+      <LoadingButton
         type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-indigo-600 font-medium text-white duration-150 hover:bg-indigo-500 active:bg-indigo-600"
+        loading={isSubmitting}
+        className="w-full font-medium text-white"
       >
-        {isSubmitting ? "Submitting..." : "Submit"}
-      </Button>
+        Send Message
+      </LoadingButton>
     </form>
   );
 }
