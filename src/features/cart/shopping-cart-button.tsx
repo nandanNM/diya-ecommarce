@@ -81,24 +81,25 @@ export default function ShoppingCartButton({
               </div>
             )}
           </div>
-          <hr />
-          <div className="flex items-center justify-between gap-5">
-            <div className="space-y-0.5">
-              <p className="text-sm">Subtotal amount: </p>
-              <p className="font-bold">{formatCurrency(subtotal)}</p>
+          <div className="space-y-4">
+            <div className="space-y-1.5 border-t pt-4">
+              <div className="flex justify-between text-sm">
+                <span>Subtotal amount:</span>
+                <span className="font-semibold">{formatCurrency(subtotal)}</span>
+              </div>
               
                <div className="flex justify-between text-sm">
                   <span>Delivery Charge:</span>
                   <span>{totalQuantity === 1 ? formatCurrency(60) : "Free"}</span>
                </div>
                
-               <div className="flex justify-between font-bold text-lg border-t pt-2">
+               <div className="flex justify-between font-bold text-lg pt-2">
                   <span>Total:</span>
                   <span>{formatCurrency(subtotal + (totalQuantity === 1 ? 60 : 0))}</span>
                </div>
 
                {totalQuantity === 1 && (
-                 <p className="text-xs text-green-600 font-medium mt-1">
+                 <p className="text-xs text-green-600 font-medium mt-1 text-center">
                    Add 1 more item for FREE delivery!
                  </p>
                )}
