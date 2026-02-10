@@ -71,7 +71,7 @@ export default function ShoppingCartButton({
                 <div className="space-y-1.5">
                   <p className="text-lg font-semibold">Your cart is empty</p>
                   <Link
-                    href="/shop"
+                    href="/#collection"
                     className="text-primary hover:underline"
                     onClick={() => setSheetOpen(false)}
                   >
