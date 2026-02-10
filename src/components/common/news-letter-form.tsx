@@ -54,7 +54,7 @@ export default function NewsletterForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-r-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
+        className="rounded-r-md cursor-pointer bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
       >
         {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Subscribe"}
       </button>
