@@ -2,6 +2,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Heart } from "lucide-react";
+import Link from "next/link";
 
 const cardVariants = cva(
   "group relative aspect-3/4 w-full cursor-pointer overflow-hidden rounded-2xl transition-all duration-500 ease-in-out",
@@ -28,6 +29,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
     ref
   ) => {
     return (
+      <Link href={href || "#"}>
       <div ref={ref} className={cn(cardVariants({ className }))} {...props}>
         <img
           src={imageUrl}
@@ -55,8 +57,8 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
         </button> */}
 
         <div className="absolute bottom-4 left-4 z-10">
-          <a
-            href={href || "#"}
+          <p
+           
             className="text-md relative inline-block py-1 font-bold tracking-[0.15em] text-white transition-colors duration-300 md:text-lg"
           >
             {category}
@@ -65,9 +67,10 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                 "absolute -bottom-0.5 left-0 h-[1.5px] w-0 bg-white transition-all duration-300 ease-in-out group-hover:w-full"
               )}
             />
-          </a>
+          </p>
         </div>
       </div>
+      </Link>
     );
   }
 );

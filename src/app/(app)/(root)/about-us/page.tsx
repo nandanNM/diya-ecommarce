@@ -151,7 +151,7 @@ export default function AboutUsSPage() {
     <section
       id="about-section"
       ref={sectionRef}
-      className="relative w-full overflow-hidden px-4 py-8 text-[#202e44]"
+      className="relative w-full overflow-hidden px-4 py-8 text-foreground"
     >
       {/* Decorative background elements */}
       <motion.div
@@ -219,7 +219,7 @@ export default function AboutUsSPage() {
         </motion.div>
 
         <motion.p
-          className="mx-auto mb-16 max-w-2xl text-center text-[#202e44]/80"
+          className="mx-auto mb-16 max-w-2xl text-center text-muted-foreground"
           variants={itemVariants}
         >
           We are a passionate team of designers and architects dedicated to
@@ -390,7 +390,7 @@ export default function AboutUsSPage() {
 
         {/* CTA Section */}
         <motion.div
-          className="mt-20 flex flex-col items-center justify-between gap-6 rounded-xl bg-[#202e44] p-8 text-white md:flex-row"
+          className="mt-20 flex flex-col items-center justify-between gap-6 rounded-xl bg-card p-8 text-card-foreground md:flex-row shadow-lg"
           initial={{ opacity: 0, y: 30 }}
           animate={isStatsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -399,7 +399,7 @@ export default function AboutUsSPage() {
             <h3 className="mb-2 text-2xl font-medium">
               Ready to transform your space?
             </h3>
-            <p className="text-white/80">
+            <p className="text-muted-foreground">
               Let's create something beautiful together.
             </p>
           </div>
@@ -458,12 +458,12 @@ function ServiceItem({
           {icon}
           {secondaryIcon}
         </motion.div>
-        <h3 className="text-xl font-medium text-[#202e44] transition-colors duration-300 group-hover:text-[#88734C]">
+        <h3 className="text-xl font-medium text-foreground transition-colors duration-300 group-hover:text-[#88734C]">
           {title}
         </h3>
       </motion.div>
       <motion.p
-        className="pl-12 text-sm leading-relaxed text-[#202e44]/80"
+        className="pl-12 text-sm leading-relaxed text-muted-foreground"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: delay + 0.4 }}
@@ -517,7 +517,7 @@ function StatCounter({ icon, value, label, suffix, delay }: StatCounterProps) {
 
   return (
     <motion.div
-      className="group flex flex-col items-center rounded-xl bg-white/50 p-6 text-center backdrop-blur-sm transition-colors duration-300 hover:bg-white"
+      className="group flex flex-col items-center rounded-xl bg-card/50 p-6 text-center backdrop-blur-sm transition-colors duration-300 hover:bg-card"
       variants={{
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -529,19 +529,19 @@ function StatCounter({ icon, value, label, suffix, delay }: StatCounterProps) {
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
     >
       <motion.div
-        className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#202e44]/5 text-[#88734C] transition-colors duration-300 group-hover:bg-[#88734C]/10"
+        className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/5 text-[#88734C] transition-colors duration-300 group-hover:bg-[#88734C]/10"
         whileHover={{ rotate: 360, transition: { duration: 0.8 } }}
       >
         {icon}
       </motion.div>
       <motion.div
         ref={countRef}
-        className="flex items-center text-3xl font-bold text-[#202e44]"
+        className="flex items-center text-3xl font-bold text-foreground"
       >
         <motion.span>{displayValue}</motion.span>
         <span>{suffix}</span>
       </motion.div>
-      <p className="mt-1 text-sm text-[#202e44]/70">{label}</p>
+      <p className="mt-1 text-sm text-muted-foreground">{label}</p>
       <motion.div className="mt-3 h-0.5 w-10 bg-[#88734C] transition-all duration-300 group-hover:w-16" />
     </motion.div>
   );

@@ -1,4 +1,4 @@
-import { MOCK_PRODUCTS } from "./product-data";
+import { MOCK_PRODUCTS } from "@/data/products";
 import { Product } from "@/lib/types";
 
 export function getProductBySlugMock(slug: string): Promise<Product | null> {

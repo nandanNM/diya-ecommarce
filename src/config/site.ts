@@ -8,7 +8,16 @@ export const metadata: Metadata = {
     template: "%s | Diya",
   },
   description: "",
-  keywords: [],
+  keywords: [
+  "Scented candles gift set",
+  "scented candles under 100",
+  "scented candles best",
+  "scented candle gift",
+  "scented candles online",
+  "scented candles in jar",
+  "Scented candles under 200"
+]
+,
   metadataBase: new URL(siteUrl),
   authors: [{ name: "Diya Team", url: siteUrl }],
   openGraph: {
@@ -66,9 +75,9 @@ export const metadata: Metadata = {
 // };
 
 export const MAIN_NAV: NavItem[] = [
-  { name: "ABOUT US", href: "/about-us" },
   {
     name: "HOME",
     href: "/",
   },
+  { name: "ABOUT US", href: "/about-us" },
 ];

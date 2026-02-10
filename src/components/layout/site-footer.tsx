@@ -4,14 +4,14 @@ import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-foreground font-sans text-primary-foreground">
+    <footer className="bg-card font-sans text-card-foreground border-t border-border/40">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 py-12 md:grid-cols-4">
         {/* Brand Section */}
         <div>
           <h2 className="text-xl font-bold tracking-[0.25em] uppercase">
             Diya
           </h2>
-          <p className="mt-3 text-sm text-primary-foreground/80">
+          <p className="mt-3 text-sm text-muted-foreground">
             Hand-poured scents that bring your most cherished memories to life.
           </p>
         </div>
@@ -21,7 +21,7 @@ export function SiteFooter() {
           <h3 className="mb-3 text-lg font-semibold tracking-wide uppercase">
             Shop
           </h3>
-          <ul className="space-y-2 text-sm text-primary-foreground/80">
+          <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <Link href="/shop">All Products</Link>
             </li>
@@ -42,7 +42,7 @@ export function SiteFooter() {
           <h3 className="mb-3 text-lg font-semibold tracking-wide uppercase">
             Company
           </h3>
-          <ul className="space-y-2 text-sm text-primary-foreground/80">
+          <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <Link href="/about-us">About Us</Link>
             </li>
@@ -81,11 +81,11 @@ export function SiteFooter() {
             <input
               type="email"
               placeholder="Your email"
-              className="w-full rounded-l-md px-3 py-2 text-gray-900 focus:outline-none"
+              className="w-full rounded-l-md px-3 py-2 text-foreground bg-background border border-border focus:outline-none"
             />
             <button
               type="submit"
-              className="rounded-r-md bg-black/80 px-4 py-2 text-white hover:bg-black"
+              className="rounded-r-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
             >
               Subscribe
             </button>
@@ -94,7 +94,7 @@ export function SiteFooter() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-primary-foreground/20 py-6 text-center text-sm text-primary-foreground/80">
+      <div className="border-t border-border py-6 text-center text-sm text-muted-foreground">
         © {new Date().getFullYear()} Diya. All rights reserved.
       </div>
     </footer>

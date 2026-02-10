@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { FeaturedCarousel } from "./featured-carousel";
 import { FeaturedCarouselSkeleton } from "./FeaturedCarouselSkeleton";
-import { MOCK_PRODUCTS } from "@/lib/product-data";
+import { MOCK_PRODUCTS } from "@/data/products";
 import { delay } from "@/lib/utils";
 
 async function getFeaturedProducts() {

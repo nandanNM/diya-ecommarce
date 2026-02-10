@@ -3,6 +3,9 @@ import { getProductBySlugMock } from "@/lib/product-api";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProductDetails from "../_components/ProductDetails";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense } from "react";
+import Product from "@/components/common/product";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -49,6 +52,45 @@ export default async function Page(props: PageProps) {
   return (
     <main className="mx-auto max-w-7xl space-y-10 px-5 py-10">
       <ProductDetails product={product} />
+      <hr className="border-gray-200" />
+      <Suspense fallback={<RelatedProductsLoadingSkeleton />}>
+        <RelatedProducts currentSlug={slug} />
+      </Suspense>
     </main>
+  );
+}
+
+async function RelatedProducts({ currentSlug }: { currentSlug: string }) {
+  const { getAllProductsMock } = await import("@/lib/product-api");
+  // Assuming getAllProductsMock is available or defaulting to import MOCK_PRODUCTS directly if not exported
+  const { MOCK_PRODUCTS } = await import("@/data/products");
+  
+  const relatedProducts = MOCK_PRODUCTS
+    .filter((p) => p.slug !== currentSlug)
+    // Simple shuffle
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 4);
+
+  if (relatedProducts.length === 0) return null;
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold">Related Products</h2>
+      <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid lg:grid-cols-4">
+        {relatedProducts.map((product) => (
+          <Product key={product._id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function RelatedProductsLoadingSkeleton() {
+  return (
+    <div className="flex grid-cols-2 flex-col gap-5 pt-12 sm:grid lg:grid-cols-4">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <Skeleton key={i} className="h-[26rem] w-full" />
+      ))}
+    </div>
   );
 }

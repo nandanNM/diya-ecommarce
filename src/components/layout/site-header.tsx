@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import ShoppingCartButton from "@/features/cart/shopping-cart-button";
 import { MAIN_NAV } from "@/config/site";
+// import { ThemeSwitch } from "../theme-switch-button";
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -27,7 +28,7 @@ export default function SiteHeader() {
               key={i}
               className="mx-6 text-[10px] font-medium tracking-[0.15em] text-primary-foreground/95 lg:mx-12 lg:text-[11px] lg:tracking-[0.2em]"
             >
-              Best Deals At Checkout &nbsp; • &nbsp; Cod Available
+              Best Deals At Checkout &nbsp; • &nbsp; Free Shipping On Orders Above 500 &nbsp; • &nbsp; 30% Off On First Order
             </span>
           ))}
         </div>
@@ -36,7 +37,7 @@ export default function SiteHeader() {
       <header className="w-full">
         <div className="container mx-auto px-4 lg:px-10">
           {/* 2. TOP SECTION (Exact Mobile Layout) */}
-          <div className="flex h-14 items-center justify-between lg:h-18">
+          <div className="flex h-14 items-center justify-between">
             {/* LEFT: Hamburger (Mobile) / Search (Desktop) */}
             <div className="flex flex-1 items-center justify-start">
               {/* Mobile Toggle */}
@@ -70,27 +71,28 @@ export default function SiteHeader() {
               </Sheet>
 
               {/* Desktop Search */}
-              <Button
+              {/* <Button
                 variant="ghost"
                 size="icon"
                 className="hidden p-0 text-foreground transition-transform hover:scale-110 lg:flex"
               >
                 <Search className="h-5.5 w-5.5 stroke-[1.2]" />
-              </Button>
-            </div>
+              </Button> */}
+            
 
             {/* CENTER: Logo (Centered on all screens) */}
             <Link
               href="/"
               className="group flex items-center gap-2 no-underline"
             >
-              <div className="mb-1 hidden text-primary transition-transform duration-500 group-hover:scale-105 lg:block">
+              <div className="mb-1  text-primary transition-transform duration-500 group-hover:scale-105">
                 <img className="size-10" src="/logo.svg" />
               </div>
-              <span className="lg:text-5.5 font-nickainley text-[15px] leading-none font-medium tracking-[0.25em] text-foreground uppercase lg:tracking-[0.3em]">
-                DIYA
+              <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
+                diya
               </span>
             </Link>
+            </div>
 
             {/* RIGHT: Search + Cart (Mobile) / User + Cart (Desktop) */}
             <div className="flex flex-1 items-center justify-end gap-3 lg:gap-6">
@@ -110,7 +112,7 @@ export default function SiteHeader() {
               >
                 <User className="h-5.5 w-5.5 stroke-[1.2]" />
               </Button> */}
-
+            {/* <ThemeSwitch/> */}
               <ShoppingCartButton
                 initialData={null}
                 className="p-0 text-foreground transition-transform hover:scale-110"

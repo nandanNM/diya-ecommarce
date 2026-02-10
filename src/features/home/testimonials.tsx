@@ -6,50 +6,7 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
-const TESTIMONIALS = [
-  {
-    id: 1,
-    name: "SAYONI NARJINARI",
-    image: "https://ik.imagekit.io/codernandan/testimonial/sayoni.jpeg",
-    text: "Pahli baarish ki khushboo ko is candle ne bilkul zinda kar diya hai. Jalate hi ek fresh, sukoon bhara aur cozy feel aata hai jo dil ko instantly calm kar deta hai. Truly a beautiful and soothing fragrance, perfect for relaxing moments.",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "SIDDARTH KUMAR",
-    image: "https://ik.imagekit.io/codernandan/testimonial/sit.jpeg",
-    text: "Always wanted a go-to product that could freshen my room instantly. I’m glad I stumbled upon these products...not only do they have beautiful aromas based on different flowers (great idea tbh), which I loved, but they also enhance the overall vibe cuz they’re cute candles, not artificial perfumes. Worth the money, I’d say. Go for it. ✌️",
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "SHELLY RICHA LAKDA",
-    image: "https://ik.imagekit.io/codernandan/testimonial/shelly.jpeg",
-    text: "I was skeptical about 'Pahli Baarish'—like, how can you bottle the smell of mud? But WOW. It literally smells like the first rain in my village. I’ve bought Bath & Body Works before, but this feels more real? Maybe because it’s handmade.",
-    rating: 5,
-  },
-  {
-    id: 4,
-    name: "RONIT PAL",
-    image: "https://ik.imagekit.io/codernandan/testimonial/ronit.jpeg",
-    text: "Honestly, I bought the Lavender one just to make my hostel room smell less... damp. But now it’s my permanent study buddy. I light it up during all-nighters, and it actually keeps me calm. The crackling sound is so satisfying when everything else is silent. 10/10 recommending to my wingmates.",
-    rating: 4,
-  },
-  {
-    id: 5,
-    name: "INDRAJIT KUMAR SAU",
-    image: "https://ik.imagekit.io/codernandan/testimonial/indra.jpeg",
-    text: "The wooden wick is a game changer! It sounds like a tiny fireplace. I put on some lo-fi beats, light the Waadi candle, and my room feels like a hill station in Manali. If you want Sukoon, just buy it.",
-    rating: 3,
-  },
-  {
-    id: 6,
-    name: "PIYUSH KUMAR",
-    image: "https://ik.imagekit.io/codernandan/testimonial/piyush.jpeg",
-    text: "I don't know what you guys put in 'Waadi' but it smells exactly like a pine forest. Instant stress buster after a long day of coding. Love that it's made by students, keep it up guys!.",
-    rating: 5,
-  },
-];
+import { TESTIMONIALS } from "@/data/testimonials";
 
 export default function TestimonialsCarousel() {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -123,7 +80,7 @@ export default function TestimonialsCarousel() {
   return (
     <section className="w-full overflow-hidden py-4 md:py-6">
       <div className="container mx-auto max-w-7xl px-4">
-        <h2 className="mb-8 text-center text-[28px] font-light tracking-wide text-[#2D2D2D] md:mb-12 md:text-[36px]">
+        <h2 className="mb-8 text-center text-[28px] font-light tracking-wide text-foreground md:mb-12 md:text-[36px]">
           Testimonials
         </h2>
 
@@ -140,12 +97,12 @@ export default function TestimonialsCarousel() {
               opacity: isHovered ? 1 : 0,
             }}
             transition={{ duration: 0.3 }}
-            className="absolute top-[70px] left-1 z-[60] flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200/50 bg-white/90 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white hover:shadow-xl active:scale-95 md:top-[100px] md:left-4 md:h-11 md:w-11 lg:left-8"
+            className="absolute top-[70px] left-1 z-[60] flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-card/90 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-card hover:shadow-xl active:scale-95 md:top-[100px] md:left-4 md:h-11 md:w-11 lg:left-8"
             style={{ pointerEvents: isHovered ? "auto" : "none" }}
             aria-label="Previous testimonial"
           >
             <ChevronLeft
-              className="h-4 w-4 text-gray-700 md:h-5 md:w-5"
+              className="h-4 w-4 text-foreground md:h-5 md:w-5"
               strokeWidth={2.5}
             />
           </motion.button>
@@ -157,12 +114,12 @@ export default function TestimonialsCarousel() {
               opacity: isHovered ? 1 : 0,
             }}
             transition={{ duration: 0.3 }}
-            className="absolute top-[70px] right-1 z-[60] flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200/50 bg-white/90 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white hover:shadow-xl active:scale-95 md:top-[100px] md:right-4 md:h-11 md:w-11 lg:right-8"
+            className="absolute top-[70px] right-1 z-[60] flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-card/90 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-card hover:shadow-xl active:scale-95 md:top-[100px] md:right-4 md:h-11 md:w-11 lg:right-8"
             style={{ pointerEvents: isHovered ? "auto" : "none" }}
             aria-label="Next testimonial"
           >
             <ChevronRight
-              className="h-4 w-4 text-gray-700 md:h-5 md:w-5"
+              className="h-4 w-4 text-foreground md:h-5 md:w-5"
               strokeWidth={2.5}
             />
           </motion.button>
@@ -282,7 +239,7 @@ export default function TestimonialsCarousel() {
                           "h-4 w-4 md:h-5 md:w-5",
                           i < TESTIMONIALS[currentIndex].rating
                             ? "fill-[#FFB800] text-[#FFB800]"
-                            : "fill-gray-300 text-gray-300"
+                            : "fill-muted text-muted"
                         )}
                       />
                     </motion.div>
@@ -291,7 +248,7 @@ export default function TestimonialsCarousel() {
 
                 {/* Testimonial Text */}
                 <div className="flex min-h-[100px] items-center justify-center overflow-hidden md:min-h-[130px]">
-                  <p className="mb-6 max-w-2xl px-2 text-center text-[15px] leading-relaxed font-normal text-[#3D3D3D] md:mb-8 md:px-8 md:text-[17px] lg:text-[19px]">
+                  <p className="mb-6 max-w-2xl px-2 text-center text-[15px] leading-relaxed font-normal text-muted-foreground md:mb-8 md:px-8 md:text-[17px] lg:text-[19px]">
                     {TESTIMONIALS[currentIndex].text}
                   </p>
                 </div>
@@ -305,11 +262,11 @@ export default function TestimonialsCarousel() {
                     duration: 0.5,
                     ease: [0.34, 1.56, 0.64, 1],
                   }}
-                  className="mb-4 h-[1px] bg-gray-300 md:mb-5"
+                  className="mb-4 h-[1px] bg-border md:mb-5"
                 />
 
                 {/* Author Name */}
-                <cite className="text-[10px] font-medium tracking-[0.2em] text-[#2D2D2D] uppercase not-italic md:text-[11px] md:tracking-[0.25em]">
+                <cite className="text-[10px] font-medium tracking-[0.2em] text-foreground uppercase not-italic md:text-[11px] md:tracking-[0.25em]">
                   -- {TESTIMONIALS[currentIndex].name}
                 </cite>
               </motion.div>

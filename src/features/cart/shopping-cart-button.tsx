@@ -87,7 +87,7 @@ export default function ShoppingCartButton({
               <p className="text-sm">Subtotal amount: </p>
               <p className="font-bold">{formatCurrency(subtotal)}</p>
               <p className="text-xs text-muted-foreground">
-                Tax and shipping calculated at checkout
+               Shipping calculated at checkout
               </p>
             </div>
             <CheckoutButton

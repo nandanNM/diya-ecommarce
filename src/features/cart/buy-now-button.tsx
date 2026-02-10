@@ -25,7 +25,7 @@ export default function BuyNowButton({
       onClick={() => startCheckoutFlow({ product, quantity, selectedOptions })}
       loading={pending}
       variant="secondary"
-      className={cn("flex gap-3", className)}
+      className={cn("flex gap-3 py-6", className)}
       {...props}
     >
       <CreditCardIcon />

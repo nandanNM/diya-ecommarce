@@ -1,13 +1,7 @@
-import codBadge from "@/assets/cod-badge.png";
-import shippingBadge from "@/assets/shipping-badge.png";
-import qualityBadge from "@/assets/quality-badge.png";
+
 import Image from "next/image";
+import { TRUST_BADGES } from "@/data/trust-badges";
 export default function TrustBadges() {
-  const TRUST_BADGES = [
-    { id: 1, name: "COD Available", image: codBadge },
-    { id: 2, name: "Free Shipping", image: shippingBadge },
-    { id: 3, name: "Premium Quality", image: qualityBadge },
-  ];
   return (
     <section className="border-border bg-background py-12">
       <div className="mx-auto max-w-7xl px-4.5">
