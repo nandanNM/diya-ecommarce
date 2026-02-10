@@ -89,7 +89,7 @@ export default function SiteHeader() {
                 <img className="size-10" src="/logo.svg" />
               </div>
               <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
-                diya
+                Diya
               </span>
             </Link>
             </div>

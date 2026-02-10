@@ -93,13 +93,34 @@ const CTASection = ({ title, subtitle, actions, images, className }: HeroSection
             {subtitle}
           </motion.p>
           <motion.div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start" variants={itemVariants}>
-            {actions.map((action, index) => (
-              <Button key={index} asChild variant={action.variant} size="lg" className={action.className}>
-                <Link href={action.href}>
-                  {action.text}
-                </Link>
-              </Button>
-            ))}
+            {actions.map((action, index) => {
+              const isAnchor = action.href.startsWith("/#") || action.href.startsWith("#");
+              
+              const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+                if (isAnchor) {
+                  e.preventDefault();
+                  const targetId = action.href.split("#")[1];
+                  const element = document.getElementById(targetId);
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth" });
+                  }
+                }
+              };
+
+              return (
+                <Button
+                  key={index}
+                  asChild
+                  variant={action.variant}
+                  size="lg"
+                  className={action.className}
+                >
+                  <Link href={action.href} onClick={isAnchor ? handleClick : undefined}>
+                    {action.text}
+                  </Link>
+                </Button>
+              );
+            })}
           </motion.div>
         </motion.div>
 

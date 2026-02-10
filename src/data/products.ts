@@ -313,13 +313,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ],
     media: {
       items: [
-        {
-          _id: "s1",
-          image: {
-            url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1.jpeg",
-            altText: "Mogra Candle S1",
-          },
-        },
+       
         {
           _id: "s2",
           image: {
@@ -332,6 +326,13 @@ export const MOCK_PRODUCTS: Product[] = [
           image: {
             url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s3.jpeg",
             altText: "Mogra Candle S3",
+          },
+        },
+         {
+          _id: "s1",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1.jpeg",
+            altText: "Mogra Candle S1",
           },
         },
       ],

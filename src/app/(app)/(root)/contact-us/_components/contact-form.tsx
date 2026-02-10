@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label"; 
@@ -47,7 +46,7 @@ export default function ContactForm() {
 
       if (result.success) {
         toast.success(
-          "We've received your message, as soon as possible MAT team contact you. Thank you!"
+          "We've received your message, as soon as possible Diya team contact you. Thank you!"
         );
         setValues({
           name: "",
