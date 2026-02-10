@@ -9,15 +9,15 @@ export default function Home() {
     <div className="max-w-7xl p-2 mx-auto">
       <CTASection
         title="Hand-Poured Nostalgia"
-        subtitle="Diya is a platform that helps students learn and grow. We offer a variety of courses and resources to help you succeed."
+        subtitle="From the chaos of circuits to the calm of soy wax. We are a group of students making eco-friendly, wooden-wick candles that sound like a tiny fireplace and smell like home."
         actions={[
           {
-            text: "Get Started",
-            href: "/courses",
+            text: "Explore Collection",
+            href: "/#collection",
             variant: "default",
           },
           {
-            text: "Learn More",
+            text: "Our Story",
             href: "/about-us",
             variant: "outline",
           },

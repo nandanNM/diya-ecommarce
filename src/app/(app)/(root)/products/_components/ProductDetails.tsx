@@ -18,7 +18,8 @@ import ProductOptions from "./ProductOptions";
 import ProductPrice from "./ProductPrice";
 import AddToCartButton from "@/features/cart/add-to-cart-button";
 import BackInStockNotificationButton from "@/features/products/back-in-stock-notification-button";
-import BuyNowButton from "@/features/cart/buy-now-button";
+
+import WhatsAppCheckoutButton from "@/features/cart/whatsapp-checkout-button";
 
 interface ProductDetailsProps {
   product: Product;
@@ -136,20 +137,29 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </div>
 
         {inStock ? (
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <AddToCartButton
-              className="flex-1"
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <AddToCartButton
+                className="flex-1"
+                product={product}
+                selectedOptions={selectedOptions}
+                disabled={availableQuantityExceeded || quantity < 1}
+                quantity={quantity}
+              />
+              {/* <BuyNowButton
+                product={product}
+                selectedOptions={selectedOptions}
+                disabled={availableQuantityExceeded || quantity < 1}
+                quantity={quantity}
+                className="flex-1"
+              /> */}
+            </div>
+            <WhatsAppCheckoutButton
               product={product}
               selectedOptions={selectedOptions}
               disabled={availableQuantityExceeded || quantity < 1}
               quantity={quantity}
-            />
-            <BuyNowButton
-              product={product}
-              selectedOptions={selectedOptions}
-              disabled={availableQuantityExceeded || quantity < 1}
-              quantity={quantity}
-              className="flex-1"
+              className="w-full"
             />
           </div>
         ) : (
@@ -158,7 +168,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             selectedOptions={selectedOptions}
           />
         )}
-
         <div className="mt-8 border-t pt-6">
              <div className="flex items-center gap-2 mb-4">
                <BadgeInfo className="h-5 w-5" />

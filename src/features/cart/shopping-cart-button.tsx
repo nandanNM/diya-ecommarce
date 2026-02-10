@@ -1,4 +1,4 @@
-import CheckoutButton from "@/features/cart/checkout-button";
+import WhatsAppCartCheckoutButton from "@/features/cart/whatsapp-cart-checkout-button";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -90,11 +90,14 @@ export default function ShoppingCartButton({
                Shipping calculated at checkout
               </p>
             </div>
-            <CheckoutButton
-              size="lg"
-              disabled={!totalQuantity}
-              className="rounded"
-            />
+            <div className="w-full">
+              <WhatsAppCartCheckoutButton
+                  cartItems={items}
+                  subtotal={subtotal}
+                  disabled={!items.length} 
+                  className="w-full rounded"
+              />
+            </div>
           </div>
         </SheetContent>
       </Sheet>
