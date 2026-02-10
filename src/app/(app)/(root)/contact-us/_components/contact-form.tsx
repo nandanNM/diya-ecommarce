@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label"; 
+import { Label } from "@/components/ui/label";
 import LoadingButton from "@/components/ui/loading-button";
 
 export default function ContactForm() {
@@ -57,7 +57,9 @@ export default function ContactForm() {
         throw new Error(result.message || "Something went wrong");
       }
     } catch (error) {
-      toast.error("There was a problem sending your message. Please try again.");
+      toast.error(
+        "There was a problem sending your message. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }

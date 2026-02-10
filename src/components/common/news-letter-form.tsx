@@ -49,14 +49,18 @@ export default function NewsletterForm() {
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full rounded-l-md px-3 py-2 text-foreground bg-background border border-border focus:outline-none focus:ring-1 focus:ring-primary"
+        className="w-full rounded-l-md border border-border bg-background px-3 py-2 text-foreground focus:ring-1 focus:ring-primary focus:outline-none"
       />
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-r-md cursor-pointer bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
+        className="flex min-w-[100px] cursor-pointer items-center justify-center rounded-r-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Subscribe"}
+        {isSubmitting ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          "Subscribe"
+        )}
       </button>
     </form>
   );

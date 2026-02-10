@@ -25,12 +25,12 @@ export default function Product({ product }: ProductProps) {
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         {product.ribbon && (
-          <span className="absolute left-2 top-2 bg-black px-2 py-1 text-xs font-medium text-white">
+          <span className="absolute top-2 left-2 bg-black px-2 py-1 text-xs font-medium text-white">
             {product.ribbon}
           </span>
         )}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 transition-all duration-300 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 px-4">
-           <AddToCartButton
+        <div className="absolute right-0 bottom-4 left-0 flex translate-y-4 transform justify-center px-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <AddToCartButton
             product={product}
             selectedOptions={{}}
             quantity={1}
@@ -41,15 +41,15 @@ export default function Product({ product }: ProductProps) {
       </div>
 
       <div className="space-y-1 text-sm">
-        <h3 className="font-medium uppercase leading-tight tracking-wide">
+        <h3 className="leading-tight font-medium tracking-wide uppercase">
           {product.name}
         </h3>
         {product.priceData?.formatted && (
           <div className="flex gap-2">
             {product.priceData.price !== product.priceData.discountedPrice && (
-                <span className="text-muted-foreground line-through">
+              <span className="text-muted-foreground line-through">
                 {product.priceData.formatted.price}
-                </span>
+              </span>
             )}
             <span className="font-medium">
               {product.priceData.formatted.discountedPrice}

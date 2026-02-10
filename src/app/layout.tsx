@@ -6,7 +6,6 @@ import { Toaster } from "@/components/ui/sonner";
 
 export const generateMetadata = () => metadata;
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,12 +17,13 @@ export default function RootLayout({
         className={`${fontOutfit.variable} ${fontCabin.variable} ${fontNickainley.variable} antialiased`}
       >
         <ThemeProvider
-           attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange>
-        {children}
-        <Toaster />
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

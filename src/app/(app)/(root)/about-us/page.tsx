@@ -89,7 +89,7 @@ export default function AboutUsSPage() {
       ),
       title: "Chemistry",
       description:
-"We approach candles like a lab experiment. The ratio of wax to fragrance oil is calculated precisely to ensure the scent fills your room without giving you a headache.",
+        "We approach candles like a lab experiment. The ratio of wax to fragrance oil is calculated precisely to ensure the scent fills your room without giving you a headache.",
       position: "left",
     },
     {
@@ -99,7 +99,7 @@ export default function AboutUsSPage() {
       ),
       title: "The Sound",
       description:
-"Our signature Crackling Wooden Wick isn't just for looks. When lit, it creates a soft crackling sound, mimicking a tiny fireplace or the sound of rain.",
+        "Our signature Crackling Wooden Wick isn't just for looks. When lit, it creates a soft crackling sound, mimicking a tiny fireplace or the sound of rain.",
       position: "left",
     },
     {
@@ -109,7 +109,8 @@ export default function AboutUsSPage() {
       ),
       title: "Small Batch",
       description:
-"Mass production feels empty. We make candles in small batches of 10-15 at a time, ensuring quality control that big brands can't match.",      position: "left",
+        "Mass production feels empty. We make candles in small batches of 10-15 at a time, ensuring quality control that big brands can't match.",
+      position: "left",
     },
     {
       icon: <LeafIcon className="h-6 w-6" />,
@@ -118,7 +119,7 @@ export default function AboutUsSPage() {
       ),
       title: "Pure Soy Wax",
       description:
-"Most market candles use Paraffin (a byproduct of petrol). We use 100% Natural Soy Wax. It burns cleaner, longer, and is better for the planet.",
+        "Most market candles use Paraffin (a byproduct of petrol). We use 100% Natural Soy Wax. It burns cleaner, longer, and is better for the planet.",
       position: "right",
     },
     {
@@ -128,7 +129,8 @@ export default function AboutUsSPage() {
       ),
       title: "Nostalgia First",
       description:
-"We don't do generic Vanilla. We capture moments—the smell of wet mud (Petrichor), winter mornings (Parijaat), and hill stations (Waadi).",      position: "right",
+        "We don't do generic Vanilla. We capture moments—the smell of wet mud (Petrichor), winter mornings (Parijaat), and hill stations (Waadi).",
+      position: "right",
     },
     {
       icon: <Building2 className="h-6 w-6" />,
@@ -137,7 +139,8 @@ export default function AboutUsSPage() {
       ),
       title: "Student Run",
       description:
-"When you buy a DIYA candle, you aren't funding a CEO's third home. You are funding our tuition, our experiments, and our dream.",      position: "right",
+        "When you buy a DIYA candle, you aren't funding a CEO's third home. You are funding our tuition, our experiments, and our dream.",
+      position: "right",
     },
   ];
 
@@ -228,7 +231,9 @@ export default function AboutUsSPage() {
           className="mx-auto mb-16 max-w-2xl text-center text-muted-foreground"
           variants={itemVariants}
         >
-         We are a team of engineering students who realized that in the race of deadlines, we forgot how to pause. DIYA is our experiment to engineer 'Sukoon' (Peace) for you.
+          We are a team of engineering students who realized that in the race of
+          deadlines, we forgot how to pause. DIYA is our experiment to engineer
+          'Sukoon' (Peace) for you.
         </motion.p>
 
         <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -393,7 +398,7 @@ export default function AboutUsSPage() {
 
         {/* CTA Section */}
         <motion.div
-          className="mt-20 flex flex-col items-center justify-between gap-6 rounded-xl bg-card p-8 text-card-foreground md:flex-row shadow-lg"
+          className="mt-20 flex flex-col items-center justify-between gap-6 rounded-xl bg-card p-8 text-card-foreground shadow-lg md:flex-row"
           initial={{ opacity: 0, y: 30 }}
           animate={isStatsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -407,13 +412,13 @@ export default function AboutUsSPage() {
             </p>
           </div>
           <Link href="/">
-          <motion.button
-            className="flex cursor-pointer items-center gap-2 rounded-lg bg-[#88734C] px-6 py-3 font-medium text-white transition-colors hover:bg-[#88734C]/90"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Get Started <ArrowRight className="h-4 w-4" />
-          </motion.button>
+            <motion.button
+              className="flex cursor-pointer items-center gap-2 rounded-lg bg-[#88734C] px-6 py-3 font-medium text-white transition-colors hover:bg-[#88734C]/90"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get Started <ArrowRight className="h-4 w-4" />
+            </motion.button>
           </Link>
         </motion.div>
       </motion.div>

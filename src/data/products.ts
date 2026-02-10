@@ -25,7 +25,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like rain)</li>
             <li><strong>Fragrance:</strong> Petrichor, Wet Soil, Ozone</li>
             <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Care Instructions",
@@ -34,7 +34,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
             <li>Do not burn for more than 4 hours at a time.</li>
             <li>Keep away from drafts, curtains, and vibrations.</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Shipping & Returns",
@@ -42,8 +42,8 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Shipping:</strong> Ships within 2 working days.</li>
             <li><strong>Returns:</strong> No returns or exchanges are allowed for this product.</li>
             <li><strong>Damages:</strong> If the product arrives damaged, please contact us within 24 hours.</li>
-        </ul>`
-      }
+        </ul>`,
+      },
     ],
     media: {
       items: [
@@ -116,7 +116,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like a forest campfire)</li>
             <li><strong>Fragrance:</strong> Pine, Cedarwood, Cool Mist</li>
             <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Care Instructions",
@@ -125,7 +125,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
             <li>Do not burn for more than 4 hours at a time.</li>
             <li>Keep away from drafts, curtains, and vibrations.</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Shipping & Returns",
@@ -133,8 +133,8 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Shipping:</strong> Ships within 2 working days.</li>
             <li><strong>Returns:</strong> No returns or exchanges are allowed for this product.</li>
             <li><strong>Damages:</strong> If the product arrives damaged, please contact us within 24 hours.</li>
-        </ul>`
-      }
+        </ul>`,
+      },
     ],
     media: {
       items: [
@@ -207,7 +207,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like a quiet night)</li>
             <li><strong>Fragrance:</strong> French Lavender, Herbal, Mild Camphor</li>
             <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Care Instructions",
@@ -216,7 +216,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
             <li>Do not burn for more than 4 hours at a time.</li>
             <li>Keep away from drafts, curtains, and vibrations.</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Shipping & Returns",
@@ -224,8 +224,8 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Shipping:</strong> Ships within 2 working days.</li>
             <li><strong>Returns:</strong> No returns or exchanges are allowed for this product.</li>
             <li><strong>Damages:</strong> If the product arrives damaged, please contact us within 24 hours.</li>
-        </ul>`
-      }
+        </ul>`,
+      },
     ],
     media: {
       items: [
@@ -291,7 +291,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like a quiet evening)</li>
             <li><strong>Fragrance:</strong> Fresh Jasmine, White Floral, Green Stem</li>
             <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Care Instructions",
@@ -300,7 +300,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
             <li>Do not burn for more than 4 hours at a time.</li>
             <li>Keep away from drafts, curtains, and vibrations.</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Shipping & Returns",
@@ -308,19 +308,18 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Shipping:</strong> Ships within 2 working days.</li>
             <li><strong>Returns:</strong> No returns or exchanges are allowed for this product.</li>
             <li><strong>Damages:</strong> If the product arrives damaged, please contact us within 24 hours.</li>
-        </ul>`
-      }
+        </ul>`,
+      },
     ],
     media: {
       items: [
-       
         {
-         _id: "s1",
-         image: {
-           url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1.jpeg",
-           altText: "Mogra Candle S1",
-         },
-       },
+          _id: "s1",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1.jpeg",
+            altText: "Mogra Candle S1",
+          },
+        },
         {
           _id: "s2",
           image: {
@@ -335,14 +334,14 @@ export const ALL_PRODUCTS: Product[] = [
             altText: "Mogra Candle S3",
           },
         },
-         
+
         {
-         _id: "s4",
-         image: {
-           url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s4.jpeg",
-           altText: "Mogra Candle S4",
-         },
-       },
+          _id: "s4",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s4.jpeg",
+            altText: "Mogra Candle S4",
+          },
+        },
       ],
     },
     priceData: {
@@ -384,7 +383,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like fallen leaves)</li>
             <li><strong>Fragrance:</strong> Shiuli, Night Jasmine, Mild Honey</li>
             <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Care Instructions",
@@ -393,7 +392,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
             <li>Do not burn for more than 4 hours at a time.</li>
             <li>Keep away from drafts, curtains, and vibrations.</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Shipping & Returns",
@@ -401,8 +400,8 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Shipping:</strong> Ships within 2 working days.</li>
             <li><strong>Returns:</strong> No returns or exchanges are allowed for this product.</li>
             <li><strong>Damages:</strong> If the product arrives damaged, please contact us within 24 hours.</li>
-        </ul>`
-      }
+        </ul>`,
+      },
     ],
     media: {
       items: [
@@ -469,7 +468,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Fragrance:</strong> None (Unscented / Pure Soy)</li>
             <li><strong>Options:</strong> Available in 4 Custom Colors</li>
             <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Care Instructions",
@@ -478,7 +477,7 @@ export const ALL_PRODUCTS: Product[] = [
             <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
             <li>Do not burn for more than 4 hours at a time.</li>
             <li>Keep away from drafts, curtains, and vibrations.</li>
-        </ul>`
+        </ul>`,
       },
       {
         title: "Shipping & Returns",
@@ -486,8 +485,8 @@ export const ALL_PRODUCTS: Product[] = [
             <li><strong>Shipping:</strong> Ships within 2 working days.</li>
             <li><strong>Returns:</strong> No returns or exchanges are allowed for this product.</li>
             <li><strong>Damages:</strong> If the product arrives damaged, please contact us within 24 hours.</li>
-        </ul>`
-      }
+        </ul>`,
+      },
     ],
     media: {
       items: [

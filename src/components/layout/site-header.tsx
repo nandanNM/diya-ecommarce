@@ -19,7 +19,7 @@ export default function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <div className="flex w-full flex-col font-outfit">
+    <div className="font-outfit flex w-full flex-col">
       {/* 1. ANNOUNCEMENT BAR */}
       <div className="w-full overflow-hidden border-b border-primary bg-primary py-2 whitespace-nowrap select-none lg:py-2.5">
         <div className="animate-marquee inline-block">
@@ -28,7 +28,8 @@ export default function SiteHeader() {
               key={i}
               className="mx-6 text-[10px] font-medium tracking-[0.15em] text-primary-foreground/95 lg:mx-12 lg:text-[11px] lg:tracking-[0.2em]"
             >
-              Best Deals At Checkout &nbsp; • &nbsp; Free Shipping On Orders Above 500 &nbsp; • &nbsp; 30% Off On First Order
+              Best Deals At Checkout &nbsp; • &nbsp; Free Shipping On Orders
+              Above 500 &nbsp; • &nbsp; 30% Off On First Order
             </span>
           ))}
         </div>
@@ -78,20 +79,19 @@ export default function SiteHeader() {
               >
                 <Search className="h-5.5 w-5.5 stroke-[1.2]" />
               </Button> */}
-            
 
-            {/* CENTER: Logo (Centered on all screens) */}
-            <Link
-              href="/"
-              className="group flex items-center gap-2 no-underline"
-            >
-              <div className="mb-1  text-primary transition-transform duration-500 group-hover:scale-105">
-                <img className="size-10" src="/logo.svg" />
-              </div>
-              <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
-                diya
-              </span>
-            </Link>
+              {/* CENTER: Logo (Centered on all screens) */}
+              <Link
+                href="/"
+                className="group flex items-center gap-2 no-underline"
+              >
+                <div className="mb-1 text-primary transition-transform duration-500 group-hover:scale-105">
+                  <img className="size-10" src="/logo.svg" />
+                </div>
+                <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
+                  diya
+                </span>
+              </Link>
             </div>
 
             {/* RIGHT: Search + Cart (Mobile) / User + Cart (Desktop) */}
@@ -112,7 +112,7 @@ export default function SiteHeader() {
               >
                 <User className="h-5.5 w-5.5 stroke-[1.2]" />
               </Button> */}
-            {/* <ThemeSwitch/> */}
+              {/* <ThemeSwitch/> */}
               <ShoppingCartButton
                 initialData={null}
                 className="p-0 text-foreground transition-transform hover:scale-110"

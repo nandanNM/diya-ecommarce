@@ -1,9 +1,8 @@
-"use client"
-import { motion } from 'framer-motion';
-import { Button, type ButtonProps } from '@/components/ui/button'; 
-import { cn } from '@/lib/utils'; 
-import React from 'react';
-
+"use client";
+import { motion } from "framer-motion";
+import { Button, type ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import React from "react";
 
 import Link from "next/link";
 
@@ -16,7 +15,7 @@ interface StatProps {
 interface ActionProps {
   text: string;
   href: string;
-  variant?: ButtonProps['variant'];
+  variant?: ButtonProps["variant"];
   className?: string;
 }
 
@@ -56,7 +55,7 @@ const imageVariants = {
     scale: 1,
     transition: {
       duration: 0.5,
-      ease: 'easeOut' as const,
+      ease: "easeOut" as const,
     },
   },
 };
@@ -67,14 +66,25 @@ const floatingVariants = {
     transition: {
       duration: 3,
       repeat: Infinity,
-      ease: 'easeInOut' as const,
+      ease: "easeInOut" as const,
     },
   },
 };
 
-const CTASection = ({ title, subtitle, actions, images, className }: HeroSectionProps) => {
+const CTASection = ({
+  title,
+  subtitle,
+  actions,
+  images,
+  className,
+}: HeroSectionProps) => {
   return (
-    <section className={cn('w-full overflow-hidden bg-background py-6 sm:py-12', className)}>
+    <section
+      className={cn(
+        "w-full overflow-hidden bg-background py-6 sm:py-12",
+        className
+      )}
+    >
       <div className="container mx-auto grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
         {/* Left Column: Text Content */}
         <motion.div
@@ -89,13 +99,20 @@ const CTASection = ({ title, subtitle, actions, images, className }: HeroSection
           >
             {title}
           </motion.h1>
-          <motion.p className="mt-6 max-w-md text-lg text-muted-foreground" variants={itemVariants}>
+          <motion.p
+            className="mt-6 max-w-md text-lg text-muted-foreground"
+            variants={itemVariants}
+          >
             {subtitle}
           </motion.p>
-          <motion.div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start" variants={itemVariants}>
+          <motion.div
+            className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start"
+            variants={itemVariants}
+          >
             {actions.map((action, index) => {
-              const isAnchor = action.href.startsWith("/#") || action.href.startsWith("#");
-              
+              const isAnchor =
+                action.href.startsWith("/#") || action.href.startsWith("#");
+
               const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
                 if (isAnchor) {
                   e.preventDefault();
@@ -115,7 +132,10 @@ const CTASection = ({ title, subtitle, actions, images, className }: HeroSection
                   size="lg"
                   className={action.className}
                 >
-                  <Link href={action.href} onClick={isAnchor ? handleClick : undefined}>
+                  <Link
+                    href={action.href}
+                    onClick={isAnchor ? handleClick : undefined}
+                  >
                     {action.text}
                   </Link>
                 </Button>
@@ -138,39 +158,51 @@ const CTASection = ({ title, subtitle, actions, images, className }: HeroSection
             animate="animate"
           />
           <motion.div
-            className="absolute bottom-0 right-1/4 h-12 w-12 rounded-lg bg-purple-200/50 dark:bg-purple-800/30"
+            className="absolute right-1/4 bottom-0 h-12 w-12 rounded-lg bg-purple-200/50 dark:bg-purple-800/30"
             variants={floatingVariants}
             animate="animate"
-            style={{ transitionDelay: '0.5s' }}
+            style={{ transitionDelay: "0.5s" }}
           />
           <motion.div
             className="absolute bottom-1/4 left-4 h-6 w-6 rounded-full bg-green-200/50 dark:bg-green-800/30"
             variants={floatingVariants}
             animate="animate"
-            style={{ transitionDelay: '1s' }}
+            style={{ transitionDelay: "1s" }}
           />
 
           {/* Images */}
           <motion.div
-            className="absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 rounded-2xl bg-muted p-2 shadow-lg sm:h-64 sm:w-64"
-            style={{ transformOrigin: 'bottom center' }}
+            className="absolute top-0 left-1/2 h-48 w-48 -translate-x-1/2 rounded-2xl bg-muted p-2 shadow-lg sm:h-64 sm:w-64"
+            style={{ transformOrigin: "bottom center" }}
             variants={imageVariants}
           >
-            <img src={images[0]} alt="Student learning" className="h-full w-full rounded-xl object-cover" />
+            <img
+              src={images[0]}
+              alt="Student learning"
+              className="h-full w-full rounded-xl object-cover"
+            />
           </motion.div>
           <motion.div
-            className="absolute right-0 top-1/3 h-40 w-40 rounded-2xl bg-muted p-2 shadow-lg sm:h-56 sm:w-56"
-            style={{ transformOrigin: 'left center' }}
+            className="absolute top-1/3 right-0 h-40 w-40 rounded-2xl bg-muted p-2 shadow-lg sm:h-56 sm:w-56"
+            style={{ transformOrigin: "left center" }}
             variants={imageVariants}
           >
-            <img src={images[1]} alt="Tutor assisting" className="h-full w-full rounded-xl object-cover" />
+            <img
+              src={images[1]}
+              alt="Tutor assisting"
+              className="h-full w-full rounded-xl object-cover"
+            />
           </motion.div>
           <motion.div
             className="absolute bottom-0 left-0 h-32 w-32 rounded-2xl bg-muted p-2 shadow-lg sm:h-48 sm:w-48"
-            style={{ transformOrigin: 'top right' }}
+            style={{ transformOrigin: "top right" }}
             variants={imageVariants}
           >
-            <img src={images[2]} alt="Collaborative discussion" className="h-full w-full rounded-xl object-cover" />
+            <img
+              src={images[2]}
+              alt="Collaborative discussion"
+              className="h-full w-full rounded-xl object-cover"
+            />
           </motion.div>
         </motion.div>
       </div>

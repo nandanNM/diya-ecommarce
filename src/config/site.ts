@@ -3,7 +3,7 @@ import { NavItem } from "@/types/nav";
 import { Metadata } from "next";
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://apnadiya.in";
-  export const imagePreview = "/images/diya-screenshot-desktop.webp";
+export const imagePreview = "/images/diya-screenshot-desktop.webp";
 export const metadata: Metadata = {
   title: {
     default: "Diya",
@@ -17,15 +17,14 @@ export const metadata: Metadata = {
     "apnadiyahome",
     "apnadiya.in",
     "apnadiya home",
-  "Scented candles gift set",
-  "scented candles under 100",
-  "scented candles best",
-  "scented candle gift",
-  "scented candles online",
-  "scented candles in jar",
-  "Scented candles under 200"
-]
-,
+    "Scented candles gift set",
+    "scented candles under 100",
+    "scented candles best",
+    "scented candle gift",
+    "scented candles online",
+    "scented candles in jar",
+    "Scented candles under 200",
+  ],
   metadataBase: new URL(siteUrl),
   authors: [{ name: "Diya Team", url: siteUrl }],
   openGraph: {
@@ -229,7 +228,6 @@ export const TERMS_OF_SERVICE = `
 </p>
 `;
 
-
 export const REFUND_CANCELLATION = `
 <p>
     Upon completing a Transaction, you are entering into a legally binding and enforceable agreement with us
@@ -303,4 +301,3 @@ export const SHIPPING_DELIVERY = `
     information before approving any refund requests.
 </p>
 `;
-

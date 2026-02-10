@@ -30,18 +30,18 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
   ) => {
     return (
       <Link href={href || "#"}>
-      <div ref={ref} className={cn(cardVariants({ className }))} {...props}>
-        <img
-          src={imageUrl}
-          alt={category}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-        />
+        <div ref={ref} className={cn(cardVariants({ className }))} {...props}>
+          <img
+            src={imageUrl}
+            alt={category}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+          />
 
-        {/* Subtle Bottom Overlay for Text Legibility */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-60" />
+          {/* Subtle Bottom Overlay for Text Legibility */}
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-60" />
 
-        {/* Like Button */}
-        {/* <button
+          {/* Like Button */}
+          {/* <button
           onClick={(e) => {
             e.stopPropagation();
             onLike?.(e);
@@ -56,20 +56,17 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
           />
         </button> */}
 
-        <div className="absolute bottom-4 left-4 z-10">
-          <p
-           
-            className="text-md relative inline-block py-1 font-bold tracking-[0.15em] text-white transition-colors duration-300 md:text-lg"
-          >
-            {category}
-            <span
-              className={cn(
-                "absolute -bottom-0.5 left-0 h-[1.5px] w-0 bg-white transition-all duration-300 ease-in-out group-hover:w-full"
-              )}
-            />
-          </p>
+          <div className="absolute bottom-4 left-4 z-10">
+            <p className="text-md relative inline-block py-1 font-bold tracking-[0.15em] text-white transition-colors duration-300 md:text-lg">
+              {category}
+              <span
+                className={cn(
+                  "absolute -bottom-0.5 left-0 h-[1.5px] w-0 bg-white transition-all duration-300 ease-in-out group-hover:w-full"
+                )}
+              />
+            </p>
+          </div>
         </div>
-      </div>
       </Link>
     );
   }

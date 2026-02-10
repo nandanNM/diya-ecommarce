@@ -85,31 +85,35 @@ export default function ShoppingCartButton({
             <div className="space-y-1.5 border-t pt-4">
               <div className="flex justify-between text-sm">
                 <span>Subtotal amount:</span>
-                <span className="font-semibold">{formatCurrency(subtotal)}</span>
+                <span className="font-semibold">
+                  {formatCurrency(subtotal)}
+                </span>
               </div>
-              
-               <div className="flex justify-between text-sm">
-                  <span>Delivery Charge:</span>
-                  <span>{totalQuantity === 1 ? formatCurrency(60) : "Free"}</span>
-               </div>
-               
-               <div className="flex justify-between font-bold text-lg pt-2">
-                  <span>Total:</span>
-                  <span>{formatCurrency(subtotal + (totalQuantity === 1 ? 60 : 0))}</span>
-               </div>
 
-               {totalQuantity === 1 && (
-                 <p className="text-xs text-green-600 font-medium mt-1 text-center">
-                   Add 1 more item for FREE delivery!
-                 </p>
-               )}
+              <div className="flex justify-between text-sm">
+                <span>Delivery Charge:</span>
+                <span>{totalQuantity === 1 ? formatCurrency(60) : "Free"}</span>
+              </div>
+
+              <div className="flex justify-between pt-2 text-lg font-bold">
+                <span>Total:</span>
+                <span>
+                  {formatCurrency(subtotal + (totalQuantity === 1 ? 60 : 0))}
+                </span>
+              </div>
+
+              {totalQuantity === 1 && (
+                <p className="mt-1 text-center text-xs font-medium text-green-600">
+                  Add 1 more item for FREE delivery!
+                </p>
+              )}
             </div>
             <div className="w-full">
               <WhatsAppCartCheckoutButton
-                  cartItems={items}
-                  subtotal={subtotal}
-                  disabled={!items.length} 
-                  className="w-full rounded"
+                cartItems={items}
+                subtotal={subtotal}
+                disabled={!items.length}
+                className="w-full rounded"
               />
             </div>
           </div>
@@ -136,7 +140,8 @@ function ShoppingCartItem({
   const quantityLimitReached =
     !!product.stock?.quantity && item.quantity >= product.stock.quantity;
 
-  const price = product.priceData?.discountedPrice || product.priceData?.price || 0;
+  const price =
+    product.priceData?.discountedPrice || product.priceData?.price || 0;
 
   return (
     <li className="flex items-center gap-3">
@@ -171,9 +176,9 @@ function ShoppingCartItem({
         </div>
         <div className="flex items-center gap-2">
           <Button
-             variant="outline"
-              size="icon"
-              className="h-8 w-8 rounded-full"
+            variant="outline"
+            size="icon"
+            className="h-8 w-8 rounded-full"
             disabled={item.quantity === 1}
             onClick={() => removeItem(productId)}
           >
@@ -182,8 +187,8 @@ function ShoppingCartItem({
           <span>{item.quantity}</span>
           <Button
             variant="outline"
-              size="icon"
-              className="h-8 w-8 rounded-full"
+            size="icon"
+            className="h-8 w-8 rounded-full"
             disabled={quantityLimitReached}
             onClick={() => addItem(product)}
           >

@@ -6,7 +6,7 @@ import CTASection from "@/features/home/cta-section";
 
 export default function Home() {
   return (
-    <div className="max-w-7xl p-2 mx-auto">
+    <div className="mx-auto max-w-7xl p-2">
       <CTASection
         title="Hand-Poured Nostalgia"
         subtitle="From the chaos of circuits to the calm of soy wax. We are a group of students making eco-friendly, wooden-wick candles that sound like a tiny fireplace and smell like home."
@@ -22,12 +22,11 @@ export default function Home() {
             variant: "outline",
           },
         ]}
-       
         images={[
           "https://ik.imagekit.io/codernandan/assets/cta-s1.jpeg",
           "https://ik.imagekit.io/codernandan/banner/diya-b1.png",
-"https://ik.imagekit.io/codernandan/assets/cta-s2.jpg" 
-       ]}
+          "https://ik.imagekit.io/codernandan/assets/cta-s2.jpg",
+        ]}
       />
       <ShopPage />
       <TrustBadges />

@@ -25,7 +25,7 @@ export default function AddToCartButton({
 
   return (
     <LoadingButton
-      className={cn("flex gap-2 py-6 rounded-md", className)}
+      className={cn("flex gap-2 rounded-md py-6", className)}
       onClick={() => {
         setLoading(true);
         // Simulate a small delay for better UX

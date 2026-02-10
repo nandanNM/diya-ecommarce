@@ -24,15 +24,18 @@ export default function ProductPrice({
         {priceData.formatted?.price}
       </span>
       {hasDiscount && <span>{priceData.formatted?.discountedPrice}</span>}
-      {hasDiscount && (
-        product.discount ? (
-          <DiscountBadge data={product.discount} /> 
+      {hasDiscount &&
+        (product.discount ? (
+          <DiscountBadge data={product.discount} />
         ) : (
           <Badge className="bg-destructive">
-            -{Math.round((1 - (priceData.discountedPrice / priceData.price)) * 100)}%
+            -
+            {Math.round(
+              (1 - priceData.discountedPrice / priceData.price) * 100
+            )}
+            %
           </Badge>
-        )
-      )}
+        ))}
     </div>
   );
 }

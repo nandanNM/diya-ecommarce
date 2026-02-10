@@ -64,9 +64,8 @@ async function RelatedProducts({ currentSlug }: { currentSlug: string }) {
   const { getAllProductsMock } = await import("@/lib/product-api");
   // Assuming getAllProductsMock is available or defaulting to import ALL_PRODUCTS directly if not exported
   const { ALL_PRODUCTS } = await import("@/data/products");
-  
-  const relatedProducts = ALL_PRODUCTS
-    .filter((p) => p.slug !== currentSlug)
+
+  const relatedProducts = ALL_PRODUCTS.filter((p) => p.slug !== currentSlug)
     // Simple shuffle
     .sort(() => 0.5 - Math.random())
     .slice(0, 4);
