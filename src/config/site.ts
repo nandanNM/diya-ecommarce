@@ -11,6 +11,12 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   keywords: [
+    "Diya",
+    "apnadiya",
+    "apnadiyain",
+    "apnadiyahome",
+    "apnadiya.in",
+    "apnadiya home",
   "Scented candles gift set",
   "scented candles under 100",
   "scented candles best",

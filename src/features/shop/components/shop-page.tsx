@@ -8,7 +8,7 @@ const CATEGORIES = [
     id: 1,
     name: "Mogra",
     slug: "mogra",
-    image: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1",
+    image: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1.jpeg",
   },
   {
     id: 2,

@@ -317,8 +317,8 @@ export const ALL_PRODUCTS: Product[] = [
         {
          _id: "s1",
          image: {
-           url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s4.jpeg",
-           altText: "Mogra Candle S4",
+           url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1.jpeg",
+           altText: "Mogra Candle S1",
          },
        },
         {
@@ -335,6 +335,14 @@ export const ALL_PRODUCTS: Product[] = [
             altText: "Mogra Candle S3",
           },
         },
+         
+        {
+         _id: "s4",
+         image: {
+           url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s4.jpeg",
+           altText: "Mogra Candle S4",
+         },
+       },
       ],
     },
     priceData: {
