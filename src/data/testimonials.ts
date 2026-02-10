@@ -41,4 +41,18 @@ export const TESTIMONIALS = [
     text: "I don't know what you guys put in 'Waadi' but it smells exactly like a pine forest. Instant stress buster after a long day of coding. Love that it's made by students, keep it up guys!.",
     rating: 5,
   },
+  {
+    id: 7,
+    name: "RIJU WANA",
+    image: "https://ik.imagekit.io/codernandan/testimonial/riju.jpeg",
+    text: "Finally found a candle that actually smells amazing till the very end. DIYA candles are top-notch quality! 🕯️.",
+    rating: 4,
+  },
+  {
+    id: 8,
+    name: "PUJA DEY",
+    image: "https://ik.imagekit.io/codernandan/testimonial/puja.jpeg",
+    text: "Long-lasting and premium. Best gift you can give to yourself or someone special.",
+    rating: 5,
+  },
 ];
