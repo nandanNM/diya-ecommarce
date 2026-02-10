@@ -1,6 +1,6 @@
 import { Product, OptionType } from "@/lib/types";
 
-export const MOCK_PRODUCTS: Product[] = [
+export const ALL_PRODUCTS: Product[] = [
   {
     _id: "1",
     name: "PAHLI BAARISH (PETRICHOR) SCENTED CANDLE",

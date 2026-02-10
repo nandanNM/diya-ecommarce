@@ -1,11 +1,11 @@
-import { MOCK_PRODUCTS } from "@/data/products";
+import { ALL_PRODUCTS } from "@/data/products";
 import { Product } from "@/lib/types";
 
 export function getProductBySlugMock(slug: string): Promise<Product | null> {
   return new Promise((resolve) => {
     // Simulate network delay
     setTimeout(() => {
-      const product = MOCK_PRODUCTS.find((p) => p.slug === slug);
+      const product = ALL_PRODUCTS.find((p) => p.slug === slug);
       resolve(product || null);
     }, 500);
   });
@@ -14,7 +14,7 @@ export function getProductBySlugMock(slug: string): Promise<Product | null> {
 export function getAllProductsMock(): Promise<Product[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(MOCK_PRODUCTS);
+      resolve(ALL_PRODUCTS);
     }, 500);
   });
 }
