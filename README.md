@@ -1,6 +1,6 @@
 # 🕯️ Diya - Handcrafted Scented Candles
 
-![Diya Hero](/images/diya-screenshot-desktop.webp)
+![Diya Hero](https://ik.imagekit.io/codernandan/assets/diya-screenshot-desktop.webp)
 
 > **"Light a Diya, light up a memory."**
 
@@ -71,7 +71,7 @@ Follow these steps to run the project locally:
     ```
 
 4.  **Open in Browser:**
-    Navigate to [http://localhost:3000](http://localhost:3000) to see the application running.
+    Navigate to [http://localhost:3000](http://localhost:1408) to see the application running.
 
 ---
 
@@ -96,4 +96,4 @@ src/
 
 ---
 
-**© 2024 Diya.** All rights reserved.
+**© 2026 Diya.** All rights reserved.
