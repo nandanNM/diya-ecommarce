@@ -29,12 +29,12 @@ export default function AddToCartButton({
         setLoading(true);
         // Simulate a small delay for better UX
         setTimeout(() => {
-            addItem(product, quantity);
-            setLoading(false);
-            // alert is handled by the user interaction, or we can add it here.
-            // Previous hook had alert.
-             // eslint-disable-next-line no-alert
-            alert("Item added to cart"); 
+          addItem(product, quantity);
+          setLoading(false);
+          // alert is handled by the user interaction, or we can add it here.
+          // Previous hook had alert.
+          // eslint-disable-next-line no-alert
+          alert("Item added to cart");
         }, 200);
       }}
       loading={loading}

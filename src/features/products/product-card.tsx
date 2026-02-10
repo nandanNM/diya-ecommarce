@@ -57,7 +57,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
         <div className="absolute bottom-4 left-4 z-10">
           <a
             href={href || "#"}
-            className="text-md relative inline-block py-1 font-bold tracking-[0.15em] text-white transition-colors duration-300"
+            className="text-md relative inline-block py-1 font-bold tracking-[0.15em] text-white transition-colors duration-300 md:text-lg"
           >
             {category}
             <span

@@ -6,9 +6,9 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import WixImage from "@/components/common/wix-image";
+import IKImage from "@/components/common/ik-image";
 import useCartStore, { CartItem } from "@/store/useCartStore";
-import {  ShoppingCartIcon, X } from "lucide-react";
+import { ShoppingCartIcon, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { cn, formatCurrency } from "@/lib/utils";
@@ -40,13 +40,13 @@ export default function ShoppingCartButton({
           onClick={() => setSheetOpen(true)}
         >
           <ShoppingCartIcon />
-          <span className="absolute right-0 top-0 flex size-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+          <span className="absolute top-0 right-0 flex size-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
             {totalQuantity < 10 ? totalQuantity : "9+"}
           </span>
         </Button>
       </div>
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent className="flex flex-col sm:max-w-lg p-6">
+        <SheetContent className="flex flex-col p-6 sm:max-w-lg">
           <SheetHeader className="p-1">
             <SheetTitle>
               Your cart{" "}
@@ -56,7 +56,7 @@ export default function ShoppingCartButton({
               </span>
             </SheetTitle>
           </SheetHeader>
-          <div className="flex grow flex-col space-y-5 overflow-y-auto pt-1 ">
+          <div className="flex grow flex-col space-y-5 overflow-y-auto pt-1">
             <ul className="space-y-5">
               {items.map((item) => (
                 <ShoppingCartItem
@@ -85,9 +85,7 @@ export default function ShoppingCartButton({
           <div className="flex items-center justify-between gap-5">
             <div className="space-y-0.5">
               <p className="text-sm">Subtotal amount: </p>
-              <p className="font-bold">
-                {formatCurrency(subtotal)}
-              </p>
+              <p className="font-bold">{formatCurrency(subtotal)}</p>
               <p className="text-xs text-muted-foreground">
                 Tax and shipping calculated at checkout
               </p>
@@ -113,14 +111,13 @@ function ShoppingCartItem({
   onProductLinkClicked,
 }: ShoppingCartItemProps) {
   const { addItem, removeItem, deleteCartProduct } = useCartStore();
-  
+
   const product = item.product;
   const productId = product._id;
   const slug = product.slug;
 
   const quantityLimitReached =
-    !!product.stock?.quantity &&
-    item.quantity >= product.stock.quantity;
+    !!product.stock?.quantity && item.quantity >= product.stock.quantity;
 
   const price = product.priceData?.price || 0;
 
@@ -128,8 +125,12 @@ function ShoppingCartItem({
     <li className="flex items-center gap-3">
       <div className="relative size-fit flex-none">
         <Link href={`/products/${slug}`} onClick={onProductLinkClicked}>
-          <WixImage
-            mediaIdentifier={product.media?.mainMedia?.image?.url || product.media?.items?.[0]?.image?.url || ""}
+          <IKImage
+            src={
+              product.media?.mainMedia?.image?.url ||
+              product.media?.items?.[0]?.image?.url ||
+              ""
+            }
             width={110}
             height={110}
             alt={product.name}
@@ -137,7 +138,7 @@ function ShoppingCartItem({
           />
         </Link>
         <button
-          className="absolute -right-1 -top-1 rounded-full border bg-background p-0.5"
+          className="absolute -top-1 -right-1 rounded-full border bg-background p-0.5"
           onClick={() => deleteCartProduct(productId)}
         >
           <X className="size-4" />
@@ -175,4 +176,3 @@ function ShoppingCartItem({
     </li>
   );
 }
-

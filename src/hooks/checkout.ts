@@ -34,9 +34,9 @@ export function useQuickCheckout() {
     console.log("Quick checkout values", values);
 
     try {
-       // Simulate checkout delay
-       await new Promise((resolve) => setTimeout(resolve, 1000));
-       alert("Quick checkout successful! (Mocked)");
+      // Simulate checkout delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      alert("Quick checkout successful! (Mocked)");
       setPending(false);
     } catch (error) {
       setPending(false);
@@ -46,4 +46,3 @@ export function useQuickCheckout() {
   }
   return { startCheckoutFlow, pending };
 }
-

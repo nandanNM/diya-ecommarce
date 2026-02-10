@@ -6,7 +6,7 @@ interface BackInStockNotificationButtonProps {
   selectedOptions: Record<string, string>;
 }
 
-export default function BackInStockNotificationButton({ }: BackInStockNotificationButtonProps) {
+export default function BackInStockNotificationButton({}: BackInStockNotificationButtonProps) {
   return (
     <Button variant="secondary" disabled>
       Notify When Available

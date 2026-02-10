@@ -12,37 +12,13 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import ShoppingCartButton from "@/features/cart/shopping-cart-button";
-
-const NAV_ITEMS = [
-  { name: "HOME", href: "/" },
-  {
-    name: "SHOP",
-    href: "/shop",
-    submenu: [
-      "SHOP ALL",
-      "PLANTERS",
-      "DINING",
-      "STORAGE",
-      "LAMPS",
-      "BAGS",
-      "CANDLES",
-    ],
-  },
-  { name: "GIFTING COLLECTION", href: "/gifting-collection" },
-  {
-    name: "SHOP BY MATERIAL",
-    href: "/shop-by-material",
-    submenu: ["CANE", "WATER HYACINTH", "BAMBOO", "KAUNA", "RATTAN-WOOD"],
-  },
-  { name: "BULK ORDER", href: "/bulk-order" },
-  { name: "ABOUT US", href: "/about-us" },
-];
+import { MAIN_NAV } from "@/config/site";
 
 export default function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <div className="font-outfit flex w-full flex-col">
+    <div className="flex w-full flex-col font-outfit">
       {/* 1. ANNOUNCEMENT BAR */}
       <div className="w-full overflow-hidden border-b border-primary bg-primary py-2 whitespace-nowrap select-none lg:py-2.5">
         <div className="animate-marquee inline-block">
@@ -80,7 +56,7 @@ export default function SiteHeader() {
                 >
                   <SheetTitle className="sr-only">Menu</SheetTitle>
                   <nav className="mt-12 flex flex-col">
-                    {NAV_ITEMS.map((item) => (
+                    {MAIN_NAV.map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
@@ -106,20 +82,13 @@ export default function SiteHeader() {
             {/* CENTER: Logo (Centered on all screens) */}
             <Link
               href="/"
-              className="group flex flex-col items-center no-underline"
+              className="group flex items-center gap-2 no-underline"
             >
               <div className="mb-1 hidden text-primary transition-transform duration-500 group-hover:scale-105 lg:block">
-                {/* <svg width="24" height="24" viewBox="0 0 40 40" fill="none">
-                  <path
-                    d="M20 5L35 12.5V27.5L20 35L5 27.5V12.5L20 5Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                  <circle cx="20" cy="20" r="3.5" fill="currentColor" />
-                </svg> */}
+                <img className="size-10" src="/logo.svg" />
               </div>
-              <span className="lg:text-5.5 text-[15px] leading-none font-medium tracking-[0.25em] text-foreground uppercase lg:tracking-[0.3em]">
-                FLICKERS & FLAME
+              <span className="lg:text-5.5 font-nickainley text-[15px] leading-none font-medium tracking-[0.25em] text-foreground uppercase lg:tracking-[0.3em]">
+                DIYA
               </span>
             </Link>
 
@@ -133,14 +102,14 @@ export default function SiteHeader() {
               >
                 <Search className="h-5 w-5 stroke-[1.5]" />
               </Button>
-
+              {/* 
               <Button
                 variant="ghost"
                 size="icon"
                 className="hidden p-0 text-foreground transition-transform hover:scale-110 lg:flex"
               >
                 <User className="h-5.5 w-5.5 stroke-[1.2]" />
-              </Button>
+              </Button> */}
 
               <ShoppingCartButton
                 initialData={null}
@@ -152,7 +121,7 @@ export default function SiteHeader() {
           {/* 3. DESKTOP NAVIGATION (Hidden on Mobile) */}
           <nav className="hidden justify-center py-2 lg:flex">
             <ul className="flex items-center gap-14">
-              {NAV_ITEMS.map((item) => {
+              {MAIN_NAV.map((item) => {
                 const isActive = pathname === item.href;
                 return (
                   <li key={item.name} className="group relative">

@@ -1,37 +1,74 @@
-// import { USER } from "@/data/user";
-// import type { NavItem } from "@/types/nav";
+import { NavItem } from "@/types/nav";
+import { Metadata } from "next";
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://apnadiya.in";
+export const metadata: Metadata = {
+  title: {
+    default: "Diya",
+    template: "%s | Diya",
+  },
+  description: "",
+  keywords: [],
+  metadataBase: new URL(siteUrl),
+  authors: [{ name: "Diya Team", url: siteUrl }],
+  openGraph: {
+    title: "Diya",
+    description: "",
+    url: siteUrl,
+    siteName: "Diya",
+    images: [
+      {
+        url: "imagePreview",
+        width: 1200,
+        height: 630,
+        alt: "Diya Desktop Screenshot",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Diya",
+    description: "",
+    images: ["imagePreview"],
+  },
 
-// export const SITE_INFO = {
-//   name: USER.displayName,
-//   url: process.env.APP_URL || "https://codernandan.in",
-//   ogImage: USER.ogImage,
-//   description: USER.bio,
-//   keywords: USER.keywords,
-// };
+  icons: {
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: [
+      { url: "/icon/icon-56x56.ico", sizes: "56x56", type: "image/ico" },
+      { url: "/icon/icon-128x128.ico", sizes: "128x128", type: "image/ico" },
+      { url: "/icon/icon-256x256.ico", sizes: "256x256", type: "image/ico" },
+    ],
+    other: [
+      { rel: "icon", url: "/icon/icon-16x16.ico", sizes: "16x16" },
+      { rel: "icon", url: "/icon/icon-36x36.ico", sizes: "36x36" },
+      { rel: "icon", url: "/icon/icon-48x48.ico", sizes: "48x48" },
+      { rel: "icon", url: "/icon/icon-56x56.ico", sizes: "56x56" },
+      { rel: "icon", url: "/icon/icon-128x128.ico", sizes: "128x128" },
+      { rel: "icon", url: "/icon/icon-256x256.ico", sizes: "256x256" },
+    ],
+  },
+  other: {
+    "instagram:profile": "https://www.instagram.com/careercafe.in/",
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "default",
+    "apple-mobile-web-app-title": "CurioTech",
+  },
+};
 
 // export const META_THEME_COLORS = {
 //   light: "#ffffff",
 //   dark: "#09090b",
 // };
 
-// export const MAIN_NAV: NavItem[] = [
-//   {
-//     title: "Portfolio",
-//     href: "/",
-//   },
-//   {
-//     title: "Blog",
-//     href: "/blog",
-//   },
-// ];
-
-// export const SOURCE_CODE_GITHUB_REPO = "nandanNM/codernandan.in";
-// export const SOURCE_CODE_GITHUB_URL = "https://github.com/nandanNM";
-
-// export const UTM_PARAMS = {
-//   utm_source: "codernandan.in",
-//   utm_medium: "portfolio_website",
-//   utm_campaign: "referral",
-// };
-
-// export const GITHUB_USERNAME = "nandanNM";
+export const MAIN_NAV: NavItem[] = [
+  { name: "ABOUT US", href: "/about-us" },
+  {
+    name: "HOME",
+    href: "/",
+  },
+];

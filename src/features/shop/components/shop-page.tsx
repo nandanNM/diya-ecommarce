@@ -4,40 +4,44 @@ import { ProductCard } from "@/features/products/product-card";
 
 const CATEGORIES = [
   {
+    startId: 1, // keeping id as is but re-indexing in map if needed or just use id
     id: 1,
-    name: "Bags",
-    image:
-      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800",
+    name: "Mogra",
+    slug: "mogra",
+    image: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1",
   },
   {
     id: 2,
-    name: "Home Decor & Storage",
-    image:
-      "https://images.unsplash.com/photo-1534349762230-e0caa72a045d?q=80&w=800",
+    name: "Waadi",
+    slug: "waadi",
+    image: "https://ik.imagekit.io/codernandan/product/waadi/waadi-s1.jpeg",
   },
   {
     id: 3,
-    name: "Lamps",
+    name: "Pahli Baarish",
+    slug: "pahli-baarish",
     image:
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800",
+      "https://ik.imagekit.io/codernandan/product/pahli-baarish/pahli-baarish-s1.jpeg",
   },
   {
     id: 4,
-    name: "Dining",
-    image:
-      "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=800",
+    name: "Saada",
+    slug: "saada",
+    image: "https://ik.imagekit.io/codernandan/product/saada/saada-s1.jpeg",
   },
   {
     id: 5,
-    name: "Candles",
+    name: "Parijaat",
+    slug: "parijaat",
     image:
-      "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=800",
+      "https://ik.imagekit.io/codernandan/product/parijaat/parijaat-s1.jpeg",
   },
   {
     id: 6,
-    name: "Planters",
+    name: "Lavender",
+    slug: "lavender",
     image:
-      "https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=800",
+      "https://ik.imagekit.io/codernandan/product/lavender/lavender-s1.jpeg",
   },
 ];
 
@@ -51,33 +55,24 @@ export default function ShopPage() {
   };
 
   return (
-    <main className="min-h-screen bg-background">
-      {/* Mobile-First Container with 18px padding based on your screenshot */}
-      <div className="mx-auto max-w-7xl px-4.5 py-8">
-        {/* Header Navigation - Hidden on very small screens or tightened */}
-        <div className="mb-6 flex justify-center gap-4 border-b border-border pb-4 text-[9px] font-bold tracking-[0.2em] text-muted-foreground uppercase md:gap-12">
-          <span>Sustainable</span>
-          <span>Timeless</span>
-          <span>Handcrafted</span>
-        </div>
-
-        <h1 className="mb-8 text-center text-xl font-medium text-foreground">
+    <section className="w-full overflow-hidden py-4 md:py-6">
+      <div className="container mx-auto max-w-7xl px-4">
+        <h2 className="mb-8 text-center text-[28px] font-light tracking-wide text-[#2D2D2D] md:mb-12 md:text-[36px]">
           Shop By Category
-        </h1>
-
-        {/* 2-Column Grid for Mobile, 3-Column for Desktop */}
+        </h2>
         <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
           {CATEGORIES.map((item) => (
             <ProductCard
               key={item.id}
               category={item.name}
               imageUrl={item.image}
+              href={`/products/${item.slug}`}
               isLiked={liked.includes(item.id)}
               onLike={() => toggleLike(item.id)}
             />
           ))}
         </div>
       </div>
-    </main>
+    </section>
   );
 }

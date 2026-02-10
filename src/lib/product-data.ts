@@ -3,161 +3,484 @@ import { Product, OptionType } from "@/lib/types";
 export const MOCK_PRODUCTS: Product[] = [
   {
     _id: "1",
-    name: "Handcrafted Bamboo Lamp",
-    slug: "1",
-    description:
-      "<p>Illuminate your home with this sustainable, handcrafted bamboo lamp. Perfect for adding a warm, natural touch to any room.</p>",
+    name: "Pahli Baarish",
+    slug: "pahli-baarish",
+    description: `<div class="product-page-container" style="max-width: 600px; font-family: 'Lato', sans-serif; color: #333;">
+    <h1 class="product-title" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 5px;">
+        PAHLI BAARISH (PETRICHOR) SCENTED CANDLE
+    </h1>
+
+    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 30px;">
+
+    <div class="product-description" style="line-height: 1.6;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px;">Description</h3>
+        <p style="margin-bottom: 15px;">
+            Bottled directly from the first monsoon shower. Designed with a blend of pure Petrichor and Evening Rain oils, this candle captures that exact moment when cool water hits dry earth.
+        </p>
+        <p style="margin-bottom: 15px;">
+            Perfect for your study desk during late-night sessions, a quiet evening with adrak chai, or simply to add an earthy, nostalgic texture to your room.
+        </p>
+        <p style="margin-bottom: 20px;">
+            It is the perfect blend of memory and calm. Hand-poured in small batches by engineering students, it brings the smell of home wherever you are.
+        </p>
+
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Details</h4>
+        <ul style="list-style-type: none; padding: 0; margin-bottom: 20px;">
+            <li><strong>Net Weight:</strong> 100g (Approx 25-30 hours burn time)</li>
+            <li><strong>Wax:</strong> 100% Natural Soy Wax (Non-Toxic)</li>
+            <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like rain)</li>
+            <li><strong>Fragrance:</strong> Petrichor, Wet Soil, Ozone</li>
+            <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
+        </ul>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight:bold;">Care Instructions</h4>
+        <ul style="padding-left: 20px; margin-bottom: 20px;">
+            <li>Trim the wooden wick to 5mm before every burn.</li>
+            <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
+            <li>Do not burn for more than 4 hours at a time.</li>
+            <li>Keep away from drafts, curtains, and vibrations.</li>
+        </ul>
+    </div>
+
+</div>`,
     media: {
       items: [
         {
-          _id: "m1",
+          _id: "s1",
           image: {
-            url: "https://images.unsplash.com/photo-1761839256602-0e28a5ab928d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            altText: "Bamboo Lamp",
+            url: "https://ik.imagekit.io/codernandan/product/pahli-baarish/pahli-baarish-s1.jpeg",
+            altText: "Pahli Baarish Candle",
           },
         },
         {
-          _id: "m2",
+          _id: "s2",
           image: {
-            url: "https://static.wixstatic.com/media/67fd73_7975d405c750420d9de3ba48c213fd22~mv2.jpg/v1/fill/w_720,h_720,al_c,lg_1,q_85,enc_auto/67fd73_7975d405c750420d9de3ba48c213fd22~mv2.jpg",
-            altText: "Bamboo Lamp Detail",
+            url: "https://ik.imagekit.io/codernandan/product/pahli-baarish/pahli-baarish-s2.jpeg",
+            altText: "Pahli Baarish Candle S2",
+          },
+        },
+        {
+          _id: "s3",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/pahli-baarish/pahli-baarish-s3.jpeg",
+            altText: "Pahli Baarish Candle S3",
+          },
+        },
+        {
+          _id: "s4",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/pahli-baarish/pahli-baarish-s4.jpeg",
+            altText: "Pahli Baarish Candle S4",
           },
         },
       ],
     },
     priceData: {
-      price: 49.99,
-      discountedPrice: 49.99,
+      price: 399.0,
+      discountedPrice: 399.0,
       formatted: {
-        price: "$49.99",
-        discountedPrice: "$49.99",
+        price: "₹399.00",
+        discountedPrice: "₹399.00",
       },
-      currency: "USD",
+      currency: "INR",
     },
-    productOptions: [
-      {
-        name: "Size",
-        optionType: OptionType.drop_down,
-        choices: [
-          { description: "Small", value: "S", inStock: true },
-          { description: "Medium", value: "M", inStock: true },
-          { description: "Large", value: "L", inStock: true },
-        ],
-      },
-      {
-        name: "Color",
-        optionType: OptionType.color,
-        choices: [
-          { description: "White", value: "#ffffff", inStock: true, },
-          { description: "Terracotta", value: "#e2725b", inStock: true },
-        ],
-      },
-    ],
+    productOptions: [],
     stock: {
       inStock: true,
-      quantity: 15,
+      quantity: 50,
     },
   },
   {
     _id: "2",
-    name: "Ceramic Flower Vase",
-    slug: "ceramic-flower-vase",
-    description:
-      "<p>A beautiful minimalist ceramic vase, perfect for fresh flowers or dried arrangements.</p>",
+    name: "Waadi",
+    slug: "waadi",
+    description: `<div class="product-page-container" style="max-width: 600px; font-family: 'Lato', sans-serif; color: #333;">
+    <h1 class="product-title" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 5px;">
+        WAADI (MOUNTAIN MIST) SCENTED CANDLE
+    </h1>
+
+    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 30px;">
+
+    <div class="product-description" style="line-height: 1.6;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px;">Description</h3>
+        <p style="margin-bottom: 15px;">
+            A direct ticket to the Himalayas. Infused with the sharp freshness of Pine needles and the cooling scent of Mountain Mist, this candle recreates the absolute silence of a deep valley.
+        </p>
+        <p style="margin-bottom: 15px;">
+            Perfect for those overwhelming days when you need to escape the city noise. Light this up, grab a book, close your eyes, and breathe in the cold mountain air.
+        </p>
+        <p style="margin-bottom: 20px;">
+            It isn't just a candle; it’s a breath of fresh air. Hand-poured in small batches by engineering students, it brings the calm of the hills to your hostel or home.
+        </p>
+
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Details</h4>
+        <ul style="list-style-type: none; padding: 0; margin-bottom: 20px;">
+            <li><strong>Net Weight:</strong> 100g (Approx 25-30 hours burn time)</li>
+            <li><strong>Wax:</strong> 100% Natural Soy Wax (Non-Toxic)</li>
+            <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like a forest campfire)</li>
+            <li><strong>Fragrance:</strong> Pine, Cedarwood, Cool Mist</li>
+            <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
+        </ul>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight:bold;">Care Instructions</h4>
+        <ul style="padding-left: 20px; margin-bottom: 20px;">
+            <li>Trim the wooden wick to 5mm before every burn.</li>
+            <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
+            <li>Do not burn for more than 4 hours at a time.</li>
+            <li>Keep away from drafts, curtains, and vibrations.</li>
+        </ul>
+    </div>
+
+</div>`,
     media: {
       items: [
         {
-          _id: "m3",
+          _id: "s1",
           image: {
-            url: "https://images.unsplash.com/photo-1581783342308-f792ca86d5da?q=80&w=1000",
-            altText: "Ceramic Vase",
+            url: "https://ik.imagekit.io/codernandan/product/waadi/waadi-s1.jpeg",
+            altText: "Waadi Candle S1",
+          },
+        },
+        {
+          _id: "s2",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/waadi/waadi-s2.jpeg",
+            altText: "Waadi Candle S2",
+          },
+        },
+        {
+          _id: "s3",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/waadi/waadi-s3.jpeg",
+            altText: "Waadi Candle S3",
+          },
+        },
+        {
+          _id: "s4",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/waadi/waadi-s4.jpeg",
+            altText: "Waadi Candle S4",
           },
         },
       ],
     },
     priceData: {
-      price: 35.0,
-      discountedPrice: 29.99,
+      price: 399.0,
+      discountedPrice: 399.0,
       formatted: {
-        price: "$35.00",
-        discountedPrice: "$29.99",
+        price: "₹399.00",
+        discountedPrice: "₹399.00",
       },
-      currency: "USD",
+      currency: "INR",
     },
-    productOptions: [
-      {
-        name: "Color",
-        optionType: OptionType.color,
-        choices: [
-          { description: "White", value: "#ffffff", inStock: true },
-          { description: "Terracotta", value: "#e2725b", inStock: true },
-        ],
-      },
-    ],
+    productOptions: [],
     stock: {
       inStock: true,
-      quantity: 5,
+      quantity: 50,
     },
   },
   {
     _id: "3",
-    name: "Woven Jute Rug",
-    slug: "woven-jute-rug",
-    description:
-      "<p>Add texture to your floor with this durable and eco-friendly jute rug.</p>",
+    name: "Lavender",
+    slug: "lavender",
+    description: `<div class="product-page-container" style="max-width: 600px; font-family: 'Lato', sans-serif; color: #333;">
+    <h1 class="product-title" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 5px;">
+        LAVENDER (SLEEP LULLABY) SCENTED CANDLE
+    </h1>
+    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 30px;">
+    <div class="product-description" style="line-height: 1.6;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px;">Description</h3>
+        <p style="margin-bottom: 15px;">
+            Your personal "Off" button. Infused with pure French Lavender essential oils, this candle is designed to help you unwind, de-stress, and drift into a deep, peaceful sleep.
+        </p>
+        <p style="margin-bottom: 15px;">
+            Perfect for the bedside table after a long day of lectures and labs. Light it an hour before sleep to turn your room into a sanctuary of calm.
+        </p>
+        <p style="margin-bottom: 20px;">
+            It is peace, poured into a jar. Hand-poured in small batches by engineering students who understand the value of a good night's rest.
+        </p>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Details</h4>
+        <ul style="list-style-type: none; padding: 0; margin-bottom: 20px;">
+            <li><strong>Net Weight:</strong> 100g (Approx 25-30 hours burn time)</li>
+            <li><strong>Wax:</strong> 100% Natural Soy Wax (Non-Toxic)</li>
+            <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like a quiet night)</li>
+            <li><strong>Fragrance:</strong> French Lavender, Herbal, Mild Camphor</li>
+            <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
+        </ul>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight:bold;">Care Instructions</h4>
+        <ul style="padding-left: 20px; margin-bottom: 20px;">
+            <li>Trim the wooden wick to 5mm before every burn.</li>
+            <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
+            <li>Do not burn for more than 4 hours at a time.</li>
+            <li>Keep away from drafts, curtains, and vibrations.</li>
+        </ul>
+    </div>
+</div>`,
     media: {
       items: [
         {
-          _id: "m4",
+          _id: "s1",
           image: {
-            url: "https://images.unsplash.com/photo-1595513824967-854737aa197e?q=80&w=1000",
-            altText: "Jute Rug",
+            url: "https://ik.imagekit.io/codernandan/product/lavender/lavender-s1.jpeg",
+            altText: "Lavender Candle S1",
+          },
+        },
+        {
+          _id: "s2",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/lavender/lavender-s2.jpeg",
+            altText: "Lavender Candle S2",
+          },
+        },
+        {
+          _id: "s3",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/lavender/lavender-s3.jpeg",
+            altText: "Lavender Candle S3",
           },
         },
       ],
     },
     priceData: {
-      price: 120.0,
-      discountedPrice: 120.0,
+      price: 399.0,
+      discountedPrice: 399.0,
       formatted: {
-        price: "$120.00",
-        discountedPrice: "$120.00",
+        price: "₹399.00",
+        discountedPrice: "₹399.00",
       },
-      currency: "USD",
+      currency: "INR",
     },
+    productOptions: [],
     stock: {
-      inStock: false,
-      quantity: 0,
+      inStock: true,
+      quantity: 50,
     },
   },
   {
     _id: "4",
-    name: "Test Product 56",
-    slug: "56",
-    description: "<p>This is a test product for slug 56.</p>",
+    name: "Mogra",
+    slug: "mogra",
+    description: `<div class="product-page-container" style="max-width: 600px; font-family: 'Lato', sans-serif; color: #333;">
+    <h1 class="product-title" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 5px;">
+        MOGRA (EVENING BLOOM) SCENTED CANDLE
+    </h1>
+
+    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 30px;">
+
+    <div class="product-description" style="line-height: 1.6;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px;">Description</h3>
+        <p style="margin-bottom: 15px;">
+            The classic scent of an Indian summer evening. Capturing the heady, intoxicating fragrance of fresh Jasmine flowers blooming at dusk, this candle feels like a warm hug or a traditional celebration.
+        </p>
+        <p style="margin-bottom: 15px;">
+            Perfect for festive nights, family gatherings, or simply when you need that familiar, heavy sweetness that makes a hostel room feel like home.
+        </p>
+        <p style="margin-bottom: 20px;">
+            It is tradition, poured into a jar. Hand-poured in small batches by engineering students to bring you the warmth of memories you can't forget.
+        </p>
+
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Details</h4>
+        <ul style="list-style-type: none; padding: 0; margin-bottom: 20px;">
+            <li><strong>Net Weight:</strong> 100g (Approx 25-30 hours burn time)</li>
+            <li><strong>Wax:</strong> 100% Natural Soy Wax (Non-Toxic)</li>
+            <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like a quiet evening)</li>
+            <li><strong>Fragrance:</strong> Fresh Jasmine, White Floral, Green Stem</li>
+            <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
+        </ul>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight:bold;">Care Instructions</h4>
+        <ul style="padding-left: 20px; margin-bottom: 20px;">
+            <li>Trim the wooden wick to 5mm before every burn.</li>
+            <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
+            <li>Do not burn for more than 4 hours at a time.</li>
+            <li>Keep away from drafts, curtains, and vibrations.</li>
+        </ul>
+    </div>
+
+</div>`,
     media: {
       items: [
         {
-          _id: "m5",
+          _id: "s1",
           image: {
-            url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000",
-            altText: "Test Product",
+            url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1.jpeg",
+            altText: "Mogra Candle S1",
+          },
+        },
+        {
+          _id: "s2",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s2.jpeg",
+            altText: "Mogra Candle S2",
+          },
+        },
+        {
+          _id: "s3",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s3.jpeg",
+            altText: "Mogra Candle S3",
           },
         },
       ],
     },
     priceData: {
-      price: 99.99,
-      discountedPrice: 89.99,
+      price: 399.0,
+      discountedPrice: 399.0,
       formatted: {
-        price: "$99.99",
-        discountedPrice: "$89.99",
+        price: "₹399.00",
+        discountedPrice: "₹399.00",
       },
-      currency: "USD",
+      currency: "INR",
     },
+    productOptions: [],
     stock: {
       inStock: true,
-      quantity: 10,
+      quantity: 50,
+    },
+  },
+  {
+    _id: "5",
+    name: "Parijaat",
+    slug: "parijaat",
+    description: `<div class="product-page-container" style="max-width: 600px; font-family: 'Lato', sans-serif; color: #333;">
+    <h1 class="product-title" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 5px;">
+        PARIJAAT (AUTUMN NOSTALGIA) SCENTED CANDLE
+    </h1>
+    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 30px;">
+    <div class="product-description" style="line-height: 1.6;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px;">Description</h3>
+        <p style="margin-bottom: 15px;">
+            The fleeting magic of October mornings. Capturing the delicate, honey-sweet scent of Night-Flowering Jasmine (Shiuli), this candle evokes memories of crisp air, dew-covered grass, and the arrival of Durga Puja.
+        </p>
+        <p style="margin-bottom: 15px;">
+            Perfect for those moments when you miss the festivities of home. Light this to fill your room with that specific, spiritual aroma that signals celebration and change.
+        </p>
+        <p style="margin-bottom: 20px;">
+            It is a season, captured in wax. Hand-poured in small batches by engineering students to keep the spirit of autumn alive all year round.
+        </p>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Details</h4>
+        <ul style="list-style-type: none; padding: 0; margin-bottom: 20px;">
+            <li><strong>Net Weight:</strong> 100g (Approx 25-30 hours burn time)</li>
+            <li><strong>Wax:</strong> 100% Natural Soy Wax (Non-Toxic)</li>
+            <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like fallen leaves)</li>
+            <li><strong>Fragrance:</strong> Shiuli, Night Jasmine, Mild Honey</li>
+            <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
+        </ul>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight:bold;">Care Instructions</h4>
+        <ul style="padding-left: 20px; margin-bottom: 20px;">
+            <li>Trim the wooden wick to 5mm before every burn.</li>
+            <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
+            <li>Do not burn for more than 4 hours at a time.</li>
+            <li>Keep away from drafts, curtains, and vibrations.</li>
+        </ul>
+    </div>
+</div>`,
+    media: {
+      items: [
+        {
+          _id: "s1",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/parijaat/parijaat-s1.jpeg",
+            altText: "Parijaat Candle S1",
+          },
+        },
+        {
+          _id: "s2",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/parijaat/parijaat-s2.jpeg",
+            altText: "Parijaat Candle S2",
+          },
+        },
+        {
+          _id: "s3",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/parijaat/parijaat-s3.jpeg",
+            altText: "Parijaat Candle S3",
+          },
+        },
+      ],
+    },
+    priceData: {
+      price: 399.0,
+      discountedPrice: 399.0,
+      formatted: {
+        price: "₹399.00",
+        discountedPrice: "₹399.00",
+      },
+      currency: "INR",
+    },
+    productOptions: [],
+    stock: {
+      inStock: true,
+      quantity: 50,
+    },
+  },
+  {
+    _id: "6",
+    name: "Saada",
+    slug: "saada",
+    description: `<div class="product-page-container" style="max-width: 600px; font-family: 'Lato', sans-serif; color: #333;">
+    <h1 class="product-title" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 5px;">
+        SAADA (UNSCENTED) CUSTOM CANDLE
+    </h1>
+    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 30px;">
+    <div class="product-description" style="line-height: 1.6;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px;">Description</h3>
+        <p style="margin-bottom: 15px;">
+            <b>Saada</b> means Simple. Sometimes, you don't need a scent; you just need the light. This is our purest creation—completely fragrance-free, designed to add a warm glow without overpowering your space.
+        </p>
+        <p style="margin-bottom: 15px;">
+            Perfect for dinner tables (so it doesn't clash with the aroma of food), for those sensitive to strong smells, or simply for reading by a quiet flame.
+        </p>
+        <p style="margin-bottom: 20px;">
+            <b>Your Vibe, Your Color.</b> While the scent is invisible, the look is up to you. Choose from our palette—Classic White, Soft Pink, Sky Blue, or Leaf Green—to match your room's aesthetic perfectly.
+        </p>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Details</h4>
+        <ul style="list-style-type: none; padding: 0; margin-bottom: 20px;">
+            <li><strong>Net Weight:</strong> 100g (Approx 25-30 hours burn time)</li>
+            <li><strong>Wax:</strong> 100% Natural Soy Wax (Non-Toxic)</li>
+            <li><strong>Wick:</strong> Crackling Wooden Wick (Sounds like a quiet fireplace)</li>
+            <li><strong>Fragrance:</strong> None (Unscented / Pure Soy)</li>
+            <li><strong>Options:</strong> Available in 4 Custom Colors</li>
+            <li><strong>Origin:</strong> Made in India (Handcrafted in Kalyani)</li>
+        </ul>
+        <h4 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight:bold;">Care Instructions</h4>
+        <ul style="padding-left: 20px; margin-bottom: 20px;">
+            <li>Trim the wooden wick to 5mm before every burn.</li>
+            <li>Let the wax melt to the edges on the first burn to avoid tunneling.</li>
+            <li>Do not burn for more than 4 hours at a time.</li>
+            <li>Keep away from drafts, curtains, and vibrations.</li>
+        </ul>
+    </div>
+</div>`,
+    media: {
+      items: [
+        {
+          _id: "s1",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/saada/saada-s1.jpeg",
+            altText: "Saada Candle S1",
+          },
+        },
+        {
+          _id: "s2",
+          image: {
+            url: "https://ik.imagekit.io/codernandan/product/saada/saada-s2.jpeg",
+            altText: "Saada Candle S2",
+          },
+        },
+      ],
+    },
+    priceData: {
+      price: 399.0,
+      discountedPrice: 399.0,
+      formatted: {
+        price: "₹399.00",
+        discountedPrice: "₹399.00",
+      },
+      currency: "INR",
+    },
+    productOptions: [],
+    stock: {
+      inStock: true,
+      quantity: 50,
     },
   },
 ];

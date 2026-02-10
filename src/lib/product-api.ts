@@ -12,9 +12,9 @@ export function getProductBySlugMock(slug: string): Promise<Product | null> {
 }
 
 export function getAllProductsMock(): Promise<Product[]> {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(MOCK_PRODUCTS);
-        }, 500);
-    });
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(MOCK_PRODUCTS);
+    }, 500);
+  });
 }

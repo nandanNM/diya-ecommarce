@@ -62,7 +62,8 @@ const useCartStore = create<CartState>()(
       resetCart: () => set({ items: [] }),
       getTotalPrice: () => {
         return get().items.reduce(
-          (total, item) => total + (item.product.priceData?.price ?? 0) * item.quantity,
+          (total, item) =>
+            total + (item.product.priceData?.price ?? 0) * item.quantity,
           0
         );
       },

@@ -48,7 +48,7 @@ export default function ProductOptions({
                     !checkInStock(product, {
                       ...selectedOptions,
                       [option.name || ""]: choice.description || "",
-                    }) && "line-through opacity-50",
+                    }) && "line-through opacity-50"
                   )}
                 >
                   {option.optionType === OptionType.color && (

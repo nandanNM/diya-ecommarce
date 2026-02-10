@@ -1,32 +1,23 @@
-// import dayjs from "dayjs";
-// import type { MetadataRoute } from "next";
+import { MetadataRoute } from "next";
+import { siteUrl } from "@/config/site";
+import { getAllProductsMock } from "@/lib/product-api";
 
-// import { SITE_INFO } from "@/config/site";
-// import { getAllPosts } from "@/data/blog";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getAllProductsMock();
 
-// export default function sitemap(): MetadataRoute.Sitemap {
-//   const posts = getAllPosts().map((post) => ({
-//     url: `${SITE_INFO.url}/blog/${post.slug}`,
-//     lastModified: dayjs(post.metadata.updatedAt).toISOString(),
-//   }));
+  const productRoutes = products.map((product) => ({
+    url: `${siteUrl}/product/${product.slug}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
 
-//   // const components = getPostsByCategory("components").map((post) => ({
-//   //   url: `${SITE_INFO.url}/components/${post.slug}`,
-//   //   lastModified: dayjs(post.metadata.updatedAt).toISOString(),
-//   // }));
+  const routes = ["", "/about-us"].map((route) => ({
+    url: `${siteUrl}${route}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly" as const,
+    priority: 1,
+  }));
 
-//   const routes = [
-//     "",
-//     "/blog",
-//     //  "/components"
-//   ].map((route) => ({
-//     url: `${SITE_INFO.url}${route}`,
-//     lastModified: dayjs().toISOString(),
-//   }));
-
-//   return [
-//     ...routes,
-//     ...posts,
-//     //  ...components
-//   ];
-// }
+  return [...routes, ...productRoutes];
+}

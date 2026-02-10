@@ -5,7 +5,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SiteHeader />
-      <main className="max-w-screen overflow-x-hidden">{children}</main>
+      <main className="max-w-screen overflow-x-hidden font-outfit">
+        {children}
+      </main>
       <SiteFooter />
     </>
   );

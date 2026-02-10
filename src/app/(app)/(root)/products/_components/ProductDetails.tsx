@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {Badge} from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { checkInStock, findVariant } from "@/lib/utils";
@@ -24,7 +24,6 @@ interface ProductDetailsProps {
   product: Product;
 }
 
-
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const [quantity, setQuantity] = useState(1);
 
@@ -35,7 +34,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       ?.map((option) => ({
         [option.name || ""]: option.choices?.[0].description || "",
       }))
-      ?.reduce((acc, curr) => ({ ...acc, ...curr }), {}) || {},
+      ?.reduce((acc, curr) => ({ ...acc, ...curr }), {}) || {}
   );
 
   const selectedVariant = findVariant(product, selectedOptions);
@@ -50,7 +49,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
   const selectedOptionsMedia = product.productOptions?.flatMap((option) => {
     const selectedChoice = option.choices?.find(
-      (choice) => choice.description === selectedOptions[option.name || ""],
+      (choice) => choice.description === selectedOptions[option.name || ""]
     );
     return selectedChoice?.media?.items ?? [];
   });
@@ -142,7 +141,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                       dangerouslySetInnerHTML={{
                         __html: section.description || "",
                       }}
-                      className="prose text-sm text-muted-foreground dark:prose-invert"
+                      className="prose dark:prose-invert text-sm text-muted-foreground"
                     />
                   </AccordionContent>
                 </AccordionItem>

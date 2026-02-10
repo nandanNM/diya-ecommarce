@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import { fontCabin, fontOutfit } from "@/lib/fonts";
-
+import { fontCabin, fontOutfit, fontNickainley } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${fontOutfit.variable} ${fontCabin.variable} antialiased`}
+        className={`${fontOutfit.variable} ${fontCabin.variable} ${fontNickainley.variable} antialiased`}
       >
         {children}
       </body>

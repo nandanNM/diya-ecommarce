@@ -1,4 +1,5 @@
 import { Cabin, Outfit, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 
 export const fontCabin = Cabin({
   subsets: ["latin"],
@@ -17,4 +18,10 @@ export const fontMono = IBM_Plex_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-mono",
+});
+
+export const fontNickainley = localFont({
+  src: "../assets/fonts/Nickainley.ttf",
+  variable: "--font-nickainley",
+  display: "swap",
 });
