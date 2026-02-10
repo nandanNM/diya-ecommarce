@@ -157,8 +157,9 @@ function ShoppingCartItem({
         </div>
         <div className="flex items-center gap-2">
           <Button
-            variant="outline"
-            size="sm"
+             variant="outline"
+              size="icon"
+              className="h-8 w-8 rounded-full"
             disabled={item.quantity === 1}
             onClick={() => removeItem(productId)}
           >
@@ -167,7 +168,8 @@ function ShoppingCartItem({
           <span>{item.quantity}</span>
           <Button
             variant="outline"
-            size="sm"
+              size="icon"
+              className="h-8 w-8 rounded-full"
             disabled={quantityLimitReached}
             onClick={() => addItem(product)}
           >

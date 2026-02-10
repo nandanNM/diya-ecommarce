@@ -1,4 +1,4 @@
-export const SUPPORT_EMAIL = "nandan7602831377@gmail.com";
+export const SUPPORT_EMAIL = "contact@apnadiya.in";
 export const SITE_URL = "https://apnadiya.in";
 export const SITE_NAME = "Diya";
 export const SITE_DESCRIPTION = `We are not a big corporation; we are a group of engineering students from Kalyani who realized that in the race of codes, circuits, and deadlines, we forgot how to pause. DIYA was born in a hostel room as an experiment to find Sukoon (peace). We combine our love for science with the art of nostalgia. Every candle is hand-poured in small batches using 100% natural soy wax and crackling wooden wicks that sound like a tiny fireplace.We don't just sell scents; we bottle memories. From the wet earth of the first rain (Pahli Baarish) to the silence of the mountains (Waadi), our candles are designed to help you disconnect from the chaos and reconnect with yourself.`;
