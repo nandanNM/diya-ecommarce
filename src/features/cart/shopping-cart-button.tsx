@@ -86,9 +86,22 @@ export default function ShoppingCartButton({
             <div className="space-y-0.5">
               <p className="text-sm">Subtotal amount: </p>
               <p className="font-bold">{formatCurrency(subtotal)}</p>
-              <p className="text-xs text-muted-foreground">
-               Shipping calculated at checkout
-              </p>
+              
+               <div className="flex justify-between text-sm">
+                  <span>Delivery Charge:</span>
+                  <span>{totalQuantity === 1 ? formatCurrency(60) : "Free"}</span>
+               </div>
+               
+               <div className="flex justify-between font-bold text-lg border-t pt-2">
+                  <span>Total:</span>
+                  <span>{formatCurrency(subtotal + (totalQuantity === 1 ? 60 : 0))}</span>
+               </div>
+
+               {totalQuantity === 1 && (
+                 <p className="text-xs text-green-600 font-medium mt-1">
+                   Add 1 more item for FREE delivery!
+                 </p>
+               )}
             </div>
             <div className="w-full">
               <WhatsAppCartCheckoutButton
@@ -122,7 +135,7 @@ function ShoppingCartItem({
   const quantityLimitReached =
     !!product.stock?.quantity && item.quantity >= product.stock.quantity;
 
-  const price = product.priceData?.price || 0;
+  const price = product.priceData?.discountedPrice || product.priceData?.price || 0;
 
   return (
     <li className="flex items-center gap-3">

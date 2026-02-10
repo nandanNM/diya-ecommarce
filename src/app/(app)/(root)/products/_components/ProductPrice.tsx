@@ -1,4 +1,5 @@
 import DiscountBadge from "@/components/common/discount-badge";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Product, Variant } from "@/lib/types";
 
@@ -23,7 +24,15 @@ export default function ProductPrice({
         {priceData.formatted?.price}
       </span>
       {hasDiscount && <span>{priceData.formatted?.discountedPrice}</span>}
-      {product.discount && <DiscountBadge data={product.discount} />}
+      {hasDiscount && (
+        product.discount ? (
+          <DiscountBadge data={product.discount} /> 
+        ) : (
+          <Badge className="bg-destructive">
+            -{Math.round((1 - (priceData.discountedPrice / priceData.price)) * 100)}%
+          </Badge>
+        )
+      )}
     </div>
   );
 }

@@ -79,17 +79,17 @@ export const ALL_PRODUCTS: Product[] = [
     },
     priceData: {
       price: 399.0,
-      discountedPrice: 399.0,
+      discountedPrice: 279.0,
       formatted: {
         price: "₹399.00",
-        discountedPrice: "₹399.00",
+        discountedPrice: "₹279.00",
       },
       currency: "INR",
     },
     productOptions: [],
     stock: {
       inStock: true,
-      quantity: 50,
+      quantity: 5,
     },
   },
   {
@@ -170,17 +170,17 @@ export const ALL_PRODUCTS: Product[] = [
     },
     priceData: {
       price: 399.0,
-      discountedPrice: 399.0,
+      discountedPrice: 269.0,
       formatted: {
         price: "₹399.00",
-        discountedPrice: "₹399.00",
+        discountedPrice: "₹269.00",
       },
       currency: "INR",
     },
     productOptions: [],
     stock: {
       inStock: true,
-      quantity: 50,
+      quantity: 10,
     },
   },
   {
@@ -254,10 +254,10 @@ export const ALL_PRODUCTS: Product[] = [
     },
     priceData: {
       price: 399.0,
-      discountedPrice: 399.0,
+      discountedPrice: 239.0,
       formatted: {
         price: "₹399.00",
-        discountedPrice: "₹399.00",
+        discountedPrice: "₹239.00",
       },
       currency: "INR",
     },
@@ -315,6 +315,13 @@ export const ALL_PRODUCTS: Product[] = [
       items: [
        
         {
+         _id: "s1",
+         image: {
+           url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s4.jpeg",
+           altText: "Mogra Candle S4",
+         },
+       },
+        {
           _id: "s2",
           image: {
             url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s2.jpeg",
@@ -328,21 +335,14 @@ export const ALL_PRODUCTS: Product[] = [
             altText: "Mogra Candle S3",
           },
         },
-         {
-          _id: "s1",
-          image: {
-            url: "https://ik.imagekit.io/codernandan/product/mogra/mogra-s1.jpeg",
-            altText: "Mogra Candle S1",
-          },
-        },
       ],
     },
     priceData: {
       price: 399.0,
-      discountedPrice: 399.0,
+      discountedPrice: 239.0,
       formatted: {
         price: "₹399.00",
-        discountedPrice: "₹399.00",
+        discountedPrice: "₹239.00",
       },
       currency: "INR",
     },
@@ -423,10 +423,10 @@ export const ALL_PRODUCTS: Product[] = [
     },
     priceData: {
       price: 399.0,
-      discountedPrice: 399.0,
+      discountedPrice: 249.0,
       formatted: {
         price: "₹399.00",
-        discountedPrice: "₹399.00",
+        discountedPrice: "₹249.00",
       },
       currency: "INR",
     },
@@ -500,18 +500,18 @@ export const ALL_PRODUCTS: Product[] = [
       ],
     },
     priceData: {
-      price: 399.0,
-      discountedPrice: 399.0,
+      price: 260.0,
+      discountedPrice: 199.0,
       formatted: {
         price: "₹399.00",
-        discountedPrice: "₹399.00",
+        discountedPrice: "199.00",
       },
       currency: "INR",
     },
     productOptions: [],
     stock: {
       inStock: true,
-      quantity: 50,
+      quantity: 5,
     },
   },
 ];

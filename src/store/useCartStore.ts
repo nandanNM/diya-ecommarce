@@ -63,13 +63,20 @@ const useCartStore = create<CartState>()(
       getTotalPrice: () => {
         return get().items.reduce(
           (total, item) =>
-            total + (item.product.priceData?.price ?? 0) * item.quantity,
+            total +
+            (item.product.priceData?.discountedPrice ??
+              item.product.priceData?.price ??
+              0) *
+              item.quantity,
           0
         );
       },
       getSubTotalPrice: () => {
         return get().items.reduce((total, item) => {
-          const price = item.product.priceData?.price ?? 0;
+          const price =
+            item.product.priceData?.discountedPrice ??
+            item.product.priceData?.price ??
+            0;
           return total + price * item.quantity;
         }, 0);
       },

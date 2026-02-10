@@ -17,11 +17,18 @@ export default function WhatsAppCartCheckoutButton({
   ...props
 }: WhatsAppCartCheckoutButtonProps) {
   const handleWhatsAppCheckout = () => {
+    // Calculate total quantity of items in the cart
+    const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+    // Delivery charge logic: 60 if 1 item, else 0
+    const deliveryCharge = totalQuantity === 1 ? 60 : 0;
+    const finalTotal = subtotal + deliveryCharge;
+
     const itemsDetails = cartItems
       .map((item) => {
         return `*${item.product.name}*
    - Qty: ${item.quantity}
-   - Price: ${formatCurrency(item.product.priceData?.price)}`;
+   - Price: ${formatCurrency(item.product.priceData?.discountedPrice || item.product.priceData?.price)}`;
       })
       .join("\n");
 
@@ -30,7 +37,11 @@ export default function WhatsAppCartCheckoutButton({
 *Order Details:*
 ${itemsDetails}
 
-*Total Amount:* ${formatCurrency(subtotal)}
+*Subtotal:* ${formatCurrency(subtotal)}
+*Delivery Charge:* ${deliveryCharge > 0 ? formatCurrency(deliveryCharge) : "Free"}
+*Total Amount:* ${formatCurrency(finalTotal)}
+
+${deliveryCharge > 0 ? "(Tip: Add 1 more item to get FREE delivery!)" : ""}
 
 Please confirm my order and share payment details.`;
 

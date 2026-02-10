@@ -78,11 +78,11 @@ export const ALL_PRODUCTS: Product[] = [
       ],
     },
     priceData: {
-      price: 399.0,
-      discountedPrice: 399.0,
+      price: 279.0,
+      discountedPrice: 279.0,
       formatted: {
         price: "₹399.00",
-        discountedPrice: "₹399.00",
+        discountedPrice: "₹279.00",
       },
       currency: "INR",
     },
