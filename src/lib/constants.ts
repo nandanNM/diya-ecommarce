@@ -5,6 +5,6 @@ export const SITE_DESCRIPTION = `We are not a big corporation; we are a group of
 export const SUPPORT_PHONE = "+91 8391839382/+91 8340347994 ";
 export const SUPPORT_FACEBOOK = "https://www.facebook.com/share/1AetPyAhzS";
 export const SUPPORT_INSTAGRAM = "https://www.instagram.com/diya.home14?igsh=MWZ5NnNibmo5aGlkaA==";
-export const SUPPORT_WHATSAPP = "https://x.com/DiyaHome14";
-export const SUPPORT_TWITTER = "9477132447";
+export const SUPPORT_WHATSAPP = "9477132447";
+export const SUPPORT_TWITTER = "https://x.com/DiyaHome14";
 export const SUPPORT_ADDRESS = "Kalyani, Nadia, West Bengal, 741235, India";

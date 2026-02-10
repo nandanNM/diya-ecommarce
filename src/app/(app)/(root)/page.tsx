@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="max-w-7xl p-2 mx-auto">
       <CTASection
-        title="Learn with Diya"
+        title="Hand-Poured Nostalgia"
         subtitle="Diya is a platform that helps students learn and grow. We offer a variety of courses and resources to help you succeed."
         actions={[
           {
