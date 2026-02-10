@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, User, ShoppingBag, Menu, ChevronDown } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Sheet,
@@ -97,13 +97,13 @@ export default function SiteHeader() {
             {/* RIGHT: Search + Cart (Mobile) / User + Cart (Desktop) */}
             <div className="flex flex-1 items-center justify-end gap-3 lg:gap-6">
               {/* Mobile Search Icon next to Cart */}
-              <Button
+              {/* <Button
                 variant="ghost"
                 size="icon"
                 className="p-0 text-foreground transition-transform hover:scale-110 lg:hidden"
               >
                 <Search className="h-5 w-5 stroke-[1.5]" />
-              </Button>
+              </Button> */}
               {/* 
               <Button
                 variant="ghost"
