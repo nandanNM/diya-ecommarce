@@ -82,6 +82,7 @@ export const MAIN_NAV: NavItem[] = [
     href: "/",
   },
   { name: "ABOUT US", href: "/about-us" },
+  { name: "CONTACT US", href: "/contact-us" },
 ];
 
 export const PRIVACY_POLICY = `

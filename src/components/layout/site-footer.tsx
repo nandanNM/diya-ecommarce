@@ -1,6 +1,6 @@
-import React from "react";
 import Link from "next/link";
 import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
+import NewsletterForm from "../common/news-letter-form";
 
 export function SiteFooter() {
   return (
@@ -23,16 +23,7 @@ export function SiteFooter() {
           </h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
-              <Link href="/shop">All Products</Link>
-            </li>
-            <li>
-              <Link href="/gifting-collection">Gifting Collection</Link>
-            </li>
-            <li>
-              <Link href="/shop-by-material">Shop by Material</Link>
-            </li>
-            <li>
-              <Link href="/bulk-order">Bulk Order</Link>
+              <Link href="/products">All Products</Link>
             </li>
           </ul>
         </div>
@@ -47,20 +38,35 @@ export function SiteFooter() {
               <Link href="/about-us">About Us</Link>
             </li>
             <li>
-              <Link href="/contact">Contact</Link>
+              <Link href="/contact-us">Contact Us</Link>
             </li>
-            <li>
-              <Link href="/faq">FAQ</Link>
-            </li>
+          </ul>
+        </div>
+
+        {/* Legal Links */}
+        <div>
+          <h3 className="mb-3 text-lg font-semibold tracking-wide uppercase">
+            Legal
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <Link href="/privacy-policy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link href="/terms-of-service">Terms of Service</Link>
+            </li>
+            <li>
+              <Link href="/refund-cancellation">Refund Policy</Link>
+            </li>
+            <li>
+              <Link href="/shipping-delivery">Shipping Policy</Link>
             </li>
           </ul>
         </div>
 
         {/* Social + Newsletter */}
-        <div>
-          <h3 className="mb-3 text-lg font-semibold tracking-wide uppercase">
+        <div className="md:col-span-4 lg:col-span-1">
+           <h3 className="mb-3 text-lg font-semibold tracking-wide uppercase">
             Stay Connected
           </h3>
           <div className="mb-4 flex space-x-4">
@@ -77,19 +83,7 @@ export function SiteFooter() {
               <Mail className="h-5 w-5" />
             </Link>
           </div>
-          <form className="flex">
-            <input
-              type="email"
-              placeholder="Your email"
-              className="w-full rounded-l-md px-3 py-2 text-foreground bg-background border border-border focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="rounded-r-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
-            >
-              Subscribe
-            </button>
-          </form>
+          <NewsletterForm />
         </div>
       </div>
 
