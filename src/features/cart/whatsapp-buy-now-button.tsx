@@ -1,62 +1,44 @@
 import { ButtonProps } from "@/components/ui/button";
 import LoadingButton from "@/components/ui/loading-button";
 import { SUPPORT_WHATSAPP } from "@/lib/constants";
-import useCartStore, { CartItem } from "@/store/useCartStore";
+import { Product } from "@/lib/types";
 import { cn, formatCurrency } from "@/lib/utils";
 import { MessageCircle } from "lucide-react";
 
-interface WhatsAppCartCheckoutButtonProps extends ButtonProps {
-  cartItems: CartItem[];
-  subtotal: number;
+interface WhatsAppCheckoutButtonProps extends ButtonProps {
+  product: Product;
+  quantity: number;
+  selectedOptions: Record<string, string>;
 }
 
-export default function WhatsAppCartCheckoutButton({
-  cartItems,
-  subtotal,
+export default function WhatsAppCheckoutButton({
+  product,
+  quantity,
+  selectedOptions,
   className,
   ...props
-}: WhatsAppCartCheckoutButtonProps) {
-  const { resetCart } = useCartStore();
-
+}: WhatsAppCheckoutButtonProps) {
   const handleWhatsAppCheckout = () => {
-    // Calculate total quantity of items in the cart
-    const totalQuantity = cartItems.reduce(
-      (acc, item) => acc + item.quantity,
-      0
-    );
+    const optionsString = Object.entries(selectedOptions)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
 
-    // Delivery charge logic: 60 if 1 item, else 0
-    const deliveryCharge = totalQuantity === 1 ? 60 : 0;
-    const finalTotal = subtotal + deliveryCharge;
+    const price = product.priceData?.discountedPrice || product.priceData?.price || 0;
+    const totalPrice = price * quantity;
 
-    const itemsDetails = cartItems
-      .map((item) => {
-        const price = item.product.priceData?.discountedPrice || item.product.priceData?.price || 0;
-        const totalLinePrice = price * item.quantity;
-        return `*${item.product.name}*
-   - Qty: ${item.quantity}
-   - Price: ${formatCurrency(totalLinePrice)}`;
-      })
-      .join("\n");
+    const message = `Hi Diya Team, I want to buy *${product.name}*
+    
+*Details:*
+Quantity: ${quantity}
+Price: ${formatCurrency(totalPrice)}
+${optionsString ? `Options: ${optionsString}` : ""}
 
-    const message = `Hi Diya Team, I want to confirm my order.
-
-*Order Details:*
-${itemsDetails}
-
-*Subtotal:* ${formatCurrency(subtotal)}
-*Delivery Charge:* ${deliveryCharge > 0 ? formatCurrency(deliveryCharge) : "Free"}
-*Total Amount:* ${formatCurrency(finalTotal)}
-
-${deliveryCharge > 0 ? "(Tip: Add 1 more item to get FREE delivery!)" : ""}
-
-Please confirm my order and share payment details.`;
+Please confirm my order.`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${SUPPORT_WHATSAPP}?text=${encodedMessage}`;
 
     window.open(whatsappUrl, "_blank");
-    resetCart();
   };
 
   return (
@@ -75,8 +57,7 @@ Please confirm my order and share payment details.`;
           clipRule="evenodd"
         />
       </svg>
-      <span className="hidden sm:inline">Checkout via WhatsApp</span>
-      <span className="sm:hidden">Checkout</span>
+      Buy via WhatsApp
     </LoadingButton>
   );
 }

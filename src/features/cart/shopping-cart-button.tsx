@@ -1,4 +1,4 @@
-import WhatsAppCartCheckoutButton from "@/features/cart/whatsapp-cart-checkout-button";
+import WhatsAppCartCheckoutButton from "@/features/cart/whatsapp-checkout-button";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -14,7 +14,7 @@ import { useState } from "react";
 import { cn, formatCurrency } from "@/lib/utils";
 
 interface ShoppingCartButtonProps {
-  initialData?: any | null; // Kept for compatibility but unused
+  initialData?: any | null;
   className?: string;
 }
 

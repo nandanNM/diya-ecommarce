@@ -19,7 +19,7 @@ import ProductPrice from "./ProductPrice";
 import AddToCartButton from "@/features/cart/add-to-cart-button";
 import BackInStockNotificationButton from "@/features/products/back-in-stock-notification-button";
 
-import WhatsAppCheckoutButton from "@/features/cart/whatsapp-checkout-button";
+import WhatsAppCheckoutButton from "@/features/cart/whatsapp-buy-now-button";
 
 interface ProductDetailsProps {
   product: Product;
