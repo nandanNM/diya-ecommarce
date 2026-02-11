@@ -15,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     >
         {children}
         <Toaster />
-        <GoogleAnalytics gaId="G-XSRMVN6E43" />
+        <GoogleAnalytics gaId="G-QLM54TXN12" />
     </ThemeProvider>
   );
 }
