@@ -231,9 +231,9 @@ export default function AboutUsSPage() {
           className="mx-auto mb-16 max-w-2xl text-center text-muted-foreground"
           variants={itemVariants}
         >
-          We are a team of engineering students who realized that in the race of
-          deadlines, we forgot how to pause. DIYA is our experiment to engineer
-          'Sukoon' (Peace) for you.
+          We are a team of engineering students who realized that in the race of deadlines, we forgot how to pause. DIYA is our small attempt to engineer “Sukoon” (peace) into everyday life. Led by 
+          {" "}<b className="font-bold">Manjesh Bhaskar</b>
+          , we blend creativity, simplicity, and thoughtful design to build experiences that help you slow down, breathe, and feel at home.
         </motion.p>
 
         <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">

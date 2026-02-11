@@ -55,7 +55,7 @@ export default function ShopPage() {
   };
 
   return (
-    <section id="collection" className="w-full overflow-hidden py-4 md:py-6">
+    <section id="collections" className="w-full overflow-hidden py-4 md:py-6">
       <div className="container mx-auto max-w-7xl px-4">
         <h2 className="mb-8 text-center text-[28px] font-light tracking-wide text-[#2D2D2D] md:mb-12 md:text-[36px]">
           Shop By Category

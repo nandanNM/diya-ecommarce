@@ -13,7 +13,7 @@ export default function Home() {
         actions={[
           {
             text: "Explore Collection",
-            href: "/#collection",
+            href: "/#collections",
             variant: "default",
           },
           {

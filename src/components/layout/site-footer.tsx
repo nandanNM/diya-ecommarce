@@ -38,12 +38,12 @@ export function SiteFooter() {
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link
-                  href="/products"
+                <a
+                  href="/#collections"
                   className="transition-colors hover:text-primary"
                 >
                   All Products
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -136,7 +136,7 @@ export function SiteFooter() {
               <AccordionContent>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li>
-                    <Link href="/products" className="block py-1">
+                    <Link href="/#collections" className="block py-1">
                       All Products
                     </Link>
                   </li>
