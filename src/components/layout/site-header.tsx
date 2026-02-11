@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import ShoppingCartButton from "@/features/cart/shopping-cart-button";
+import SearchBar from "@/components/search-bar";
 import { MAIN_NAV } from "@/config/site";
 import { useState } from "react";
 // import { ThemeSwitch } from "../theme-switch-button";
@@ -76,14 +77,12 @@ export default function SiteHeader() {
               </Sheet>
 
               {/* Desktop Search */}
-              {/* <Button
-                variant="ghost"
-                size="icon"
-                className="hidden p-0 text-foreground transition-transform hover:scale-110 lg:flex"
-              >
-                <Search className="h-5.5 w-5.5 stroke-[1.2]" />
-              </Button> */}
+              <div className="hidden lg:flex">
+                <SearchBar />
+              </div>
+            
 
+              </div>
               {/* CENTER: Logo (Centered on all screens) */}
               <Link
                 href="/"
@@ -96,26 +95,12 @@ export default function SiteHeader() {
                   diya
                 </span>
               </Link>
-            </div>
 
             {/* RIGHT: Search + Cart (Mobile) / User + Cart (Desktop) */}
             <div className="flex flex-1 items-center justify-end gap-3 lg:gap-6">
-              {/* Mobile Search Icon next to Cart */}
-              {/* <Button
-                variant="ghost"
-                size="icon"
-                className="p-0 text-foreground transition-transform hover:scale-110 lg:hidden"
-              >
-                <Search className="h-5 w-5 stroke-[1.5]" />
-              </Button> */}
-              {/* 
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hidden p-0 text-foreground transition-transform hover:scale-110 lg:flex"
-              >
-                <User className="h-5.5 w-5.5 stroke-[1.2]" />
-              </Button> */}
+              <div className="lg:hidden">
+                <SearchBar />
+              </div>
               {/* <ThemeSwitch/> */}
               <ShoppingCartButton
                 initialData={null}
