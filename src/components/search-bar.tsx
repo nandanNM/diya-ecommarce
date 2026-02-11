@@ -57,14 +57,14 @@ const SearchBar = () => {
         asChild
       >
         <Button
-                variant="ghost"
-                size="icon"
-                className="flex rounded-full p-0 text-foreground transition-transform hover:scale-110"
-              >
-                <Search className="h-5.5 w-5.5 stroke-[1.2]" />
-              </Button>
+          variant="ghost"
+          size="icon"
+          className="flex rounded-full p-0 text-foreground transition-transform hover:scale-110"
+        >
+          <Search className="h-5.5 w-5.5 stroke-[1.2]" />
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+      <DialogContent className="sm:max-w-2xl h-[90vh] flex flex-col overflow-hidden !top-1/2 !-translate-y-1/2">
         <DialogHeader>
           <DialogTitle className="mb-3">Product Searchbar</DialogTitle>
           <form className="relative" onSubmit={(e) => e.preventDefault()}>
@@ -88,7 +88,7 @@ const SearchBar = () => {
             </button>
           </form>
         </DialogHeader>
-        <div className="w-full h-full overflow-y-auto border border-primary/20 rounded-md bg-transparent">
+        <div className="w-full flex-1 overflow-y-auto border border-primary/20 rounded-md bg-transparent">
           <div className="">
             <AnimatePresence mode="wait">
               {loading ? (
@@ -98,7 +98,7 @@ const SearchBar = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-center px-6 gap-1 py-10 text-center text-green-600 font-semibold justify-center"
+                  className="flex items-center px-6 gap-1 py-10 text-center text-primary font-semibold justify-center"
                 >
                   <Loader2 className="w-5 h-5 animate-spin" />
                   Searching in progress...
@@ -145,12 +145,17 @@ const SearchBar = () => {
                                 {product.name}
                               </h3>
                               <p className="text-sm text-gray-600 line-clamp-1">
-                                {product.description?.replace(/<[^>]*>/g, '').substring(0, 100)}...
+                                {product.description
+                                  ?.replace(/<[^>]*>/g, "")
+                                  .substring(0, 100)}
+                                ...
                               </p>
                             </Link>
                             <PriceView
                               price={product.priceData?.price}
-                              discountedPrice={product.priceData?.discountedPrice}
+                              discountedPrice={
+                                product.priceData?.discountedPrice
+                              }
                               className="md:text-lg"
                             />
                           </div>
@@ -179,11 +184,11 @@ const SearchBar = () => {
                   {search ? (
                     <p>
                       Nothing match with the keyword{" "}
-                      <span className="underline text-red-600">{search}</span>.
+                      <span className="underline text-destructive">{search}</span>.
                       Please try something else.
                     </p>
                   ) : (
-                    <p className="text-green-600 flex items-center justify-center gap-1">
+                    <p className="text-primary-foreground flex items-center justify-center gap-1">
                       <Search className="w-5 h-5" />
                       Search and explore your products.
                     </p>

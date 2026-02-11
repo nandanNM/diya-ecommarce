@@ -19,19 +19,24 @@ export default function WhatsAppCheckoutButton({
   ...props
 }: WhatsAppCheckoutButtonProps) {
   const handleWhatsAppCheckout = () => {
+  const deliveryCharge = quantity === 1 ? 60 : 0;
     const optionsString = Object.entries(selectedOptions)
       .map(([key, value]) => `${key}: ${value}`)
       .join(", ");
 
     const price = product.priceData?.discountedPrice || product.priceData?.price || 0;
     const totalPrice = price * quantity;
+      const finalTotal = totalPrice + deliveryCharge;
 
     const message = `Hi Diya Team, I want to buy *${product.name}*
     
 *Details:*
-Quantity: ${quantity}
-Price: ${formatCurrency(totalPrice)}
 ${optionsString ? `Options: ${optionsString}` : ""}
+*Price:* ${formatCurrency(totalPrice)}
+*Delivery Charge:* ${deliveryCharge > 0 ? formatCurrency(deliveryCharge) : "Free"}
+*Total Amount:* ${formatCurrency(finalTotal)}
+
+${deliveryCharge > 0 ? "(Tip: Add 1 more item to get FREE delivery!)" : ""}
 
 Please confirm my order.`;
 
