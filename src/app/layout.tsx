@@ -3,6 +3,7 @@ import { fontCabin, fontOutfit, fontNickainley } from "@/lib/fonts";
 import { metadata } from "@/config/site";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { Providers } from "@/components/layout/providers";
 
 export const generateMetadata = () => metadata;
 
@@ -16,15 +17,9 @@ export default function RootLayout({
       <body
         className={`${fontOutfit.variable} ${fontCabin.variable} ${fontNickainley.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           {children}
-          <Toaster />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

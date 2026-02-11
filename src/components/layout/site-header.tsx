@@ -13,9 +13,11 @@ import {
 import { Button } from "@/components/ui/button";
 import ShoppingCartButton from "@/features/cart/shopping-cart-button";
 import { MAIN_NAV } from "@/config/site";
+import { useState } from "react";
 // import { ThemeSwitch } from "../theme-switch-button";
 
 export default function SiteHeader() {
+   const [sheetOpen, setSheetOpen] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -42,7 +44,7 @@ export default function SiteHeader() {
             {/* LEFT: Hamburger (Mobile) / Search (Desktop) */}
             <div className="flex flex-1 items-center justify-start">
               {/* Mobile Toggle */}
-              <Sheet>
+              <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
                 <SheetTrigger asChild>
                   <Button
                     variant="ghost"
@@ -62,9 +64,11 @@ export default function SiteHeader() {
                       <Link
                         key={item.name}
                         href={item.href}
+                        onClick={() => setSheetOpen(false)}
                         className="border-b border-border/40 px-8 py-4 text-[12px] font-bold tracking-[0.15em] text-muted-foreground"
                       >
                         {item.name}
+
                       </Link>
                     ))}
                   </nav>
