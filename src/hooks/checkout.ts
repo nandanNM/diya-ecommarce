@@ -17,7 +17,6 @@ export function useCartCheckout() {
       setPending(false);
     } catch (error) {
       setPending(false);
-      console.error(error);
       toast.error("Failed to load checkout. Please try again.");
     }
   }
@@ -31,8 +30,6 @@ export function useQuickCheckout() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function startCheckoutFlow(values: any) {
     setPending(true);
-    console.log("Quick checkout values", values);
-
     try {
       // Simulate checkout delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -40,7 +37,6 @@ export function useQuickCheckout() {
       setPending(false);
     } catch (error) {
       setPending(false);
-      console.error(error);
       toast.error("Failed to load checkout. Please try again.");
     }
   }

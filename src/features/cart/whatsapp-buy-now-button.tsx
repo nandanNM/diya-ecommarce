@@ -28,11 +28,10 @@ export default function WhatsAppCheckoutButton({
     const totalPrice = price * quantity;
       const finalTotal = totalPrice + deliveryCharge;
 
-    const message = `Hi Diya Team, I want to buy *${product.name}*
-    
-*Details:*
-${optionsString ? `Options: ${optionsString}` : ""}
-*Price:* ${formatCurrency(totalPrice)}
+    const message = `Hi Diya Team, I want to buy *${product.name}*${optionsString ? `\n   - Options: ${optionsString}` : ""}
+   - Qty: ${quantity}
+   - Price: ${formatCurrency(totalPrice)}
+
 *Delivery Charge:* ${deliveryCharge > 0 ? formatCurrency(deliveryCharge) : "Free"}
 *Total Amount:* ${formatCurrency(finalTotal)}
 

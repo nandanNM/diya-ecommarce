@@ -14,9 +14,7 @@ interface PageProps {
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params;
   const { slug } = params;
-  console.log("slug", slug);
   const product = await getProductBySlugMock(slug);
-  console.log("product", product);
 
   if (!product) notFound();
 

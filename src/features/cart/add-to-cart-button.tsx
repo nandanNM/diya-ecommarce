@@ -30,7 +30,7 @@ export default function AddToCartButton({
         setLoading(true);
         // Simulate a small delay for better UX
         setTimeout(() => {
-          addItem(product, quantity);
+          addItem(product, quantity, selectedOptions);
           setLoading(false);
           toast.success("Item added to cart");
         }, 200);

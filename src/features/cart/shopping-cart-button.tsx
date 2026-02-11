@@ -60,7 +60,7 @@ export default function ShoppingCartButton({
             <ul className="space-y-5">
               {items.map((item) => (
                 <ShoppingCartItem
-                  key={item.product._id}
+                  key={item.cartItemId}
                   item={item}
                   onProductLinkClicked={() => setSheetOpen(false)}
                 />
@@ -135,6 +135,7 @@ function ShoppingCartItem({
 
   const product = item.product;
   const productId = product._id;
+  const cartItemId = item.cartItemId;
   const slug = product.slug;
 
   const quantityLimitReached =
@@ -161,7 +162,7 @@ function ShoppingCartItem({
         </Link>
         <button
           className="absolute -top-1 -right-1 rounded-full border bg-background p-0.5"
-          onClick={() => deleteCartProduct(productId)}
+          onClick={() => deleteCartProduct(cartItemId)}
         >
           <X className="size-4" />
         </button>
@@ -170,7 +171,15 @@ function ShoppingCartItem({
         <Link href={`/products/${slug}`} onClick={onProductLinkClicked}>
           <p className="font-bold">{product.name}</p>
         </Link>
-        {/* Description logic if needed, but Product type doesn't have descriptionLines like LineItem had */}
+        {item.selectedOptions && Object.keys(item.selectedOptions).length > 0 && (
+          <div className="text-xs text-muted-foreground">
+            {Object.entries(item.selectedOptions).map(([key, value]) => (
+              <span key={key} className="block">
+                {key}: {value}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="flex items-center gap-2">
           {item.quantity} x {formatCurrency(price)}
         </div>
@@ -180,7 +189,7 @@ function ShoppingCartItem({
             size="icon"
             className="h-8 w-8 rounded-full"
             disabled={item.quantity === 1}
-            onClick={() => removeItem(productId)}
+            onClick={() => removeItem(cartItemId)}
           >
             -
           </Button>
@@ -190,7 +199,7 @@ function ShoppingCartItem({
             size="icon"
             className="h-8 w-8 rounded-full"
             disabled={quantityLimitReached}
-            onClick={() => addItem(product)}
+            onClick={() => addItem(product, 1, item.selectedOptions)}
           >
             +
           </Button>

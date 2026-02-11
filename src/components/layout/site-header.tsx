@@ -32,7 +32,7 @@ export default function SiteHeader() {
               className="mx-6 text-[10px] font-medium tracking-[0.15em] text-primary-foreground/95 lg:mx-12 lg:text-[11px] lg:tracking-[0.2em]"
             >
               Best Deals At Checkout &nbsp; • &nbsp; Free Shipping On Orders
-              Above 500 &nbsp; • &nbsp; 30% Off On First Order
+              Above 499 &nbsp; • &nbsp; 30% Off On First Order
             </span>
           ))}
         </div>
@@ -92,7 +92,7 @@ export default function SiteHeader() {
                   <img className="size-10" src="/logo.svg" />
                 </div>
                 <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
-                  diya
+                  Diya
                 </span>
               </Link>
 

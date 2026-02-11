@@ -31,13 +31,23 @@ export default function WhatsAppCartCheckoutButton({
 
     const itemsDetails = cartItems
       .map((item) => {
-        const price = item.product.priceData?.discountedPrice || item.product.priceData?.price || 0;
+        const price =
+          item.product.priceData?.discountedPrice ||
+          item.product.priceData?.price ||
+          0;
         const totalLinePrice = price * item.quantity;
-        return `*${item.product.name}*
+
+        const optionsString = item.selectedOptions
+          ? Object.entries(item.selectedOptions)
+              .map(([key, value]) => `${key}: ${value}`)
+              .join(", ")
+          : "";
+
+        return `*${item.product.name}*${optionsString ? `\n   - Options: ${optionsString}` : ""}
    - Qty: ${item.quantity}
    - Price: ${formatCurrency(totalLinePrice)}`;
       })
-      .join("\n");
+      .join("\n\n");
 
     const message = `Hi Diya Team, I want to confirm my order.
 
