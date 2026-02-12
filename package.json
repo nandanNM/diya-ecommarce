@@ -14,8 +14,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "lint": "eslint",
-    "seed:test": "tsx scripts/seed-test-data.ts",
-    "prepare": "husky"
+    "seed:test": "tsx scripts/seed-test-data.ts"
   },
   "dependencies": {
     "@imagekit/next": "^2.1.4",
