@@ -1,5 +1,5 @@
 import OurImpact from "@/features/home/our-impact";
-import ShopPage from "@/features/shop/components/shop-page";
+import ShopPage from "@/features/shop/shop-page";
 import Testimonials from "@/features/home/testimonials";
 import TrustBadges from "@/features/home/trust-badges";
 import CTASection from "@/features/home/cta-section";
