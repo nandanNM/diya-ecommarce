@@ -14,7 +14,27 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "lint": "eslint",
-    "seed:test": "tsx scripts/seed-test-data.ts"
+    "seed:test": "tsx scripts/seed-test-data.ts",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,js,json,md}": [
+      "prettier --write"
+    ],
+    "*.{ts,js}": [
+      "eslint --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nandanNM/diya-ecommarce.git"
+  },
+  "keywords": [
+    "Diya"
+  ],
+  "author": "Nandan Manna",
+  "bugs": {
+    "url": "https://github.com/nandanNM/diya-ecommarce/issues"
   },
   "dependencies": {
     "@imagekit/next": "^2.1.4",
@@ -40,11 +60,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "eslint": "^8.57.0",
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-boundaries": "^5.4.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
