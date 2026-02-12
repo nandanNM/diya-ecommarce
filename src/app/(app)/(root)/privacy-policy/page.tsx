@@ -1,5 +1,6 @@
+import type { Metadata } from "next";
+
 import { PRIVACY_POLICY } from "@/config/site";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",

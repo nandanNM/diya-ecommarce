@@ -1,4 +1,5 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+
 import { siteUrl } from "@/config/site";
 import { getAllProductsMock } from "@/lib/product-api";
 

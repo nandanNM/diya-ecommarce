@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+
 import { ProductCard } from "@/features/products/product-card";
 
 const CATEGORIES = [
@@ -67,8 +68,6 @@ export default function ShopPage() {
               category={item.name}
               imageUrl={item.image}
               href={`/products/${item.slug}`}
-              isLiked={liked.includes(item.id)}
-              onLike={() => toggleLike(item.id)}
             />
           ))}
         </div>

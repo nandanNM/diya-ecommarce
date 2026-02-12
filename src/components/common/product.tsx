@@ -1,9 +1,10 @@
 "use client";
-import { Product as ProductType } from "@/lib/types";
 import Link from "next/link";
-import { formatCurrency } from "@/lib/utils";
-import IKImage from "./ik-image";
+
 import AddToCartButton from "@/features/cart/add-to-cart-button";
+import type { Product as ProductType } from "@/lib/types";
+
+import IKImage from "./ik-image";
 
 interface ProductProps {
   product: ProductType;

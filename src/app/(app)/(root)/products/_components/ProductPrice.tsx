@@ -1,7 +1,7 @@
 import DiscountBadge from "@/components/common/discount-badge";
 import { Badge } from "@/components/ui/badge";
+import type { Product, Variant } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Product, Variant } from "@/lib/types";
 
 interface ProductPriceProps {
   product: Product;

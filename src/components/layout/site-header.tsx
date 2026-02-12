@@ -1,24 +1,25 @@
 "use client";
 
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
+
+import SearchBar from "@/components/search-bar";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
   SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import ShoppingCartButton from "@/features/cart/shopping-cart-button";
-import SearchBar from "@/components/search-bar";
 import { MAIN_NAV } from "@/config/site";
-import { useState } from "react";
+import ShoppingCartButton from "@/features/cart/shopping-cart-button";
+import { cn } from "@/lib/utils";
 // import { ThemeSwitch } from "../theme-switch-button";
 
 export default function SiteHeader() {
-   const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -69,7 +70,6 @@ export default function SiteHeader() {
                         className="border-b border-border/40 px-8 py-4 text-[12px] font-bold tracking-[0.15em] text-muted-foreground"
                       >
                         {item.name}
-
                       </Link>
                     ))}
                   </nav>
@@ -80,21 +80,19 @@ export default function SiteHeader() {
               <div className="hidden lg:flex">
                 <SearchBar />
               </div>
-            
-
+            </div>
+            {/* CENTER: Logo (Centered on all screens) */}
+            <Link
+              href="/"
+              className="group flex items-center gap-2 no-underline"
+            >
+              <div className="mb-1 text-primary transition-transform duration-500 group-hover:scale-105">
+                <img className="size-10" src="/logo.svg" alt="Diya Logo" />
               </div>
-              {/* CENTER: Logo (Centered on all screens) */}
-              <Link
-                href="/"
-                className="group flex items-center gap-2 no-underline"
-              >
-                <div className="mb-1 text-primary transition-transform duration-500 group-hover:scale-105">
-                  <img className="size-10" src="/logo.svg" />
-                </div>
-                <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
-                  Diya
-                </span>
-              </Link>
+              <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
+                Diya
+              </span>
+            </Link>
 
             {/* RIGHT: Search + Cart (Mobile) / User + Cart (Desktop) */}
             <div className="flex flex-1 items-center justify-end gap-3 lg:gap-6">
@@ -102,10 +100,7 @@ export default function SiteHeader() {
                 <SearchBar />
               </div>
               {/* <ThemeSwitch/> */}
-              <ShoppingCartButton
-                initialData={null}
-                className="p-0 text-foreground transition-transform hover:scale-110"
-              />
+              <ShoppingCartButton className="p-0 text-foreground transition-transform hover:scale-110" />
             </div>
           </div>
 

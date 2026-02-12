@@ -1,12 +1,12 @@
 "use client";
 
-import * as React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import Image from "next/image";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import * as React from "react";
 
 import { TESTIMONIALS } from "@/data/testimonials";
+import { cn } from "@/lib/utils";
 
 export default function TestimonialsCarousel() {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -136,8 +136,6 @@ export default function TestimonialsCarousel() {
 
                   // Calculate slide distance based on position with proper spacing
                   const getSlideX = (pos: number) => {
-                    const mobileSpacing = 130;
-                    const desktopSpacing = 180;
                     // Use average for responsive behavior
                     const spacing = 155;
                     return pos * spacing;

@@ -1,9 +1,8 @@
 import "../styles/globals.css";
-import { fontCabin, fontOutfit, fontNickainley } from "@/lib/fonts";
-import { metadata } from "@/config/site";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
+
 import { Providers } from "@/components/layout/providers";
+import { metadata } from "@/config/site";
+import { fontCabin, fontNickainley, fontOutfit } from "@/lib/fonts";
 
 export const generateMetadata = () => metadata;
 
@@ -17,9 +16,7 @@ export default function RootLayout({
       <body
         className={`${fontOutfit.variable} ${fontCabin.variable} ${fontNickainley.variable} antialiased`}
       >
-        <Providers>
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

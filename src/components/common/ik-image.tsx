@@ -1,8 +1,7 @@
 "use client";
 
 import { Image as ImageKitImage, ImageKitProvider } from "@imagekit/next";
-import { ImgHTMLAttributes } from "react";
-import Image from "next/image";
+import type { ImgHTMLAttributes } from "react";
 
 interface IKImageProps extends Omit<
   ImgHTMLAttributes<HTMLImageElement>,
@@ -15,7 +14,7 @@ interface IKImageProps extends Omit<
   width?: number;
   height?: number;
   loading?: "lazy" | "eager";
-  transformation?: any[];
+  transformation?: Record<string, string | number | undefined>[];
 }
 
 const urlEndpoint =
@@ -54,7 +53,7 @@ export default function IKImage({
     );
   }
 
-  const IKImageComponent = ImageKitImage as any;
+  const IKImageComponent = ImageKitImage as unknown as React.ElementType;
 
   // Construct transformation array safely
   const activeTransformation = [...transformation];

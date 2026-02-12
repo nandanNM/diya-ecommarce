@@ -1,9 +1,9 @@
-import { Product } from "@/lib/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-const generateId = () => Math.random().toString(36).substring(2, 9);
+import type { Product } from "@/lib/types";
 
+const generateId = () => Math.random().toString(36).substring(2, 9);
 
 export interface CartItem {
   cartItemId: string;
@@ -106,9 +106,10 @@ const useCartStore = create<CartState>()(
     {
       name: "cart-store",
       version: 1,
-      migrate: (persistedState: any, version) => {
+      migrate: (persistedState: unknown, version) => {
         if (version === 0 || version === undefined) {
-          persistedState.items = persistedState.items.map((item: CartItem) => ({
+          const state = persistedState as CartState;
+          state.items = state.items.map((item: CartItem) => ({
             ...item,
             cartItemId: item.cartItemId || generateId(),
             selectedOptions: item.selectedOptions || {},

@@ -1,5 +1,6 @@
+import type { Metadata } from "next";
+
 import { TERMS_OF_SERVICE } from "@/config/site";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Service",

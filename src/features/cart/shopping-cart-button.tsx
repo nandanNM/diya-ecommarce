@@ -1,4 +1,8 @@
-import WhatsAppCartCheckoutButton from "@/features/cart/whatsapp-checkout-button";
+import { ShoppingCartIcon, X } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+
+import IKImage from "@/components/common/ik-image";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -6,20 +10,16 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import IKImage from "@/components/common/ik-image";
-import useCartStore, { CartItem } from "@/store/useCartStore";
-import { ShoppingCartIcon, X } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import WhatsAppCartCheckoutButton from "@/features/cart/whatsapp-checkout-button";
 import { cn, formatCurrency } from "@/lib/utils";
+import type { CartItem } from "@/store/useCartStore";
+import useCartStore from "@/store/useCartStore";
 
 interface ShoppingCartButtonProps {
-  initialData?: any | null;
   className?: string;
 }
 
 export default function ShoppingCartButton({
-  initialData,
   className,
 }: ShoppingCartButtonProps) {
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -134,7 +134,6 @@ function ShoppingCartItem({
   const { addItem, removeItem, deleteCartProduct } = useCartStore();
 
   const product = item.product;
-  const productId = product._id;
   const cartItemId = item.cartItemId;
   const slug = product.slug;
 
@@ -171,15 +170,16 @@ function ShoppingCartItem({
         <Link href={`/products/${slug}`} onClick={onProductLinkClicked}>
           <p className="font-bold">{product.name}</p>
         </Link>
-        {item.selectedOptions && Object.keys(item.selectedOptions).length > 0 && (
-          <div className="text-xs text-muted-foreground">
-            {Object.entries(item.selectedOptions).map(([key, value]) => (
-              <span key={key} className="block">
-                {key}: {value}
-              </span>
-            ))}
-          </div>
-        )}
+        {item.selectedOptions &&
+          Object.keys(item.selectedOptions).length > 0 && (
+            <div className="text-xs text-muted-foreground">
+              {Object.entries(item.selectedOptions).map(([key, value]) => (
+                <span key={key} className="block">
+                  {key}: {value}
+                </span>
+              ))}
+            </div>
+          )}
         <div className="flex items-center gap-2">
           {item.quantity} x {formatCurrency(price)}
         </div>

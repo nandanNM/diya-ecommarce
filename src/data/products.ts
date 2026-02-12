@@ -1,4 +1,5 @@
-import { Product, OptionType } from "@/lib/types";
+import type { Product } from "@/lib/types";
+import { OptionType } from "@/lib/types";
 
 export const ALL_PRODUCTS: Product[] = [
   {
@@ -516,33 +517,42 @@ export const ALL_PRODUCTS: Product[] = [
       currency: "INR",
     },
     productOptions: [
-      {name:"Color Options",optionType:OptionType.color,choices:[{
-        description:"Ivory White",
-        value:"#FFFFF0",
-        inStock:true,
-      },{
-        description:"Cococa Brown",
-        value:"#D2691E",
-        inStock:true,
-      },{
-        description:"Coral Read",
-        value:"#F86F65",
-        inStock:true, 
-      },{
-        description:"Diya Orange",
-        value:"#F6C394",
-        inStock:true, 
-      },{
-        description:"Holllow Purple",
-        value:"#AA9698",
-        inStock:true, 
-      },{
-        description:"Olive Green",
-        value:"#858D68",
-        inStock:true, 
-      }
-    
-    ]}
+      {
+        name: "Color Options",
+        optionType: OptionType.color,
+        choices: [
+          {
+            description: "Ivory White",
+            value: "#FFFFF0",
+            inStock: true,
+          },
+          {
+            description: "Cococa Brown",
+            value: "#D2691E",
+            inStock: true,
+          },
+          {
+            description: "Coral Read",
+            value: "#F86F65",
+            inStock: true,
+          },
+          {
+            description: "Diya Orange",
+            value: "#F6C394",
+            inStock: true,
+          },
+          {
+            description: "Holllow Purple",
+            value: "#AA9698",
+            inStock: true,
+          },
+          {
+            description: "Olive Green",
+            value: "#858D68",
+            inStock: true,
+          },
+        ],
+      },
     ],
     stock: {
       inStock: true,
