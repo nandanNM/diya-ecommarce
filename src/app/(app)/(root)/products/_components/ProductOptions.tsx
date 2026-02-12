@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
+import type { Product } from "@/lib/types";
+import { OptionType } from "@/lib/types";
 import { checkInStock, cn } from "@/lib/utils";
-import { Product, OptionType } from "@/lib/types";
 
 interface ProductOptionsProps {
   product: Product;

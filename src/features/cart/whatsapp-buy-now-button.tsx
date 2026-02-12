@@ -1,9 +1,8 @@
-import { ButtonProps } from "@/components/ui/button";
+import type { ButtonProps } from "@/components/ui/button";
 import LoadingButton from "@/components/ui/loading-button";
 import { SUPPORT_WHATSAPP } from "@/lib/constants";
-import { Product } from "@/lib/types";
+import type { Product } from "@/lib/types";
 import { cn, formatCurrency } from "@/lib/utils";
-import { MessageCircle } from "lucide-react";
 
 interface WhatsAppCheckoutButtonProps extends ButtonProps {
   product: Product;
@@ -19,14 +18,15 @@ export default function WhatsAppCheckoutButton({
   ...props
 }: WhatsAppCheckoutButtonProps) {
   const handleWhatsAppCheckout = () => {
-  const deliveryCharge = quantity === 1 ? 60 : 0;
+    const deliveryCharge = quantity === 1 ? 60 : 0;
     const optionsString = Object.entries(selectedOptions)
       .map(([key, value]) => `${key}: ${value}`)
       .join(", ");
 
-    const price = product.priceData?.discountedPrice || product.priceData?.price || 0;
+    const price =
+      product.priceData?.discountedPrice || product.priceData?.price || 0;
     const totalPrice = price * quantity;
-      const finalTotal = totalPrice + deliveryCharge;
+    const finalTotal = totalPrice + deliveryCharge;
 
     const message = `Hi Diya Team, I want to buy *${product.name}*${optionsString ? `\n   - Options: ${optionsString}` : ""}
    - Qty: ${quantity}

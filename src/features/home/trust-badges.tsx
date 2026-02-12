@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import { TRUST_BADGES } from "@/data/trust-badges";
 export default function TrustBadges() {
   return (

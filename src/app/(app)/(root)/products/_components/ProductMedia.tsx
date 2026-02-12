@@ -1,9 +1,10 @@
-import IKImage from "@/components/common/ik-image";
-import { cn } from "@/lib/utils";
-import { MediaItem } from "@/lib/types";
 import { PlayIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Zoom from "react-medium-image-zoom";
+
+import IKImage from "@/components/common/ik-image";
+import type { MediaItem } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 interface ProductMediaProps {
   media: MediaItem[] | undefined;
@@ -12,9 +13,7 @@ interface ProductMediaProps {
 export default function ProductMedia({ media }: ProductMediaProps) {
   const [selectedMedia, setSelectedMedia] = useState(media?.[0]);
 
-  useEffect(() => {
-    setSelectedMedia(media?.[0]);
-  }, [media]);
+  // useEffect removed as parent component handles resetting via key prop
 
   if (!media?.length) return null;
 

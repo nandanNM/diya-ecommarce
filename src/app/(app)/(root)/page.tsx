@@ -1,8 +1,8 @@
+import CTASection from "@/features/home/cta-section";
 import OurImpact from "@/features/home/our-impact";
-import ShopPage from "@/features/shop/components/shop-page";
 import Testimonials from "@/features/home/testimonials";
 import TrustBadges from "@/features/home/trust-badges";
-import CTASection from "@/features/home/cta-section";
+import ShopPage from "@/features/shop/shop-page";
 
 export default function Home() {
   return (

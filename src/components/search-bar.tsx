@@ -1,7 +1,17 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, Search, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
+
+import { ALL_PRODUCTS } from "@/data/products";
+import AddToCartButton from "@/features/cart/add-to-cart-button";
+import type { Product } from "@/lib/types";
+
+import PriceView from "./price-view";
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,14 +20,6 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
-import AddToCartButton from "@/features/cart/add-to-cart-button";
-import PriceView from "./price-view";
-import Image from "next/image";
-import Link from "next/link";
-import { ALL_PRODUCTS } from "@/data/products";
-import { Product } from "@/lib/types";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "./ui/button";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -64,7 +66,7 @@ const SearchBar = () => {
           <Search className="h-5.5 w-5.5 stroke-[1.2]" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl h-[90vh] flex flex-col overflow-hidden !top-1/2 !-translate-y-1/2">
+      <DialogContent className="!top-1/2 flex h-[90vh] !-translate-y-1/2 flex-col overflow-hidden sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="mb-3">Product Searchbar</DialogTitle>
           <form className="relative" onSubmit={(e) => e.preventDefault()}>
@@ -77,18 +79,18 @@ const SearchBar = () => {
             {search && (
               <X
                 onClick={() => setSearch("")}
-                className="w-4 h-4 absolute top-3 right-11 hover:text-red-600 transition-colors duration-200 cursor-pointer"
+                className="absolute top-3 right-11 h-4 w-4 cursor-pointer transition-colors duration-200 hover:text-red-600"
               />
             )}
             <button
               type="submit"
-              className="absolute right-0 top-0 bg-primary/10 w-10 h-full flex items-center justify-center rounded-tr-md hover:bg-primary hover:text-white transition-all duration-200"
+              className="absolute top-0 right-0 flex h-full w-10 items-center justify-center rounded-tr-md bg-primary/10 transition-all duration-200 hover:bg-primary hover:text-white"
             >
-              <Search className="w-5 h-5" />
+              <Search className="h-5 w-5" />
             </button>
           </form>
         </DialogHeader>
-        <div className="w-full flex-1 overflow-y-auto border border-primary/20 rounded-md bg-transparent">
+        <div className="w-full flex-1 overflow-y-auto rounded-md border border-primary/20 bg-transparent">
           <div className="">
             <AnimatePresence mode="wait">
               {loading ? (
@@ -98,9 +100,9 @@ const SearchBar = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-center px-6 gap-1 py-10 text-center text-primary font-semibold justify-center"
+                  className="flex items-center justify-center gap-1 px-6 py-10 text-center font-semibold text-primary"
                 >
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin" />
                   Searching in progress...
                 </motion.p>
               ) : products?.length ? (
@@ -117,34 +119,34 @@ const SearchBar = () => {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.2, delay: index * 0.02 }}
-                      className="bg-transparent overflow-hidden border-b border-primary/10 transition-colors duration-200 hover:bg-muted/50"
+                      className="overflow-hidden border-b border-primary/10 bg-transparent transition-colors duration-200 hover:bg-muted/50"
                     >
                       <div className="flex items-center p-1">
                         <Link
                           href={`/products/${product?.slug}`}
                           onClick={() => setShowSearch(false)}
-                          className="h-20 w-20 md:h-24 md:w-24 flex-shrink-0 border border-primary/20 rounded-md overflow-hidden group relative"
+                          className="group relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border border-primary/20 md:h-24 md:w-24"
                         >
                           {product?.media?.items?.[0]?.image?.url && (
                             <Image
                               fill
                               src={product.media.items[0].image.url}
                               alt={product.name}
-                              className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300 pointer-events-none"
+                              className="pointer-events-none h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                               onClick={(e) => e.preventDefault()}
                             />
                           )}
                         </Link>
-                        <div className="px-4 py-2 flex-grow">
-                          <div className="flex justify-between items-start">
+                        <div className="flex-grow px-4 py-2">
+                          <div className="flex items-start justify-between">
                             <Link
                               href={`/products/${product?.slug}`}
                               onClick={() => setShowSearch(false)}
                             >
-                              <h3 className="text-sm md:text-lg font-semibold text-gray-800 line-clamp-1 hover:text-primary transition-colors duration-200">
+                              <h3 className="line-clamp-1 text-sm font-semibold text-gray-800 transition-colors duration-200 hover:text-primary md:text-lg">
                                 {product.name}
                               </h3>
-                              <p className="text-sm text-gray-600 line-clamp-1">
+                              <p className="line-clamp-1 text-sm text-gray-600">
                                 {product.description
                                   ?.replace(/<[^>]*>/g, "")
                                   .substring(0, 100)}
@@ -160,7 +162,7 @@ const SearchBar = () => {
                             />
                           </div>
 
-                          <div className="w-full sm:w-60 mt-1">
+                          <div className="mt-1 w-full sm:w-60">
                             <AddToCartButton
                               product={product}
                               selectedOptions={{}}
@@ -179,17 +181,19 @@ const SearchBar = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="text-center py-10 font-semibold tracking-wide"
+                  className="py-10 text-center font-semibold tracking-wide"
                 >
                   {search ? (
                     <p>
                       Nothing match with the keyword{" "}
-                      <span className="underline text-destructive">{search}</span>.
-                      Please try something else.
+                      <span className="text-destructive underline">
+                        {search}
+                      </span>
+                      . Please try something else.
                     </p>
                   ) : (
-                    <p className="text-primary-foreground flex items-center justify-center gap-1">
-                      <Search className="w-5 h-5" />
+                    <p className="flex items-center justify-center gap-1 text-primary-foreground">
+                      <Search className="h-5 w-5" />
                       Search and explore your products.
                     </p>
                   )}

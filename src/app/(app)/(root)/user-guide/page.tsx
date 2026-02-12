@@ -1,15 +1,15 @@
 "use client";
 
-import { useRef } from "react";
-import { BookOpen, Zap } from "lucide-react";
+import { buildSrc, Video } from "@imagekit/next";
 import {
   motion,
+  useInView,
   useScroll,
   useTransform,
-  useInView,
   type Variants,
 } from "framer-motion";
-import { buildSrc, Video } from "@imagekit/next";
+import { BookOpen } from "lucide-react";
+import { useRef } from "react";
 
 export default function UserGuidePage() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -49,7 +49,7 @@ export default function UserGuidePage() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden px-4 py-8 text-foreground min-h-screen"
+      className="relative min-h-screen w-full overflow-hidden px-4 py-8 text-foreground"
     >
       {/* Decorative background elements */}
       <motion.div

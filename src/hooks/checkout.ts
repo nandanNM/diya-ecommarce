@@ -1,6 +1,7 @@
-import useCartStore from "@/store/useCartStore";
 import { useState } from "react";
 import { toast } from "sonner";
+
+import useCartStore from "@/store/useCartStore";
 
 export function useCartCheckout() {
   const { resetCart } = useCartStore();
@@ -15,7 +16,7 @@ export function useCartCheckout() {
       resetCart();
       toast.success("Checkout successful! (Mocked)");
       setPending(false);
-    } catch (error) {
+    } catch {
       setPending(false);
       toast.error("Failed to load checkout. Please try again.");
     }
@@ -27,15 +28,14 @@ export function useCartCheckout() {
 export function useQuickCheckout() {
   const [pending, setPending] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async function startCheckoutFlow(values: any) {
+  async function startCheckoutFlow() {
     setPending(true);
     try {
       // Simulate checkout delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
       toast.success("Quick checkout successful! (Mocked)");
       setPending(false);
-    } catch (error) {
+    } catch {
       setPending(false);
       toast.error("Failed to load checkout. Please try again.");
     }

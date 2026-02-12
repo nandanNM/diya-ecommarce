@@ -1,4 +1,4 @@
-import { Product, OptionType } from "@/lib/types";
+import type { Product } from "@/lib/types";
 
 export const ALL_PRODUCTS: Product[] = [
   {

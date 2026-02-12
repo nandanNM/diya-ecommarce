@@ -1,6 +1,6 @@
+import { Facebook, Instagram, Mail, Twitter } from "lucide-react";
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
-import NewsletterForm from "../common/news-letter-form";
+
 import {
   Accordion,
   AccordionContent,
@@ -13,6 +13,8 @@ import {
   SUPPORT_INSTAGRAM,
   SUPPORT_TWITTER,
 } from "@/lib/constants";
+
+import NewsletterForm from "../common/news-letter-form";
 
 export function SiteFooter() {
   return (
@@ -38,12 +40,12 @@ export function SiteFooter() {
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a
+                <Link
                   href="/#collections"
                   className="transition-colors hover:text-primary"
                 >
                   All Products
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

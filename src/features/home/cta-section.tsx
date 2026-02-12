@@ -1,16 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
-import { Button, type ButtonProps } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 import React from "react";
 
-import Link from "next/link";
-
-interface StatProps {
-  value: string;
-  label: string;
-  icon: React.ReactNode;
-}
+import { Button, type ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface ActionProps {
   text: string;

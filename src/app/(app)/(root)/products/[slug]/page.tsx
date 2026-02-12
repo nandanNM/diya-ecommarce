@@ -1,11 +1,13 @@
-import { delay } from "@/lib/utils";
-import { getProductBySlugMock } from "@/lib/product-api";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import ProductDetails from "../_components/ProductDetails";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
+
 import Product from "@/components/common/product";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getProductBySlugMock } from "@/lib/product-api";
+import { delay } from "@/lib/utils";
+
+import ProductDetails from "../_components/ProductDetails";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -59,7 +61,6 @@ export default async function Page(props: PageProps) {
 }
 
 async function RelatedProducts({ currentSlug }: { currentSlug: string }) {
-  const { getAllProductsMock } = await import("@/lib/product-api");
   // Assuming getAllProductsMock is available or defaulting to import ALL_PRODUCTS directly if not exported
   const { ALL_PRODUCTS } = await import("@/data/products");
 

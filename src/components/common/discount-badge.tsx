@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Discount } from "@/lib/types";
+import type { Discount } from "@/lib/types";
 
 interface DiscountBadgeProps {
   data: Discount;

@@ -1,5 +1,6 @@
+import type { Metadata } from "next";
+
 import { REFUND_CANCELLATION } from "@/config/site";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Refund and Cancellation Policy",

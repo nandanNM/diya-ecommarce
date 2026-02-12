@@ -1,6 +1,7 @@
+import type { Metadata } from "next";
+
 import { SITE_DESCRIPTION, SUPPORT_INSTAGRAM } from "@/lib/constants";
-import { NavItem } from "@/types/nav";
-import { Metadata } from "next";
+import type { NavItem } from "@/types/nav";
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://apnadiya.in";
 export const imagePreview = "/images/diya-screenshot-desktop.webp";

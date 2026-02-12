@@ -1,9 +1,9 @@
-import { ButtonProps } from "@/components/ui/button";
+import type { ButtonProps } from "@/components/ui/button";
 import LoadingButton from "@/components/ui/loading-button";
 import { SUPPORT_WHATSAPP } from "@/lib/constants";
-import useCartStore, { CartItem } from "@/store/useCartStore";
 import { cn, formatCurrency } from "@/lib/utils";
-import { MessageCircle } from "lucide-react";
+import type { CartItem } from "@/store/useCartStore";
+import useCartStore from "@/store/useCartStore";
 
 interface WhatsAppCartCheckoutButtonProps extends ButtonProps {
   cartItems: CartItem[];
