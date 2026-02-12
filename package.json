@@ -17,25 +17,6 @@
     "seed:test": "tsx scripts/seed-test-data.ts",
     "prepare": "husky"
   },
-  "lint-staged": {
-    "*.{ts,js,json,md}": [
-      "prettier --write"
-    ],
-    "*.{ts,js}": [
-      "eslint --fix"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nandanNM/diya-ecommarce.git"
-  },
-  "keywords": [
-    "CurioTech"
-  ],
-  "author": "Career Cafe",
-  "bugs": {
-    "url": "https://github.com/nandanNM/diya-ecommarce.git/issues"
-  },
   "dependencies": {
     "@imagekit/next": "^2.1.4",
     "@next/third-parties": "^16.1.6",
@@ -65,7 +46,6 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-boundaries": "^5.4.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "husky": "^9.1.7",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
