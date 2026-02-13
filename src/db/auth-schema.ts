@@ -3,7 +3,6 @@ import {
   bigint,
   boolean,
   index,
-  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -12,15 +11,13 @@ import {
 
 import { baseSchema } from "./schema";
 
-export const roleEnumUser = pgEnum("userRole", ["customer", "admin"]);
-
 export const user = pgTable("user", {
   ...baseSchema,
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   phoneNumber: bigint("phoneNumber", { mode: "number" }).unique(),
   image: text("image"),
-  role: roleEnumUser("userRole").default("customer"),
+  role: text("role"),
   isActive: boolean("isActive").default(true),
 });
 

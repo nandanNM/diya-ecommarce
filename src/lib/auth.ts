@@ -1,8 +1,10 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
+import { admin, openAPI } from "better-auth/plugins";
 
 import db from "@/db";
+import { ac, customer, superAdmin } from "@/lib/utils/permissions";
 
 export const auth = betterAuth({
   baseURL: process.env.NEXT_PUBLIC_SITE_URL,
@@ -13,7 +15,6 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
-    disableSignUp: true,
     requireEmailVerification: false,
   },
 
@@ -25,5 +26,32 @@ export const auth = betterAuth({
       maxAge: 60 * 5, // 5 minutes
     },
   },
-  plugins: [nextCookies()],
+  advanced: {
+    cookiePrefix: "better-auth", //TODO: change to diya
+    useSecureCookies: process.env.NODE_ENV === "production",
+    crossSubDomainCookies: {
+      enabled: false,
+    },
+    // Disable origin check in development to allow requests without Origin header
+    disableOriginCheck: process.env.NODE_ENV === "development",
+  },
+  user: {
+    additionalFields: {
+      phoneNumber: { type: "number" },
+      isActive: { type: "boolean" },
+    },
+  },
+  plugins: [
+    nextCookies(),
+    openAPI(),
+    admin({
+      ac,
+      defaultRole: "customer",
+      adminRoles: ["superAdmin"],
+      roles: {
+        superAdmin,
+        customer,
+      },
+    }),
+  ],
 });
