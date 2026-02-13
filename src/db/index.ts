@@ -14,7 +14,7 @@ export const pool = new Pool({
 
 export const db = drizzle(pool, {
   schema: { ...schema, ...authSchema },
-  logger: true,
+  logger: process.env.NODE_ENV === "development",
 });
 
 export type db = typeof db;

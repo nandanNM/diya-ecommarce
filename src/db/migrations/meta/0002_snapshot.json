@@ -1,6 +1,6 @@
 {
-  "id": "0a3b48bb-5708-47ca-8fde-6683de17adeb",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "2b008198-9ccd-4f1e-a219-18b177fb6179",
+  "prevId": "7d8a3a98-9a07-4535-ad56-0b772fe6564b",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -978,29 +978,23 @@
           "notNull": true,
           "default": "now()"
         },
+        "accountId": {
+          "name": "accountId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "providerId": {
+          "name": "providerId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "userId": {
           "name": "userId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
-        },
-        "provider": {
-          "name": "provider",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "providerAccountId": {
-          "name": "providerAccountId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "password": {
-          "name": "password",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
         },
         "accessToken": {
           "name": "accessToken",
@@ -1029,6 +1023,18 @@
         "refreshTokenExpiresAt": {
           "name": "refreshTokenExpiresAt",
           "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         }
@@ -1066,7 +1072,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "account_accountId_unique": {
+          "name": "account_accountId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "accountId"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -1123,6 +1137,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "impersonatedBy": {
+          "name": "impersonatedBy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -1207,6 +1227,13 @@
           "primaryKey": false,
           "notNull": true
         },
+        "emailVerified": {
+          "name": "emailVerified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
         "phoneNumber": {
           "name": "phoneNumber",
           "type": "bigint",
@@ -1222,6 +1249,25 @@
         "role": {
           "name": "role",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "banned": {
+          "name": "banned",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "banReason": {
+          "name": "banReason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "banExpires": {
+          "name": "banExpires",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },

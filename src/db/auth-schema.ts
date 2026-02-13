@@ -8,16 +8,28 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import { v7 } from "uuid";
 
-import { baseSchema } from "./schema";
+export const baseSchema = {
+  id: uuid("id").primaryKey().$default(v7),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt")
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+};
 
 export const user = pgTable("user", {
   ...baseSchema,
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
+  emailVerified: boolean("emailVerified").default(false).notNull(),
   phoneNumber: bigint("phoneNumber", { mode: "number" }).unique(),
   image: text("image"),
   role: text("role"),
+  banned: boolean("banned").default(false),
+  banReason: text("banReason"),
+  banExpires: timestamp("banExpires"),
   isActive: boolean("isActive").default(true),
 });
 
@@ -36,6 +48,7 @@ export const session = pgTable(
     userId: uuid("userId") //use uuid type for foreign key references
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
+    impersonatedBy: text("impersonatedBy"),
   },
   (table) => [index("sessionUserIdIdx").on(table.userId)]
 );
@@ -44,17 +57,18 @@ export const account = pgTable(
   "account",
   {
     ...baseSchema,
+    accountId: text("accountId").notNull().unique(),
+    providerId: text("providerId").notNull(),
     userId: uuid("userId")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    provider: text("provider").notNull(),
-    providerAccountId: text("providerAccountId").notNull(),
-    password: text("password"),
     accessToken: text("accessToken"),
     refreshToken: text("refreshToken"),
     idToken: text("idToken"),
     accessTokenExpiresAt: timestamp("accessTokenExpiresAt"),
     refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt"),
+    scope: text("scope"),
+    password: text("password"),
   },
   (table) => [index("accountUserIdIdx").on(table.userId)]
 );

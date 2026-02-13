@@ -12,9 +12,6 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
-import { v7 } from "uuid";
-
-import { user } from "./auth-schema";
 
 // ENUMS
 export const roleEnum = pgEnum("role", ["customer", "admin", "manager"]);
@@ -50,14 +47,7 @@ export const discountTypeEnum = pgEnum("discountType", [
   "percentage",
   "fixed_amount",
 ]);
-export const baseSchema = {
-  id: uuid("id").primaryKey().$default(v7),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt")
-    .defaultNow()
-    .$onUpdate(() => /* @__PURE__ */ new Date())
-    .notNull(),
-};
+import { baseSchema, user } from "./auth-schema";
 
 export const address = pgTable("address", {
   ...baseSchema,
