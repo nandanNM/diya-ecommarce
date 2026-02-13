@@ -27,7 +27,6 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import type React from "react";
 import { useEffect, useRef } from "react";
 
 export default function AboutUsSPage() {
@@ -245,7 +244,7 @@ export default function AboutUsSPage() {
           </div>
 
           {/* Center Image */}
-          <div className="order-first mb-8 flex items-center justify-center md:order-none md:mb-0">
+          <div className="order-first mb-8 flex items-center justify-center md:order-0 md:mb-0">
             <motion.div
               className="relative w-full max-w-xs"
               variants={itemVariants}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { CreditCardIcon } from "lucide-react";
 
 import type { ButtonProps } from "@/components/ui/button";
