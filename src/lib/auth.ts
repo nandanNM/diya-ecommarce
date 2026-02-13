@@ -40,7 +40,7 @@ export const auth = betterAuth({
         if (options.model === "user" || options.model === "users") {
           return false;
         }
-        return v7(); //
+        return v7();
       },
     },
   },
@@ -49,7 +49,7 @@ export const auth = betterAuth({
       phoneNumber: {
         type: "number",
         required: false,
-        input: true, // Allow users to provide phone number during signup
+        input: true,
       },
       isActive: {
         type: "boolean",

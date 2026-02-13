@@ -17,3 +17,20 @@ export const loginSchema = z.object({
 });
 
 export type LoginValues = z.infer<typeof loginSchema>;
+
+export const createCategorySchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  slug: z
+    .string()
+    .min(1, "Slug is required")
+    .regex(/^[a-z0-9-]+$/, "Invalid slug format"),
+  description: z.string().optional(),
+  parentId: z.string().uuid().optional().nullable(),
+  position: z.number().int().optional(),
+  isActive: z.boolean().optional(),
+});
+export type CategoryValues = z.infer<typeof createCategorySchema>;
+
+export const updateCategorySchema = createCategorySchema.partial();
+
+export type UpdateCategoryValues = z.infer<typeof updateCategorySchema>;
