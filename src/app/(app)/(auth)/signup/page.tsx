@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 import loginImage from "@/assets/login-candle.webp";
 import SignUpForm from "@/components/forms/sign-up-form";
+
+export const metadata: Metadata = {
+  title: "Sign Up",
+};
 
 export default function SignupPage() {
   return (
