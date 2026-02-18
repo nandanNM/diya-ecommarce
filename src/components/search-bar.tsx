@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { ALL_PRODUCTS } from "@/data/products";
 import AddToCartButton from "@/features/cart/add-to-cart-button";
-import type { Product } from "@/lib/types";
+import type { Product } from "@/types/product";
 
 import PriceView from "./price-view";
 import { Button } from "./ui/button";

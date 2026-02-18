@@ -3,102 +3,131 @@ import "dotenv/config";
 
 import { v7 as uuidv7 } from "uuid";
 
+import { ALL_PRODUCTS } from "@/data/products";
 import { db } from "@/db";
 import { category, media, product, productVariant } from "@/db/schema";
 
 async function main() {
-  console.log("🌱 Seeding database...");
+  console.log("🌱 Seeding database with Flickers & Flame products...");
 
-  // 1. Create the Main Category
-  const [candleCategory] = await db
-    .insert(category)
-    .values({
-      id: uuidv7(),
-      name: "Candles",
-      slug: "candles",
-      description: "Hand-poured signature scents for your home.",
-      isActive: true,
-    })
-    .returning();
+  try {
+    // 1️⃣ Upsert Category
+    const [candleCategory] = await db
+      .insert(category)
+      .values({
+        id: uuidv7(),
+        name: "Candles",
+        slug: "candles",
+        description: "Hand-poured signature scents for your home.",
+        isActive: true,
+      })
+      .onConflictDoUpdate({
+        target: category.slug,
+        set: {
+          name: "Candles",
+          isActive: true,
+        },
+      })
+      .returning();
 
-  // 2. Data for your 6 Products
-  const candleData = [
-    {
-      name: "Midnight Jasmine",
-      price: "24.00",
-      slug: "midnight-jasmine",
-      ribbon: "New",
-    },
-    {
-      name: "Ocean Breeze",
-      price: "22.00",
-      slug: "ocean-breeze",
-      ribbon: null,
-    },
-    {
-      name: "Vanilla Bean",
-      price: "20.00",
-      slug: "vanilla-bean",
-      ribbon: "Best Seller",
-    },
-    {
-      name: "Sandals & Spice",
-      price: "25.00",
-      slug: "sandals-spice",
-      ribbon: null,
-    },
-    {
-      name: "Spiced Apple",
-      price: "22.00",
-      slug: "spiced-apple",
-      ribbon: null,
-    },
-    {
-      name: "Lavender Fields",
-      price: "24.00",
-      slug: "lavender-fields",
-      ribbon: "Featured",
-    },
-  ];
+    // 2️⃣ Loop Products
+    for (const item of ALL_PRODUCTS) {
+      const [insertedProduct] = await db
+        .insert(product)
+        .values({
+          name: item.name,
+          slug: item.slug,
+          description: item.description,
+          basePrice: String(item.priceData?.price ?? 0),
+          salePrice: item.priceData?.discountedPrice
+            ? String(item.priceData.discountedPrice)
+            : null,
+          currency: item.priceData?.currency ?? "INR",
+          brand: item.brand ?? "Flickers & Flame",
+          ribbon: item.ribbon ?? null,
+          isActive: true,
+          isFeatured: false,
+          categoryId: candleCategory.id,
+          additionalInfoSections: item.additionalInfoSections ?? [],
+          productOptions: item.productOptions
+            ? item.productOptions.map((opt) => ({
+                name: opt.name,
+                optionType: String(opt.optionType), // Convert enum to string
+                choices: opt.choices.map((choice) => ({
+                  value: choice.value,
+                  description: choice.description,
+                  inStock: choice.inStock,
+                  visible: choice.visible,
+                })),
+              }))
+            : [],
+        })
+        .returning();
 
-  for (const item of candleData) {
-    const productId = uuidv7();
+      const productId = insertedProduct.id;
 
-    // Insert Product
-    await db.insert(product).values({
-      id: productId,
-      name: item.name,
-      slug: item.slug,
-      basePrice: item.price,
-      categoryId: candleCategory.id,
-      isActive: true,
-      isFeatured: item.ribbon === "Featured",
-      ribbon: item.ribbon,
-    });
+      // 3️⃣ Insert Media
+      if (item.media?.items?.length) {
+        await db.insert(media).values(
+          item.media.items.map((m, index) => ({
+            id: uuidv7(),
+            url: m.image?.url ?? "",
+            altText: m.image?.altText ?? item.name,
+            mediaType: "image" as const,
+            refId: productId,
+            refType: "product" as const,
+            position: index,
+          }))
+        );
+      }
 
-    // Insert Media (Unified Media Table)
-    await db.insert(media).values({
-      url: `https://images.unsplash.com/photo-example-${item.slug}`, // Placeholder
-      mediaType: "image",
-      refId: productId,
-      refType: "product",
-      position: 0,
-    });
+      // 4️⃣ Insert Variants
+      if (item.productOptions && item.productOptions.length > 0) {
+        // Multiple variants (like SAADA color options)
+        const option = item.productOptions[0];
 
-    // Insert a Default Variant (for Stock)
-    await db.insert(productVariant).values({
-      productId: productId,
-      sku: `${item.slug.toUpperCase()}-001`,
-      price: item.price,
-      stockQuantity: 50,
-      optionValues: { size: "Standard" },
-    });
+        if (option.choices && option.choices.length > 0) {
+          for (const choice of option.choices) {
+            await db.insert(productVariant).values({
+              id: uuidv7(),
+              productId,
+              sku: `${item.slug.toUpperCase()}-${choice.description
+                .replace(/\s+/g, "-")
+                .toUpperCase()}`,
+              price: String(
+                item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
+              ),
+              costPrice: "150.00",
+              stockQuantity: item.stock?.quantity ?? 10,
+              trackInventory: true,
+              optionValues: {
+                [option.name]: choice.value,
+              },
+            });
+          }
+        }
+      } else {
+        // Single default variant
+        await db.insert(productVariant).values({
+          id: uuidv7(),
+          productId,
+          sku: `${item.slug.toUpperCase()}-STD`,
+          price: String(
+            item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
+          ),
+          costPrice: "150.00",
+          stockQuantity: item.stock?.quantity ?? 10,
+          trackInventory: true,
+          optionValues: {},
+        });
+      }
+    }
+
+    console.log("✅ Seeding complete! All products inserted.");
+  } catch (err) {
+    console.error("❌ Seeding failed:", err);
+    process.exit(1);
   }
-
-  console.log("✅ Seeding complete! 6 products added.");
 }
 
-main().catch((err) => {
-  console.error("❌ Seeding failed:", err);
-  process.exit(1);
-});
+main();

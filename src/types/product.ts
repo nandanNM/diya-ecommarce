@@ -1,23 +1,36 @@
+export interface HomeProduct {
+  id: string;
+  name: string;
+  slug: string;
+  imageUrl: string | null;
+}
+
 export interface Product {
   _id: string;
   name: string;
   slug: string;
+  visible: boolean;
   description?: string;
   media?: {
     items: MediaItem[];
     mainMedia?: MediaItem;
   };
-  priceData?: PriceData;
-  productOptions?: ProductOption[];
   stock?: Stock;
-  brand?: string;
-  ribbon?: string;
+  priceData?: PriceData;
   additionalInfoSections?: AdditionalInfoSection[];
+  ribbons?: Array<{ text: string }>;
+  ribbon?: string;
+  productOptions?: ProductOption[];
   discount?: Discount;
+  variants?: VariantWithDetails[];
+  lastUpdated?: string;
+  brand?: string;
 }
 
 export interface MediaItem {
   _id: string;
+  mediaType?: "image" | "video";
+  title?: string;
   image?: Image;
   video?: Video;
   thumbnail?: Image;
@@ -54,21 +67,26 @@ export interface PriceData {
 export interface ProductOption {
   name: string;
   optionType: OptionType;
-  choices?: ProductOptionChoice[];
+  choices: ProductOptionChoice[];
 }
 
 export interface ProductOptionChoice {
   description: string;
   value: string;
   inStock: boolean;
+  visible: boolean;
   media?: {
+    mainMedia?: MediaItem;
     items: MediaItem[];
   };
 }
 
 export interface Stock {
+  trackInventory?: boolean;
+  trackQuantity?: boolean;
   inStock: boolean;
   quantity?: number;
+  inventoryStatus?: "IN_STOCK" | "OUT_OF_STOCK" | "PARTIALLY_OUT_OF_STOCK";
 }
 
 export interface AdditionalInfoSection {
@@ -77,7 +95,7 @@ export interface AdditionalInfoSection {
 }
 
 export interface Discount {
-  type: "PERCENT" | "AMOUNT";
+  type: "PERCENT" | "AMOUNT" | "NONE";
   value: number;
 }
 
@@ -93,18 +111,39 @@ export interface Variant {
   priceData?: PriceData;
   variant?: {
     priceData?: PriceData;
+    convertedPriceData?: PriceData;
+    weight?: number;
+    sku?: string;
+    visible?: boolean;
+  };
+}
+
+export interface VariantWithDetails {
+  _id: string;
+  choices: Record<string, string>;
+  variant: {
+    priceData: PriceData;
+    convertedPriceData: PriceData;
+    weight?: number;
+    sku?: string;
+    visible: boolean;
+  };
+  stock: {
+    trackQuantity: boolean;
+    quantity?: number;
+    inStock: boolean;
   };
 }
 
 export interface LineItem {
   _id: string;
   productId: string;
-  name: string; // simpler name for local use
+  name: string;
   productName?: {
     original?: string;
     translated?: string;
   };
-  image?: string; // simpler image for local use
+  image?: string;
   mediaItem?: {
     url: string;
     altText?: string;

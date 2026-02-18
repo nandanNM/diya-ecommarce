@@ -4,8 +4,8 @@ import { CreditCardIcon } from "lucide-react";
 import type { ButtonProps } from "@/components/ui/button";
 import LoadingButton from "@/components/ui/loading-button";
 import { useQuickCheckout as useQuickBuy } from "@/hooks/checkout";
-import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import type { Product } from "@/types/product";
 
 interface BuyNowButtonProps extends ButtonProps {
   product: Product;

@@ -3,7 +3,7 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 
-const OurImpact = () => {
+export default function OurImpact() {
   return (
     <section className="w-full overflow-hidden py-4 md:py-6">
       <div className="container mx-auto max-w-7xl px-4">
@@ -18,7 +18,7 @@ const OurImpact = () => {
               <img
                 src="https://ik.imagekit.io/codernandan/assets/your-impact2.jpeg"
                 alt="Artisan weaving"
-                className="aspect-[3/4] w-full rounded-sm object-cover"
+                className="aspect-3/4 w-full rounded-sm object-cover"
               />
             </div>
 
@@ -27,7 +27,7 @@ const OurImpact = () => {
               <img
                 src="https://ik.imagekit.io/codernandan/assets/your-impact1.jpeg"
                 alt="Artisan group"
-                className="aspect-[3/4] w-full rounded-sm object-cover"
+                className="aspect-3/4 w-full rounded-sm object-cover"
               />
             </div>
           </div>
@@ -67,6 +67,4 @@ const OurImpact = () => {
       </div>
     </section>
   );
-};
-
-export default OurImpact;
+}

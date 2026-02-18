@@ -15,8 +15,8 @@ import { Label } from "@/components/ui/label";
 import AddToCartButton from "@/features/cart/add-to-cart-button";
 import WhatsAppCheckoutButton from "@/features/cart/whatsapp-buy-now-button";
 import BackInStockNotificationButton from "@/features/products/back-in-stock-notification-button";
-import type { Product } from "@/lib/types";
 import { checkInStock, findVariant } from "@/lib/utils";
+import type { Product } from "@/types/product";
 
 import ProductMedia from "./ProductMedia";
 import ProductOptions from "./ProductOptions";

@@ -15,7 +15,11 @@ export async function GET() {
       .from(product)
       .leftJoin(
         media,
-        and(eq(product.id, media.refId), eq(media.refType, "product"))
+        and(
+          eq(product.id, media.refId),
+          eq(media.refType, "product"),
+          eq(media.position, 0)
+        )
       )
       .where(eq(product.isActive, true));
     if (!products || products.length === 0) {

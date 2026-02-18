@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import type { Product } from "@/lib/types";
+import type { Product } from "@/types/product";
 
 interface BackInStockNotificationButtonProps {
   product: Product;

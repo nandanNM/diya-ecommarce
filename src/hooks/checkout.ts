@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import useCartStore from "@/store/useCartStore";
-
 export function useCartCheckout() {
-  const { resetCart } = useCartStore();
-
   const [pending, setPending] = useState(false);
 
   async function startCheckoutFlow() {
@@ -13,7 +9,6 @@ export function useCartCheckout() {
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      resetCart();
       toast.success("Checkout successful! (Mocked)");
       setPending(false);
     } catch {

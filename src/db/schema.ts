@@ -29,12 +29,6 @@ export const paymentStatusEnum = pgEnum("paymentStatus", [
   "failed",
   "refunded",
 ]);
-export const fulfillmentStatusEnum = pgEnum("fulfillmentStatus", [
-  "unfulfilled",
-  "partially_fulfilled",
-  "fulfilled",
-  "returned",
-]);
 export const mediaTypeEnum = pgEnum("mediaType", ["image", "video"]);
 export const mediaRefTypeEnum = pgEnum("mediaRefType", [
   "product",
@@ -42,10 +36,6 @@ export const mediaRefTypeEnum = pgEnum("mediaRefType", [
   "review",
   "category",
   "collection",
-]);
-export const discountTypeEnum = pgEnum("discountType", [
-  "percentage",
-  "fixed_amount",
 ]);
 import { baseSchema, user } from "./auth-schema";
 
@@ -111,9 +101,31 @@ export const product = pgTable("product", {
   name: varchar("name", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   description: text("description"),
+  additionalInfoSections: jsonb("additionalInfoSections").$type<
+    {
+      title: string;
+      description: string;
+    }[]
+  >(),
+  productOptions: jsonb("productOptions").$type<
+    {
+      name: string;
+      optionType: string;
+      choices: {
+        value: string;
+        description: string;
+        inStock: boolean;
+        visible: boolean;
+      }[];
+    }[]
+  >(),
+  discount: jsonb("discount").$type<{
+    type: "percent" | "amount" | "none";
+    value: number;
+  }>(),
   basePrice: decimal("basePrice", { precision: 12, scale: 2 }).notNull(),
   salePrice: decimal("salePrice", { precision: 12, scale: 2 }),
-  currency: varchar("currency", { length: 3 }).default("USD"),
+  currency: varchar("currency", { length: 3 }).default("INR"),
   sku: varchar("sku", { length: 100 }).unique(),
   brand: varchar("brand", { length: 100 }),
   ribbon: varchar("ribbon", { length: 50 }),
@@ -129,13 +141,15 @@ export const productVariant = pgTable("productVariant", {
   productId: uuid("productId")
     .notNull()
     .references(() => product.id, { onDelete: "cascade" }),
+  costPrice: decimal("costPrice", { precision: 12, scale: 2 }).default("0.00"),
+  trackInventory: boolean("trackInventory").default(true).notNull(),
   sku: varchar("sku", { length: 100 }).notNull().unique(),
   price: decimal("price", { precision: 12, scale: 2 }),
   stockQuantity: integer("stockQuantity").default(0).notNull(),
-  optionValues: jsonb("optionValues").notNull(),
+  optionValues: jsonb("optionValues").$type<Record<string, string>>().notNull(),
 });
 
-// CART & WISHLIST
+// CART
 export const cart = pgTable("cart", {
   ...baseSchema,
   userId: uuid("userId").references(() => user.id, { onDelete: "cascade" }),
@@ -167,8 +181,12 @@ export const order = pgTable("order", {
     .default("pending")
     .notNull(),
   total: decimal("total", { precision: 12, scale: 2 }).notNull(),
-  shippingAddressId: uuid("shippingAddressId").references(() => address.id),
-  billingAddressId: uuid("billingAddressId").references(() => address.id),
+  shippingAddressId: uuid("shippingAddressId").references(() => address.id, {
+    onDelete: "set null",
+  }),
+  billingAddressId: uuid("billingAddressId").references(() => address.id, {
+    onDelete: "set null",
+  }),
 });
 
 export const orderItem = pgTable("orderItem", {

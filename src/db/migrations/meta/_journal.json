@@ -22,6 +22,34 @@
       "when": 1770972399987,
       "tag": "0002_wide_blade",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1771046220577,
+      "tag": "0003_bored_zarek",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1771054581292,
+      "tag": "0004_nebulous_glorian",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1771055730296,
+      "tag": "0005_quick_deathbird",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1771055750091,
+      "tag": "0006_sloppy_major_mapleleaf",
+      "breakpoints": true
     }
   ]
 }

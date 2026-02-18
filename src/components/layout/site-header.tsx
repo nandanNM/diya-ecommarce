@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, UserRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -15,12 +15,14 @@ import {
 } from "@/components/ui/sheet";
 import { MAIN_NAV } from "@/config/site";
 import ShoppingCartButton from "@/features/cart/shopping-cart-button";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-// import { ThemeSwitch } from "../theme-switch-button";
+// import useCartStore from "@/store/useCartStore";
 
 export default function SiteHeader() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session, isPending } = authClient.useSession();
 
   return (
     <div className="font-outfit flex w-full flex-col">
@@ -99,7 +101,13 @@ export default function SiteHeader() {
               <div className="lg:hidden">
                 <SearchBar />
               </div>
-              {/* <ThemeSwitch/> */}
+
+              <Link
+                className="p-0 text-foreground transition-transform hover:scale-110"
+                href={!isPending && session ? "/profile" : "/signup"}
+              >
+                <UserRound className="size-4" />
+              </Link>
               <ShoppingCartButton className="p-0 text-foreground transition-transform hover:scale-110" />
             </div>
           </div>

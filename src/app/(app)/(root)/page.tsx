@@ -1,10 +1,17 @@
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
+
 import CTASection from "@/features/home/cta-section";
 import OurImpact from "@/features/home/our-impact";
 import Testimonials from "@/features/home/testimonials";
 import TrustBadges from "@/features/home/trust-badges";
 import ShopPage from "@/features/shop/shop-page";
+import { getHomeProducts } from "@/lib/actions/product.actions";
 
-export default function Home() {
+export const revalidate = 3600;
+export default async function Home() {
+  const products = await getHomeProducts();
+
   return (
     <div className="mx-auto max-w-7xl p-2">
       <CTASection
@@ -28,7 +35,9 @@ export default function Home() {
           "https://ik.imagekit.io/codernandan/assets/cta-s2.jpg",
         ]}
       />
-      <ShopPage />
+      <Suspense fallback={<Loader2 className="mx-auto size-4 animate-spin" />}>
+        <ShopPage products={products} />
+      </Suspense>
       <TrustBadges />
       <Testimonials />
       <OurImpact />

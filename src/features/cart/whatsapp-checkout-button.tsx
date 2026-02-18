@@ -2,8 +2,8 @@ import type { ButtonProps } from "@/components/ui/button";
 import LoadingButton from "@/components/ui/loading-button";
 import { SUPPORT_WHATSAPP } from "@/lib/constants";
 import { cn, formatCurrency } from "@/lib/utils";
-import type { CartItem } from "@/store/useCartStore";
 import useCartStore from "@/store/useCartStore";
+import type { CartItem } from "@/types/cart";
 
 interface WhatsAppCartCheckoutButtonProps extends ButtonProps {
   cartItems: CartItem[];

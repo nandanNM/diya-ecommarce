@@ -1,4 +1,4 @@
-import { OptionType, type Product } from "@/lib/types";
+import { OptionType, type Product } from "@/types/product";
 
 export const ALL_PRODUCTS: Product[] = [
   {
@@ -524,31 +524,37 @@ export const ALL_PRODUCTS: Product[] = [
             description: "Ivory White",
             value: "#FFFFF0",
             inStock: true,
+            visible: true,
           },
           {
             description: "Cococa Brown",
             value: "#D2691E",
             inStock: true,
+            visible: true,
           },
           {
             description: "Coral Read",
             value: "#F86F65",
             inStock: true,
+            visible: true,
           },
           {
             description: "Diya Orange",
             value: "#F6C394",
             inStock: true,
+            visible: true,
           },
           {
             description: "Holllow Purple",
             value: "#AA9698",
             inStock: true,
+            visible: true,
           },
           {
             description: "Olive Green",
             value: "#858D68",
             inStock: true,
+            visible: true,
           },
         ],
       },

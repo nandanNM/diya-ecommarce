@@ -3,8 +3,8 @@ import { useState } from "react";
 import Zoom from "react-medium-image-zoom";
 
 import IKImage from "@/components/common/ik-image";
-import type { MediaItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import type { MediaItem } from "@/types/product";
 
 interface ProductMediaProps {
   media: MediaItem[] | undefined;

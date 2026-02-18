@@ -16,7 +16,7 @@ export interface ProductCardProps
   extends
     React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof cardVariants> {
-  imageUrl: string;
+  imageUrl: string | null;
   category: string;
   href?: string;
 }
@@ -27,7 +27,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
       <Link href={href || "#"}>
         <div ref={ref} className={cn(cardVariants({ className }))} {...props}>
           <img
-            src={imageUrl}
+            src={imageUrl ? imageUrl : ""}
             alt={category}
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
           />

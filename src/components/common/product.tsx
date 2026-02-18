@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import AddToCartButton from "@/features/cart/add-to-cart-button";
-import type { Product as ProductType } from "@/lib/types";
+import type { Product as ProductType } from "@/types/product";
 
 import IKImage from "./ik-image";
 

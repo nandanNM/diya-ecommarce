@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { cache, Suspense } from "react";
 
 import Product from "@/components/common/product";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getProductBySlugMock } from "@/lib/product-api";
+import { getProductBySlug } from "@/lib/actions/product.actions";
 import { delay } from "@/lib/utils";
 
 import ProductDetails from "../_components/ProductDetails";
@@ -12,11 +12,14 @@ import ProductDetails from "../_components/ProductDetails";
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+const getProductCached = cache(async (slug: string) => {
+  return getProductBySlug(slug);
+});
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params;
   const { slug } = params;
-  const product = await getProductBySlugMock(slug);
+  const product = await getProductCached(slug);
 
   if (!product) notFound();
 
@@ -45,7 +48,7 @@ export default async function Page(props: PageProps) {
   const { slug } = params;
   await delay(100);
 
-  const product = await getProductBySlugMock(slug);
+  const product = await getProductCached(slug);
 
   if (!product?._id) notFound();
 
@@ -87,7 +90,7 @@ function RelatedProductsLoadingSkeleton() {
   return (
     <div className="flex grid-cols-2 flex-col gap-5 pt-12 sm:grid lg:grid-cols-4">
       {Array.from({ length: 4 }).map((_, i) => (
-        <Skeleton key={i} className="h-[26rem] w-full" />
+        <Skeleton key={i} className="h-104 w-full" />
       ))}
     </div>
   );

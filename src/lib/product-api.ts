@@ -1,5 +1,5 @@
 import { ALL_PRODUCTS } from "@/data/products";
-import type { Product } from "@/lib/types";
+import type { Product } from "@/types/product";
 
 export function getProductBySlugMock(slug: string): Promise<Product | null> {
   return new Promise((resolve) => {
