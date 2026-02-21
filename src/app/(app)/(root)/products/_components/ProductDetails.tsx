@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import AddToCartButton from "@/features/cart/add-to-cart-button";
-import WhatsAppCheckoutButton from "@/features/cart/whatsapp-buy-now-button";
+import BuyNowButton from "@/features/cart/buy-now-button";
 import BackInStockNotificationButton from "@/features/products/back-in-stock-notification-button";
 import { checkInStock, findVariant } from "@/lib/utils";
 import type { Product } from "@/types/product";
@@ -31,15 +31,13 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   const [viewers, setViewers] = useState(0);
 
   useEffect(() => {
-    // Initial random value between 5 and 30 - delayed to avoid sync state update warning
     const timeout = setTimeout(() => {
       setViewers(Math.floor(Math.random() * 25) + 5);
     }, 0);
 
     const interval = setInterval(() => {
-      // Update to a new random value between 5 and 30
       setViewers(Math.floor(Math.random() * 25) + 5);
-    }, 5000); // Update every 5 seconds
+    }, 5000);
 
     return () => {
       clearTimeout(timeout);
@@ -100,7 +98,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
         <ProductPrice product={product} selectedVariant={selectedVariant} />
 
-        {/* Viewers Count */}
         <div className="flex animate-pulse items-center gap-2 text-sm font-medium text-muted-foreground">
           <Eye className="h-4 w-4" />
           <span>{viewers} people watching this product now!</span>
@@ -158,21 +155,14 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                 disabled={availableQuantityExceeded || quantity < 1}
                 quantity={quantity}
               />
-              {/* <BuyNowButton
+              <BuyNowButton
                 product={product}
                 selectedOptions={selectedOptions}
                 disabled={availableQuantityExceeded || quantity < 1}
                 quantity={quantity}
                 className="flex-1"
-              /> */}
+              />
             </div>
-            <WhatsAppCheckoutButton
-              product={product}
-              selectedOptions={selectedOptions}
-              disabled={availableQuantityExceeded || quantity < 1}
-              quantity={quantity}
-              className="w-full"
-            />
           </div>
         ) : (
           <BackInStockNotificationButton

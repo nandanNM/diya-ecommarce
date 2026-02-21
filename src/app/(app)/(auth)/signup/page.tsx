@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-// import Image from "next/image";
 import Link from "next/link";
 
-// import signupImage from "@/assets/signup-image.jpg";
 import SignUpForm from "@/components/forms/sign-up-form";
 
 export const metadata: Metadata = {
@@ -28,11 +26,6 @@ export default function SignupPage() {
             </Link>
           </div>
         </div>
-        {/* <Image
-          src={signupImage}
-          alt="image"
-          className="hidden w-1/2 object-cover md:block"
-        /> */}
       </div>
     </main>
   );

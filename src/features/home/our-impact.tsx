@@ -11,9 +11,7 @@ export default function OurImpact() {
           Our Impact
         </h2>
         <div className="relative flex flex-col items-center md:flex-row md:items-start">
-          {/* --- Image Section: Two Images --- */}
           <div className="relative z-0 flex w-full gap-3 md:w-[60%] md:gap-4">
-            {/* Left Image (Smaller/Staggered) */}
             <div className="w-1/2 rounded-sm bg-card p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.08)] md:mt-12 md:w-[45%]">
               <img
                 src="https://ik.imagekit.io/codernandan/assets/your-impact2.jpeg"
@@ -22,7 +20,6 @@ export default function OurImpact() {
               />
             </div>
 
-            {/* Right Image (Main/Higher) */}
             <div className="w-1/2 rounded-sm bg-card p-1.5 shadow-[0_15px_40px_rgba(0,0,0,0.1)] md:w-[50%]">
               <img
                 src="https://ik.imagekit.io/codernandan/assets/your-impact1.jpeg"
@@ -32,14 +29,12 @@ export default function OurImpact() {
             </div>
           </div>
 
-          {/* --- Text Card Section --- */}
           <div
             className={cn(
               "relative z-10 border border-border/50 bg-card",
               "w-[94%] md:w-[45%]",
               "p-6 md:p-12",
               "rounded-sm shadow-[0_20px_60px_rgba(0,0,0,0.12)]",
-              // Mobile: Overlaps bottom | Desktop: Overlaps right side
               "mt-[-40px] md:mt-24 md:-ml-28",
               "self-center"
             )}

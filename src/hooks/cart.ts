@@ -2,8 +2,8 @@ import type { QueryKey } from "@tanstack/react-query";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { findVariantId } from "@/lib/find-variant";
 import kyInstance from "@/lib/ky";
+import { findVariant } from "@/lib/utils";
 import type { UpdateCartItemQuantityValues } from "@/lib/validations";
 import type { AddToCartValues, Cart } from "@/types/cart";
 const queryKey: QueryKey = ["cart"];
@@ -28,7 +28,7 @@ export function useAddItemToCart() {
       selectedOptions,
       quantity,
     }: AddToCartValues) => {
-      const variantId = findVariantId(product, selectedOptions);
+      const variantId = findVariant(product, selectedOptions)?._id ?? null;
 
       return kyInstance
         .post("/api/cart/add", {
@@ -67,17 +67,14 @@ export function useUpdateCartItemQuantity() {
       const previousCart = queryClient.getQueryData<Cart | null>(queryKey);
 
       if (previousCart) {
-        // Optimistically update quantity
+        // optimistic quantity update
         const updatedItems = previousCart.items.map((item) =>
           item.cartItemId === itemId ? { ...item, quantity: newQuantity } : item
         );
 
-        // Recalculate subtotal using cached product price data
+        // recalculate subtotal
         const subtotal = updatedItems.reduce((acc, item) => {
-          const price =
-            item.product.priceData?.discountedPrice ??
-            item.product.priceData?.price ??
-            0;
+          const price = item.product.discountedPrice;
           return acc + price * item.quantity;
         }, 0);
 
@@ -120,17 +117,14 @@ export function useRemoveCartItem() {
       const previousCart = queryClient.getQueryData<Cart | null>(queryKey);
 
       if (previousCart) {
-        // Optimistically remove item
+        // optimistic remove
         const updatedItems = previousCart.items.filter(
           (item) => item.cartItemId !== itemId
         );
 
-        // Recalculate subtotal using cached product price data
+        // recalculate subtotal
         const subtotal = updatedItems.reduce((acc, item) => {
-          const price =
-            item.product.priceData?.discountedPrice ??
-            item.product.priceData?.price ??
-            0;
+          const price = item.product.discountedPrice;
           return acc + price * item.quantity;
         }, 0);
 

@@ -2,7 +2,6 @@ import type { ButtonProps } from "@/components/ui/button";
 import LoadingButton from "@/components/ui/loading-button";
 import { SUPPORT_WHATSAPP } from "@/lib/constants";
 import { cn, formatCurrency } from "@/lib/utils";
-import useCartStore from "@/store/useCartStore";
 import type { CartItem } from "@/types/cart";
 
 interface WhatsAppCartCheckoutButtonProps extends ButtonProps {
@@ -16,25 +15,18 @@ export default function WhatsAppCartCheckoutButton({
   className,
   ...props
 }: WhatsAppCartCheckoutButtonProps) {
-  const { resetCart } = useCartStore();
-
   const handleWhatsAppCheckout = () => {
-    // Calculate total quantity of items in the cart
     const totalQuantity = cartItems.reduce(
       (acc, item) => acc + item.quantity,
       0
     );
 
-    // Delivery charge logic: 60 if 1 item, else 0
     const deliveryCharge = totalQuantity === 1 ? 60 : 0;
     const finalTotal = subtotal + deliveryCharge;
 
     const itemsDetails = cartItems
       .map((item) => {
-        const price =
-          item.product.priceData?.discountedPrice ||
-          item.product.priceData?.price ||
-          0;
+        const price = item.product.discountedPrice;
         const totalLinePrice = price * item.quantity;
 
         const optionsString = item.selectedOptions
@@ -66,7 +58,6 @@ Please confirm my order and share payment details.`;
     const whatsappUrl = `https://wa.me/${SUPPORT_WHATSAPP}?text=${encodedMessage}`;
 
     window.open(whatsappUrl, "_blank");
-    resetCart();
   };
 
   return (

@@ -11,15 +11,15 @@ const statement = {
 
 export const ac = createAccessControl(statement);
 
-// Can browse the store and manage their own shopping activity
+// customer: browse and shop
 export const customer = ac.newRole({
-  product: ["read"], // Can view products
-  category: ["read"], // Can view categories
-  order: ["create", "read"], // Can place and view orders
-  coupon: ["read"], // Can see/apply coupons
+  product: ["read"],
+  category: ["read"],
+  order: ["create", "read"],
+  coupon: ["read"],
 });
 
-// Has full power over every part of the system
+// superAdmin: full access
 export const superAdmin = ac.newRole({
   product: ["create", "read", "update", "delete"],
   order: ["create", "read", "update", "delete"],

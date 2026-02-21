@@ -154,20 +154,15 @@ function ShoppingCartItem({
   const slug = product.slug;
 
   const quantityLimitReached =
-    !!product.stock?.quantity && item.quantity >= product.stock.quantity;
+    !!product.stockQuantity && item.quantity >= product.stockQuantity;
 
-  const price =
-    product.priceData?.discountedPrice || product.priceData?.price || 0;
+  const price = product.discountedPrice;
   return (
     <li className="flex items-center gap-3">
       <div className="relative size-fit flex-none">
         <Link href={`/products/${slug}`} onClick={onProductLinkClicked}>
           <IKImage
-            src={
-              product.media?.mainMedia?.image?.url ||
-              product.media?.items?.[0]?.image?.url ||
-              ""
-            }
+            src={product.imageUrl || ""}
             width={110}
             height={110}
             alt={product.name}

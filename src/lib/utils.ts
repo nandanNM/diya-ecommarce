@@ -30,21 +30,19 @@ export function checkInStock(
 export function findVariant(
   product: Product,
   selectedOptions: Record<string, string>
-) {
-  if (!product.productOptions?.length) return null;
+): Variant | null {
+  if (!product.variants || product.variants.length === 0) return null;
 
-  // Since we don't have real variants in the mock data,
-  // we'll return a mock variable or null based on logic.
-  // For now, let's just return a basic mock variant if stock exists.
-  return {
-    _id: "mock-variant-id",
-    choices: selectedOptions,
-    stock: product.stock,
-    priceData: product.priceData,
-    variant: {
-      priceData: product.priceData,
-    },
-  } as Variant;
+  const choiceKeys = Object.keys(selectedOptions);
+
+  const matched =
+    choiceKeys.length === 0
+      ? product.variants[0]
+      : (product.variants.find((v) =>
+          choiceKeys.every((key) => v.choices?.[key] === selectedOptions[key])
+        ) ?? product.variants[0]);
+
+  return matched ?? null;
 }
 
 export function slugify(input: string): string {

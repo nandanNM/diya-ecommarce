@@ -4,7 +4,6 @@ import db from "@/db";
 import { media, product } from "@/db/schema";
 
 export async function GET() {
-  // get product for home page
   try {
     const products = await db
       .select({

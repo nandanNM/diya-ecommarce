@@ -29,7 +29,6 @@ export default function LoginForm() {
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: LoginValues) {
     startTransition(async () => {
       const { error } = await login(values);

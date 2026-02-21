@@ -32,7 +32,6 @@ export default function SignUpForm() {
     },
   });
 
-  //  Define a submit handler.
   function onSubmit(values: SignUpValues) {
     startTransition(async () => {
       const { error } = await signUp(values);

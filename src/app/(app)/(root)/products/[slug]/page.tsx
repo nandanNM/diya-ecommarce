@@ -64,11 +64,9 @@ export default async function Page(props: PageProps) {
 }
 
 async function RelatedProducts({ currentSlug }: { currentSlug: string }) {
-  // Assuming getAllProductsMock is available or defaulting to import ALL_PRODUCTS directly if not exported
   const { ALL_PRODUCTS } = await import("@/data/products");
 
   const relatedProducts = ALL_PRODUCTS.filter((p) => p.slug !== currentSlug)
-    // Simple shuffle
     .sort(() => 0.5 - Math.random())
     .slice(0, 4);
 

@@ -10,7 +10,6 @@ interface ThemeSwitchProps {
 export function ThemeSwitch({ className = "" }: ThemeSwitchProps) {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
-  // Check current theme on component mount
   React.useEffect(() => {
     const savedTheme =
       localStorage.getItem("theme") ||
@@ -22,7 +21,6 @@ export function ThemeSwitch({ className = "" }: ThemeSwitchProps) {
     document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
 
-  // Toggle theme
   const toggleTheme = React.useCallback(() => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);

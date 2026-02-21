@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import { v7 as uuidv7 } from "uuid";
 
 import { db } from "@/db";
-import { cart, cartItem, productVariant } from "@/db/schema";
+import { cart, cartItem, media, product, productVariant } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { addToCartSchema } from "@/lib/validations";
 
@@ -71,6 +71,35 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
     }
+
+    // snapshot enrichment: avoids re-joining product/media in GET
+    const [productRow] = await db
+      .select({ name: product.name, slug: product.slug })
+      .from(product)
+      .where(eq(product.id, variant.productId))
+      .limit(1);
+
+    const [primaryMedia] = await db
+      .select({ url: media.url })
+      .from(media)
+      .where(
+        and(
+          eq(media.refId, variant.productId),
+          eq(media.refType, "product"),
+          eq(media.position, 0)
+        )
+      )
+      .limit(1);
+
+    const enrichedSnapshot = {
+      name: productRow?.name ?? "",
+      slug: productRow?.slug ?? "",
+      imageUrl: primaryMedia?.url ?? null,
+      price: Number(variant.price ?? 0),
+      sku: variant.sku,
+      optionValues: variant.optionValues as Record<string, string>,
+    };
+
     const existingItem = await db.query.cartItem.findFirst({
       where: and(
         eq(cartItem.cartId, existingCart.id),
@@ -83,6 +112,7 @@ export async function POST(req: NextRequest) {
         .update(cartItem)
         .set({
           quantity: existingItem.quantity + quantity,
+          snapshot: enrichedSnapshot,
         })
         .where(eq(cartItem.id, existingItem.id));
     } else {
@@ -92,10 +122,7 @@ export async function POST(req: NextRequest) {
         variantId: variant.id,
         quantity,
         price: variant.price!,
-        snapshot: {
-          sku: variant.sku,
-          optionValues: variant.optionValues,
-        },
+        snapshot: enrichedSnapshot,
       });
     }
 

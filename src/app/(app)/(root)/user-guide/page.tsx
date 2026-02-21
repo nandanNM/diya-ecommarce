@@ -15,7 +15,6 @@ export default function UserGuidePage() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
 
-  // Parallax effect for decorative elements
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -51,7 +50,6 @@ export default function UserGuidePage() {
       ref={sectionRef}
       className="relative min-h-screen w-full overflow-hidden px-4 py-8 text-foreground"
     >
-      {/* Decorative background elements */}
       <motion.div
         className="absolute top-20 left-10 h-64 w-64 rounded-full bg-[#88734C]/5 blur-3xl"
         style={{ y: y1, rotate: rotate1 }}
@@ -158,7 +156,6 @@ export default function UserGuidePage() {
               transition={{ duration: 0.8, delay: 0.6 }}
             ></motion.div>
 
-            {/* Floating accent elements */}
             <motion.div
               className="absolute -top-4 -right-8 h-16 w-16 rounded-full bg-[#88734C]/10"
               initial={{ opacity: 0, y: 20 }}

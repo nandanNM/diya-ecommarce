@@ -50,6 +50,20 @@
       "when": 1771055750091,
       "tag": "0006_sloppy_major_mapleleaf",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1771477319807,
+      "tag": "0007_stale_alice",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1771599803122,
+      "tag": "0008_boring_young_avengers",
+      "breakpoints": true
     }
   ]
 }

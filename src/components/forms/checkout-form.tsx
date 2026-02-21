@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -13,23 +13,35 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { AddressFormValues } from "@/lib/validations";
-import { addressSchema } from "@/lib/validations";
+import type { GuestShippingValues } from "@/lib/validations";
+import { guestShippingSchema } from "@/lib/validations";
 
 import LoadingButton from "../ui/loading-button";
 
 interface CheckoutFormProps {
-  onSubmit: (values: AddressFormValues) => void;
+  onSubmit?: (values: GuestShippingValues) => void;
+  renderSubmit?: (values: GuestShippingValues) => React.ReactNode;
+  selectedAddress?: GuestShippingValues | null;
+  isProcessing?: boolean;
+  prefillEmail?: string;
 }
 
-export default function CheckoutForm({ onSubmit }: CheckoutFormProps) {
+export default function CheckoutForm({
+  onSubmit,
+  renderSubmit,
+  selectedAddress,
+  isProcessing,
+  prefillEmail,
+}: CheckoutFormProps) {
   const [error, setError] = useState<string>("");
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<AddressFormValues>({
-    resolver: zodResolver(addressSchema),
+  const form = useForm<GuestShippingValues>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(guestShippingSchema) as any,
     defaultValues: {
       fullName: "",
+      email: prefillEmail ?? "",
       phone: "",
       addressLine1: "",
       addressLine2: "",
@@ -37,12 +49,26 @@ export default function CheckoutForm({ onSubmit }: CheckoutFormProps) {
       state: "",
       postalCode: "",
       country: "India",
-      isDefault: false,
-      label: "",
     },
   });
 
-  function handleSubmit(values: AddressFormValues) {
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const currentValues = form.watch();
+
+  useEffect(() => {
+    if (selectedAddress) {
+      form.reset(selectedAddress);
+    }
+  }, [selectedAddress, form]);
+
+  useEffect(() => {
+    if (prefillEmail && !form.getValues("email")) {
+      form.setValue("email", prefillEmail);
+    }
+  }, [prefillEmail, form]);
+
+  function handleSubmit(values: GuestShippingValues) {
+    if (!onSubmit) return;
     startTransition(async () => {
       try {
         onSubmit(values);
@@ -73,12 +99,26 @@ export default function CheckoutForm({ onSubmit }: CheckoutFormProps) {
 
         <FormField
           control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email Address</FormLabel>
+              <FormControl>
+                <Input type="email" placeholder="you@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="phone"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder="1234567890" {...field} />
+                <Input placeholder="9876543210" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -173,14 +213,18 @@ export default function CheckoutForm({ onSubmit }: CheckoutFormProps) {
           />
         </div>
 
-        <LoadingButton
-          loading={isPending}
-          className="w-full"
-          size="lg"
-          type="submit"
-        >
-          Continue to Payment
-        </LoadingButton>
+        {renderSubmit ? (
+          renderSubmit(currentValues)
+        ) : (
+          <LoadingButton
+            loading={isPending || !!isProcessing}
+            className="w-full"
+            size="lg"
+            type="submit"
+          >
+            Continue to Payment
+          </LoadingButton>
+        )}
       </form>
     </Form>
   );

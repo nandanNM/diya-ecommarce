@@ -18,7 +18,6 @@ import type {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    // 1 Fetch product
     const [prod] = await db
       .select()
       .from(dbProduct)
@@ -27,7 +26,6 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
     if (!prod) return null;
 
-    //  Fetch variants
     const variants = await db
       .select()
       .from(productVariant)
@@ -35,13 +33,11 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
     const variantIds = variants.map((v) => v.id);
 
-    // Fetch ALL media (product + variants) in ONE query
     const allMedia = await db
       .select()
       .from(media)
       .where(inArray(media.refId, [prod.id, ...variantIds]));
 
-    // Split product media and variant media
     const productMedia = allMedia
       .filter((m) => m.refId === prod.id && m.refType === "product")
       .sort((a, b) => a.position - b.position);
@@ -56,7 +52,6 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       }
     }
 
-    //Transform product media
     const mediaItems = productMedia.map((m) => ({
       _id: m.id,
       mediaType: m.mediaType as "image" | "video",
@@ -71,7 +66,6 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       video: m.mediaType === "video" ? { files: [{ url: m.url }] } : undefined,
     }));
 
-    // Price Calculation
     const basePrice = parseFloat(prod.basePrice);
     const salePrice = prod.salePrice ? parseFloat(prod.salePrice) : basePrice;
 
@@ -101,7 +95,6 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       },
     };
 
-    // Product Options
     const productOptions = (prod.productOptions || []).map((option) => {
       const choices = option.choices.map((choice) => {
         const matchingVariants = variants.filter((v) => {
@@ -145,7 +138,6 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       };
     });
 
-    // 🔹 Variants
     const variantsWithDetails: VariantWithDetails[] = variants.map((v) => {
       const variantPrice = v.price ? parseFloat(v.price) : finalPrice;
 

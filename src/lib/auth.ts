@@ -5,7 +5,7 @@ import { admin, openAPI } from "better-auth/plugins";
 import { v7 } from "uuid";
 
 import db from "@/db";
-import { ac, customer, superAdmin } from "@/lib/utils/permissions";
+import { ac, customer, superAdmin } from "@/lib/permissions";
 
 export const auth = betterAuth({
   baseURL: process.env.NEXT_PUBLIC_SITE_URL,
@@ -28,12 +28,12 @@ export const auth = betterAuth({
     },
   },
   advanced: {
-    cookiePrefix: "better-auth", //TODO: change to diya
+    cookiePrefix: "better-auth",
     useSecureCookies: process.env.NODE_ENV === "production",
     crossSubDomainCookies: {
       enabled: false,
     },
-    // Disable origin check in development to allow requests without Origin header
+    // disable origin check in dev to allow requests without Origin header
     disableOriginCheck: process.env.NODE_ENV === "development",
     database: {
       generateId: (options) => {
@@ -55,7 +55,7 @@ export const auth = betterAuth({
         type: "boolean",
         required: false,
         defaultValue: true,
-        input: false, // Don't allow users to set this - use default value
+        input: false,
       },
     },
   },

@@ -13,8 +13,6 @@ interface ProductMediaProps {
 export default function ProductMedia({ media }: ProductMediaProps) {
   const [selectedMedia, setSelectedMedia] = useState(media?.[0]);
 
-  // useEffect removed as parent component handles resetting via key prop
-
   if (!media?.length) return null;
 
   const selectedImage = selectedMedia?.image;
@@ -81,7 +79,7 @@ function MediaPreview({ mediaItem, isSelected, onSelect }: MediaPreviewProps) {
     <div
       className={cn(
         "relative cursor-pointer bg-secondary",
-        isSelected && "outline outline-1 outline-primary"
+        isSelected && "outline-1 outline-primary"
       )}
     >
       <IKImage

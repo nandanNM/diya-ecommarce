@@ -3,11 +3,10 @@ import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { db } from "@/db";
-import { cart, cartItem, product, productVariant } from "@/db/schema";
-import { getProductBySlug } from "@/lib/actions/product.actions";
+import { cart, cartItem } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import type { CartItem as FrontendCartItem } from "@/types/cart";
-import type { Product as FrontendProduct } from "@/types/product";
+import { productViewFromSnapshot } from "@/lib/mappers/product.mapper";
+import type { Cart, CartItem as FrontendCartItem } from "@/types/cart";
 
 export async function GET() {
   try {
@@ -33,6 +32,8 @@ export async function GET() {
     if (!existingCart) {
       return NextResponse.json({ cart: null });
     }
+
+    // snapshot avoids re-joining product/media in GET
     const items = await db
       .select({
         id: cartItem.id,
@@ -41,12 +42,8 @@ export async function GET() {
         quantity: cartItem.quantity,
         price: cartItem.price,
         snapshot: cartItem.snapshot,
-        product: product,
-        variant: productVariant,
       })
       .from(cartItem)
-      .leftJoin(product, eq(cartItem.productId, product.id))
-      .leftJoin(productVariant, eq(cartItem.variantId, productVariant.id))
       .where(eq(cartItem.cartId, existingCart.id));
 
     const subtotal = items.reduce(
@@ -54,60 +51,50 @@ export async function GET() {
       0
     );
 
-    const frontendItems: FrontendCartItem[] = await Promise.all(
-      items.map(async (item) => {
-        const rawProduct = item.product as typeof product.$inferSelect | null;
+    const frontendItems: FrontendCartItem[] = items.map((item) => {
+      // snapshot: name, slug, imageUrl, price, sku, optionValues
+      const snap = item.snapshot as {
+        name?: string;
+        slug?: string;
+        imageUrl?: string | null;
+        price?: number;
+        sku?: string;
+        optionValues?: Record<string, string>;
+      };
 
-        // Try to reuse the same enrichment logic used for product pages
-        let enrichedProduct: FrontendProduct | null = null;
-        if (rawProduct?.slug) {
-          enrichedProduct = await getProductBySlug(rawProduct.slug);
+      const productView = productViewFromSnapshot(
+        item.productId,
+        snap.slug ?? "",
+        {
+          name: snap.name ?? "",
+          imageUrl: snap.imageUrl ?? null,
+          price: snap.price ?? Number(item.price),
+          sku: snap.sku ?? "",
+          optionValues: snap.optionValues ?? {},
         }
+      );
 
-        // Fallback: minimal product shape that still satisfies the storefront type
-        const safeProduct: FrontendProduct =
-          enrichedProduct ??
-          ({
-            _id: item.productId,
-            name: rawProduct?.name ?? "",
-            slug: rawProduct?.slug ?? "",
-            visible: rawProduct?.isActive ?? true,
-            description: rawProduct?.description ?? undefined,
-            priceData: {
-              currency: rawProduct?.currency ?? "INR",
-              price: Number(item.price),
-              discountedPrice: Number(item.price),
-            },
-          } as FrontendProduct);
-
-        return {
-          cartItemId: item.id,
-          product: safeProduct,
-          variantId: item.variantId ?? undefined,
-          quantity: item.quantity,
-          selectedOptions:
-            (
-              item.variant as
-                | { optionValues?: Record<string, string> }
-                | null
-                | undefined
-            )?.optionValues ?? {},
-        };
-      })
-    );
-
-    return NextResponse.json({
-      cart: {
-        id: existingCart.id,
-        userId: existingCart.userId,
-        sessionId: existingCart.sessionId,
-        items: frontendItems,
-        subtotal,
-        total: subtotal,
-        createdAt: existingCart.createdAt,
-        updatedAt: existingCart.updatedAt,
-      },
+      return {
+        cartItemId: item.id,
+        product: productView,
+        variantId: item.variantId ?? undefined,
+        quantity: item.quantity,
+        selectedOptions: snap.optionValues ?? {},
+      };
     });
+
+    const responseCart: Cart = {
+      id: existingCart.id,
+      userId: existingCart.userId,
+      sessionId: existingCart.sessionId,
+      items: frontendItems,
+      subtotal,
+      total: subtotal,
+      createdAt: existingCart.createdAt.toISOString(),
+      updatedAt: existingCart.updatedAt.toISOString(),
+    };
+
+    return NextResponse.json({ cart: responseCart });
   } catch {
     return NextResponse.json(
       { message: "Failed to fetch cart" },

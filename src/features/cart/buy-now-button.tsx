@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { CreditCardIcon } from "lucide-react";
 
 import type { ButtonProps } from "@/components/ui/button";
@@ -20,12 +19,14 @@ export default function BuyNowButton({
   className,
   ...props
 }: BuyNowButtonProps) {
-  const { startCheckoutFlow, pending } = useQuickBuy();
+  const quickBuyQuery = useQuickBuy();
 
   return (
     <LoadingButton
-      onClick={() => startCheckoutFlow()}
-      loading={pending}
+      onClick={() =>
+        quickBuyQuery.mutate({ product, quantity, selectedOptions })
+      }
+      loading={quickBuyQuery.isPending}
       variant="secondary"
       className={cn("flex gap-3 py-6", className)}
       {...props}

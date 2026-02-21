@@ -1,8 +1,10 @@
 import type { Product } from "./product";
+import type { ProductView } from "./product-view";
 
 export interface CartItem {
   cartItemId: string;
-  product: Product;
+  // snapshot-hydrated product view for display
+  product: ProductView;
   variantId?: string;
   quantity: number;
   selectedOptions: Record<string, string>;
@@ -20,7 +22,7 @@ export interface Cart {
   updatedAt: string;
 }
 
-// Values used on the frontend when initiating an "add to cart"
+// full Product needed — findVariant() requires variants/productOptions
 export interface AddToCartValues {
   product: Product;
   selectedOptions: Record<string, string>;

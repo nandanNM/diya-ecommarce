@@ -17,7 +17,6 @@ import { MAIN_NAV } from "@/config/site";
 import ShoppingCartButton from "@/features/cart/shopping-cart-button";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-// import useCartStore from "@/store/useCartStore";
 
 export default function SiteHeader() {
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -26,7 +25,6 @@ export default function SiteHeader() {
 
   return (
     <div className="font-outfit flex w-full flex-col">
-      {/* 1. ANNOUNCEMENT BAR */}
       <div className="w-full overflow-hidden border-b border-primary bg-primary py-2 whitespace-nowrap select-none lg:py-2.5">
         <div className="animate-marquee inline-block">
           {[1, 2, 3, 4].map((i) => (
@@ -43,11 +41,8 @@ export default function SiteHeader() {
 
       <header className="w-full">
         <div className="container mx-auto px-4 lg:px-10">
-          {/* 2. TOP SECTION (Exact Mobile Layout) */}
           <div className="flex h-14 items-center justify-between">
-            {/* LEFT: Hamburger (Mobile) / Search (Desktop) */}
             <div className="flex flex-1 items-center justify-start">
-              {/* Mobile Toggle */}
               <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
                 <SheetTrigger asChild>
                   <Button
@@ -78,12 +73,10 @@ export default function SiteHeader() {
                 </SheetContent>
               </Sheet>
 
-              {/* Desktop Search */}
               <div className="hidden lg:flex">
                 <SearchBar />
               </div>
             </div>
-            {/* CENTER: Logo (Centered on all screens) */}
             <Link
               href="/"
               className="group flex items-center gap-2 no-underline"
@@ -96,7 +89,6 @@ export default function SiteHeader() {
               </span>
             </Link>
 
-            {/* RIGHT: Search + Cart (Mobile) / User + Cart (Desktop) */}
             <div className="flex flex-1 items-center justify-end gap-3 lg:gap-6">
               <div className="lg:hidden">
                 <SearchBar />
@@ -112,7 +104,6 @@ export default function SiteHeader() {
             </div>
           </div>
 
-          {/* 3. DESKTOP NAVIGATION (Hidden on Mobile) */}
           <nav className="hidden justify-center py-2 lg:flex">
             <ul className="flex items-center gap-14">
               {MAIN_NAV.map((item) => {
@@ -137,7 +128,6 @@ export default function SiteHeader() {
                       />
                     </Link>
 
-                    {/* Submenu Dropdown */}
                     {item.submenu && (
                       <ul className="invisible absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
                         <div className="min-w-50 border border-border bg-popover py-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">

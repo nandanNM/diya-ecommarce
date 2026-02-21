@@ -16,7 +16,7 @@ export default function Product({ product }: ProductProps) {
 
   return (
     <Link href={`/products/${product.slug}`} className="group block space-y-3">
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-100">
+      <div className="relative aspect-3/4 w-full overflow-hidden bg-gray-100">
         <IKImage
           src={mainImage}
           alt={mainAlt}
