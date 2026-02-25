@@ -57,10 +57,6 @@ export interface VideoFile {
 export interface PriceData {
   price: number;
   discountedPrice: number;
-  formatted?: {
-    price: string;
-    discountedPrice: string;
-  };
   currency: string;
 }
 
@@ -151,11 +147,9 @@ export interface LineItem {
   quantity: number;
   price?: {
     amount: string;
-    formattedConvertedAmount: string;
   };
   fullPrice?: {
     amount: string;
-    formattedConvertedAmount: string;
   };
   descriptionLines?: Array<{
     name?: {
@@ -183,6 +177,5 @@ export interface Cart {
   lineItems: LineItem[];
   subtotal?: {
     amount: string;
-    formattedConvertedAmount: string;
   };
 }

@@ -4,7 +4,10 @@ import { cache, Suspense } from "react";
 
 import Product from "@/components/common/product";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getProductBySlug } from "@/lib/actions/product.actions";
+import {
+  getProductBySlug,
+  getRelatedProducts,
+} from "@/lib/actions/product.actions";
 import { delay } from "@/lib/utils";
 
 import ProductDetails from "../_components/ProductDetails";
@@ -22,7 +25,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const product = await getProductCached(slug);
 
   if (!product) notFound();
-
+  console.log(product);
   const mainImage = product.media?.items?.[0]?.image;
 
   return {
@@ -64,11 +67,7 @@ export default async function Page(props: PageProps) {
 }
 
 async function RelatedProducts({ currentSlug }: { currentSlug: string }) {
-  const { ALL_PRODUCTS } = await import("@/data/products");
-
-  const relatedProducts = ALL_PRODUCTS.filter((p) => p.slug !== currentSlug)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 4);
+  const relatedProducts = await getRelatedProducts(currentSlug);
 
   if (relatedProducts.length === 0) return null;
 
@@ -88,7 +87,7 @@ function RelatedProductsLoadingSkeleton() {
   return (
     <div className="flex grid-cols-2 flex-col gap-5 pt-12 sm:grid lg:grid-cols-4">
       {Array.from({ length: 4 }).map((_, i) => (
-        <Skeleton key={i} className="h-104 w-full" />
+        <Skeleton key={i} className="h-80 w-full" />
       ))}
     </div>
   );

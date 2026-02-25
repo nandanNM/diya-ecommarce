@@ -1,15 +1,6 @@
 import type { Product } from "@/types/product";
 import type { ProductView } from "@/types/product-view";
 
-const INR_FORMATTER = new Intl.NumberFormat("en-IN", {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
-
-function formatINR(amount: number): string {
-  return `₹${INR_FORMATTER.format(amount)}`;
-}
-
 /**
  * toProductView
  *
@@ -36,10 +27,6 @@ export function toProductView(product: Product): ProductView {
     price,
     discountedPrice,
     currency: product.priceData?.currency ?? "INR",
-    formattedPrice: product.priceData?.formatted?.price ?? formatINR(price),
-    formattedDiscountedPrice:
-      product.priceData?.formatted?.discountedPrice ??
-      formatINR(discountedPrice),
     inStock: product.stock?.inStock ?? true,
     stockQuantity: product.stock?.quantity,
     ribbon: product.ribbon ?? undefined,
@@ -76,8 +63,6 @@ export function productViewFromSnapshot(
     price: snapshot.price,
     discountedPrice: snapshot.price,
     currency: "INR",
-    formattedPrice: formatINR(snapshot.price),
-    formattedDiscountedPrice: formatINR(snapshot.price),
     inStock: true,
     stockQuantity: undefined,
     ribbon: undefined,

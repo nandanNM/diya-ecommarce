@@ -96,7 +96,7 @@ export const cartRefreshSchema = z.object({
 
 export const addToCartSchema = z.object({
   productId: z.string().uuid(),
-  variantId: z.string().uuid(),
+  variantId: z.string().uuid().optional().nullable(),
   quantity: z.number().int().min(1),
 });
 

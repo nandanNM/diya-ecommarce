@@ -1,6 +1,6 @@
 "use server";
 
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray, ne } from "drizzle-orm";
 
 import db from "@/db";
 import {
@@ -78,28 +78,26 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     } else if (discountType === "amount") {
       finalPrice = salePrice - discountValue;
     }
-
-    const formatPrice = (price: number) =>
-      `₹${price.toLocaleString("en-IN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}`;
+    const calculateFinalPrice = (price: number) => {
+      if (discountType === "percent") {
+        return price * (1 - discountValue / 100);
+      } else if (discountType === "amount") {
+        return Math.max(0, price - discountValue);
+      }
+      return price;
+    };
 
     const priceData = {
       currency: prod.currency || "INR",
       price: basePrice,
       discountedPrice: finalPrice,
-      formatted: {
-        price: formatPrice(basePrice),
-        discountedPrice: formatPrice(finalPrice),
-      },
     };
 
     const productOptions = (prod.productOptions || []).map((option) => {
       const choices = option.choices.map((choice) => {
         const matchingVariants = variants.filter((v) => {
           const optionValues = v.optionValues as Record<string, string>;
-          return optionValues[option.name] === choice.value;
+          return optionValues[option.name] === choice.description;
         });
 
         const choiceMediaItems = matchingVariants.flatMap((variant) =>
@@ -139,7 +137,9 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     });
 
     const variantsWithDetails: VariantWithDetails[] = variants.map((v) => {
-      const variantPrice = v.price ? parseFloat(v.price) : finalPrice;
+      const rawVariantPrice = v.price ? parseFloat(v.price) : basePrice;
+      const variantSalePrice = v.price ? rawVariantPrice : salePrice;
+      const variantFinalPrice = calculateFinalPrice(variantSalePrice);
 
       return {
         _id: v.id,
@@ -147,21 +147,13 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
         variant: {
           priceData: {
             currency: prod.currency || "INR",
-            price: variantPrice,
-            discountedPrice: variantPrice,
-            formatted: {
-              price: formatPrice(variantPrice),
-              discountedPrice: formatPrice(variantPrice),
-            },
+            price: rawVariantPrice,
+            discountedPrice: variantFinalPrice,
           },
           convertedPriceData: {
             currency: prod.currency || "INR",
-            price: variantPrice,
-            discountedPrice: variantPrice,
-            formatted: {
-              price: formatPrice(variantPrice),
-              discountedPrice: formatPrice(variantPrice),
-            },
+            price: rawVariantPrice,
+            discountedPrice: variantFinalPrice,
           },
           sku: v.sku || "",
           visible: true,
@@ -250,6 +242,76 @@ export async function getHomeProducts(): Promise<HomeProduct[] | []> {
       return [];
     }
     return products;
+  } catch {
+    return [];
+  }
+}
+
+export async function getRelatedProducts(
+  currentSlug: string,
+  limit: number = 4
+): Promise<Product[]> {
+  try {
+    const products = await db.query.product.findMany({
+      where: and(eq(dbProduct.isActive, true), ne(dbProduct.slug, currentSlug)),
+      limit,
+    });
+
+    const relatedProducts: Product[] = [];
+
+    for (const prod of products) {
+      const productMedia = await db
+        .select()
+        .from(media)
+        .where(and(eq(media.refId, prod.id), eq(media.refType, "product")))
+        .orderBy(media.position)
+        .limit(1);
+
+      const mediaItems = productMedia.map((m) => ({
+        _id: m.id,
+        mediaType: m.mediaType as "image" | "video",
+        title: m.altText || "",
+        image:
+          m.mediaType === "image"
+            ? { url: m.url, altText: m.altText || "" }
+            : undefined,
+      }));
+
+      const basePrice = parseFloat(prod.basePrice);
+      const salePrice = prod.salePrice ? parseFloat(prod.salePrice) : basePrice;
+
+      const discountValue = prod.discount?.value || 0;
+      const discountType = prod.discount?.type || "none";
+
+      let finalPrice = salePrice;
+      if (discountType === "percent") {
+        finalPrice = salePrice * (1 - discountValue / 100);
+      } else if (discountType === "amount") {
+        finalPrice = salePrice - discountValue;
+      }
+
+      relatedProducts.push({
+        _id: prod.id,
+        name: prod.name,
+        slug: prod.slug,
+        visible: prod.isActive || true,
+        media: {
+          mainMedia: mediaItems[0],
+          items: mediaItems,
+        },
+        priceData: {
+          currency: prod.currency || "INR",
+          price: basePrice,
+          discountedPrice: finalPrice,
+        },
+        ribbon: prod.ribbon || undefined,
+        productOptions: [],
+        variants: [],
+        stock: { inStock: true },
+      });
+    }
+
+    return relatedProducts;
   } catch {
     return [];
   }

@@ -62,6 +62,29 @@ async function main() {
               }))
             : [],
         })
+        .onConflictDoUpdate({
+          target: product.slug,
+          set: {
+            name: item.name,
+            description: item.description,
+            basePrice: String(item.priceData?.price ?? 0),
+            salePrice: item.priceData?.discountedPrice
+              ? String(item.priceData.discountedPrice)
+              : null,
+            productOptions: item.productOptions
+              ? item.productOptions.map((opt) => ({
+                  name: opt.name,
+                  optionType: String(opt.optionType),
+                  choices: opt.choices.map((choice) => ({
+                    value: choice.value,
+                    description: choice.description,
+                    inStock: choice.inStock,
+                    visible: choice.visible,
+                  })),
+                }))
+              : [],
+          },
+        })
         .returning();
 
       const productId = insertedProduct.id;
@@ -88,38 +111,66 @@ async function main() {
 
         if (option.choices && option.choices.length > 0) {
           for (const choice of option.choices) {
-            await db.insert(productVariant).values({
-              id: uuidv7(),
-              productId,
-              sku: `${item.slug.toUpperCase()}-${choice.description
-                .replace(/\s+/g, "-")
-                .toUpperCase()}`,
-              price: String(
-                item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
-              ),
-              costPrice: "150.00",
-              stockQuantity: item.stock?.quantity ?? 10,
-              trackInventory: true,
-              optionValues: {
-                [option.name]: choice.value,
-              },
-            });
+            await db
+              .insert(productVariant)
+              .values({
+                id: uuidv7(),
+                productId,
+                sku: `${item.slug.toUpperCase()}-${choice.description
+                  .replace(/\s+/g, "-")
+                  .toUpperCase()}`,
+                price: String(
+                  item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
+                ),
+                costPrice: "150.00",
+                stockQuantity: item.stock?.quantity ?? 10,
+                trackInventory: true,
+                optionValues: {
+                  [option.name]: choice.description,
+                },
+              })
+              .onConflictDoUpdate({
+                target: productVariant.sku,
+                set: {
+                  optionValues: {
+                    [option.name]: choice.description,
+                  },
+                  price: String(
+                    item.priceData?.discountedPrice ??
+                      item.priceData?.price ??
+                      0
+                  ),
+                  stockQuantity: item.stock?.quantity ?? 10,
+                },
+              });
           }
         }
       } else {
         // Single default variant
-        await db.insert(productVariant).values({
-          id: uuidv7(),
-          productId,
-          sku: `${item.slug.toUpperCase()}-STD`,
-          price: String(
-            item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
-          ),
-          costPrice: "150.00",
-          stockQuantity: item.stock?.quantity ?? 10,
-          trackInventory: true,
-          optionValues: {},
-        });
+        await db
+          .insert(productVariant)
+          .values({
+            id: uuidv7(),
+            productId,
+            sku: `${item.slug.toUpperCase()}-STD`,
+            price: String(
+              item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
+            ),
+            costPrice: "150.00",
+            stockQuantity: item.stock?.quantity ?? 10,
+            trackInventory: true,
+            optionValues: {},
+          })
+          .onConflictDoUpdate({
+            target: productVariant.sku,
+            set: {
+              optionValues: {},
+              price: String(
+                item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
+              ),
+              stockQuantity: item.stock?.quantity ?? 10,
+            },
+          });
       }
     }
 

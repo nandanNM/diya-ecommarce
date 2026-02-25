@@ -54,8 +54,8 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       }))
       ?.reduce((acc, curr) => ({ ...acc, ...curr }), {}) || {}
   );
-
   const selectedVariant = findVariant(product, selectedOptions);
+  console.log("selectedVariant", selectedVariant);
 
   const inStock = checkInStock(product, selectedOptions);
 

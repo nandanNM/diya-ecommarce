@@ -14,14 +14,11 @@ export function findVariantId(
 
   const choiceKeys = Object.keys(selectedOptions);
 
-  const matchedVariant =
-    choiceKeys.length === 0
-      ? product.variants[0]
-      : (product.variants.find((variant) =>
-          choiceKeys.every(
-            (key) => variant.choices?.[key] === selectedOptions[key]
-          )
-        ) ?? product.variants[0]);
+  if (choiceKeys.length === 0) return product.variants[0]?._id ?? null;
+
+  const matchedVariant = product.variants.find((variant) =>
+    choiceKeys.every((key) => variant.choices?.[key] === selectedOptions[key])
+  );
 
   return matchedVariant?._id ?? null;
 }

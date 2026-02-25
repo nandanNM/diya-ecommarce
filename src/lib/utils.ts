@@ -35,14 +35,17 @@ export function findVariant(
 
   const choiceKeys = Object.keys(selectedOptions);
 
-  const matched =
-    choiceKeys.length === 0
-      ? product.variants[0]
-      : (product.variants.find((v) =>
-          choiceKeys.every((key) => v.choices?.[key] === selectedOptions[key])
-        ) ?? product.variants[0]);
-
-  return matched ?? null;
+  return (
+    product.variants.find((v) => {
+      const variantChoices = v.choices || {};
+      const variantKeys = Object.keys(variantChoices);
+      // Strict match: must have same number of options and identical values
+      return (
+        variantKeys.length === choiceKeys.length &&
+        choiceKeys.every((key) => variantChoices[key] === selectedOptions[key])
+      );
+    }) ?? null
+  );
 }
 
 export function slugify(input: string): string {

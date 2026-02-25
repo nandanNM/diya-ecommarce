@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { variantId, quantity } = result.data;
+    const { productId, variantId, quantity } = result.data;
     const session = await auth.api.getSession({
       headers: await headers(),
     });
@@ -61,9 +61,16 @@ export async function POST(req: NextRequest) {
       existingCart = newCart[0];
     }
 
-    const variant = await db.query.productVariant.findFirst({
-      where: eq(productVariant.id, variantId),
-    });
+    let variant;
+    if (variantId) {
+      variant = await db.query.productVariant.findFirst({
+        where: eq(productVariant.id, variantId),
+      });
+    } else {
+      variant = await db.query.productVariant.findFirst({
+        where: eq(productVariant.productId, productId),
+      });
+    }
 
     if (!variant) {
       return NextResponse.json(
@@ -103,7 +110,7 @@ export async function POST(req: NextRequest) {
     const existingItem = await db.query.cartItem.findFirst({
       where: and(
         eq(cartItem.cartId, existingCart.id),
-        eq(cartItem.variantId, variantId)
+        eq(cartItem.variantId, variant.id)
       ),
     });
 

@@ -21,8 +21,6 @@ export interface ProductView {
   /** Effective selling price after discount */
   discountedPrice: number;
   currency: string;
-  formattedPrice: string;
-  formattedDiscountedPrice: string;
   inStock: boolean;
   stockQuantity?: number;
   ribbon?: string;
