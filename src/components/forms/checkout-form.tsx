@@ -13,28 +13,36 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useInitiatePayment } from "@/hooks/checkout";
 import type { GuestShippingValues } from "@/lib/validations";
 import { guestShippingSchema } from "@/lib/validations";
 
 import LoadingButton from "../ui/loading-button";
 
 interface CheckoutFormProps {
-  onSubmit?: (values: GuestShippingValues) => void;
-  renderSubmit?: (values: GuestShippingValues) => React.ReactNode;
   selectedAddress?: GuestShippingValues | null;
-  isProcessing?: boolean;
   prefillEmail?: string;
+  // Checkout data
+  cartId?: string;
+  isDirect?: boolean;
+  variantId?: string;
+  quantity?: number;
+  couponCode?: string;
+  total?: number;
 }
 
 export default function CheckoutForm({
-  onSubmit,
-  renderSubmit,
   selectedAddress,
-  isProcessing,
   prefillEmail,
+  cartId,
+  isDirect,
+  variantId,
+  quantity,
+  couponCode,
+  total,
 }: CheckoutFormProps) {
   const [error, setError] = useState<string>("");
-  const [isPending, startTransition] = useTransition();
+  const mutation = useInitiatePayment();
 
   const form = useForm<GuestShippingValues>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,9 +60,6 @@ export default function CheckoutForm({
     },
   });
 
-  // eslint-disable-next-line react-hooks/incompatible-library
-  const currentValues = form.watch();
-
   useEffect(() => {
     if (selectedAddress) {
       form.reset(selectedAddress);
@@ -68,14 +73,22 @@ export default function CheckoutForm({
   }, [prefillEmail, form]);
 
   function handleSubmit(values: GuestShippingValues) {
-    if (!onSubmit) return;
-    startTransition(async () => {
-      try {
-        onSubmit(values);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong");
-      }
-    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const payload: any = { shippingDetails: values };
+
+    if (isDirect && variantId) {
+      payload.isDirect = true;
+      payload.variantId = variantId;
+      payload.quantity = quantity;
+    } else if (cartId) {
+      payload.cartId = cartId;
+    }
+
+    if (couponCode) {
+      payload.couponCode = couponCode;
+    }
+
+    mutation.mutate(payload);
   }
 
   return (
@@ -159,7 +172,7 @@ export default function CheckoutForm({
             name="city"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>City</FormLabel>
+                <FormLabel>City/Vilage</FormLabel>
                 <FormControl>
                   <Input placeholder="Mumbai" {...field} />
                 </FormControl>
@@ -213,18 +226,14 @@ export default function CheckoutForm({
           />
         </div>
 
-        {renderSubmit ? (
-          renderSubmit(currentValues)
-        ) : (
-          <LoadingButton
-            loading={isPending || !!isProcessing}
-            className="w-full"
-            size="lg"
-            type="submit"
-          >
-            Continue to Payment
-          </LoadingButton>
-        )}
+        <LoadingButton
+          loading={mutation.isPending}
+          className="w-full"
+          size="lg"
+          type="submit"
+        >
+          {total ? `Pay ₹${total.toFixed(2)}` : "Continue to Payment"}
+        </LoadingButton>
       </form>
     </Form>
   );

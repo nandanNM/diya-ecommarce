@@ -138,6 +138,7 @@ export const checkoutInitiateSchema = z.object({
   isDirect: z.boolean().optional(),
   variantId: z.string().uuid().optional(),
   quantity: z.number().int().min(1).optional(),
+  couponCode: z.string().optional(),
 });
 
 export type CheckoutInitiateValues = z.infer<typeof checkoutInitiateSchema>;

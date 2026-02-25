@@ -21,9 +21,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/ui/loading-button";
-import PaymentButton from "@/features/checkout/PaymentButton";
 import { useCart } from "@/hooks/cart";
+import { useInitiatePayment } from "@/hooks/checkout";
+import { authClient } from "@/lib/auth-client";
 import kyInstance from "@/lib/ky";
+import type { GuestShippingValues } from "@/lib/validations";
 import type { Address } from "@/types";
 import type {
   CouponApplyResponse,
@@ -125,6 +127,23 @@ export default function Checkout() {
   const shipping = 0;
   const total = subtotal - discount + shipping;
 
+  const { data: session } = authClient.useSession();
+  const paymentMutation = useInitiatePayment();
+
+  const handleSavedAddressPayment = (values: GuestShippingValues) => {
+    paymentMutation.mutate({
+      shippingDetails: {
+        ...values,
+        email: session?.user.email ?? values.email,
+      },
+      isDirect,
+      variantId: variantId || undefined,
+      quantity,
+      cartId: cartData?.id,
+      couponCode: appliedCoupon?.code,
+    });
+  };
+
   const isLoading = isCartLoading || (isDirect && isDirectLoading);
 
   return (
@@ -161,17 +180,16 @@ export default function Checkout() {
                 onChange={() => setSelectedAddress(null)}
                 renderAction={(addr) => (
                   <div className="mt-4">
-                    <PaymentButton
-                      shippingDetails={addr}
-                      isDirect={isDirect}
-                      variantId={variantId || undefined}
-                      quantity={quantity}
-                      cartId={cartData?.id}
-                      couponCode={appliedCoupon?.code}
-                      className="w-full py-6 text-lg font-semibold shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99]"
-                      label={`Pay ₹${total.toFixed(2)} with PayU`}
-                      disabled={!displayItems.length}
-                    />
+                    <LoadingButton
+                      onClick={() => handleSavedAddressPayment(addr)}
+                      loading={paymentMutation.isPending}
+                      disabled={
+                        !displayItems.length || paymentMutation.isPending
+                      }
+                      className="w-full py-6 text-lg font-semibold shadow-lg"
+                    >
+                      Pay ₹{total.toFixed(2)} with PayU
+                    </LoadingButton>
                   </div>
                 )}
               />
@@ -190,20 +208,13 @@ export default function Checkout() {
                 </CardHeader>
                 <CardContent className="pt-6">
                   <CheckoutForm
-                    selectedAddress={selectedAddress}
-                    renderSubmit={(values) => (
-                      <PaymentButton
-                        shippingDetails={values}
-                        isDirect={isDirect}
-                        variantId={variantId || undefined}
-                        quantity={quantity}
-                        cartId={cartData?.id}
-                        couponCode={appliedCoupon?.code}
-                        className="w-full py-6 text-lg font-semibold shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99]"
-                        label={`Pay ₹${total.toFixed(2)} with PayU`}
-                        disabled={!displayItems.length}
-                      />
-                    )}
+                    selectedAddress={null}
+                    cartId={cartData?.id}
+                    isDirect={isDirect}
+                    variantId={variantId || undefined}
+                    quantity={quantity}
+                    couponCode={appliedCoupon?.code}
+                    total={total}
                   />
                 </CardContent>
               </Card>
@@ -307,7 +318,7 @@ export default function Checkout() {
                                 return toast.error("Please enter a code");
                               handleApplyCoupon(couponCode);
                             }}
-                            size="sm"
+                            size="lg"
                           >
                             Apply
                           </LoadingButton>

@@ -3,10 +3,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { redirectToPayU } from "@/components/forms/payU-form";
 import kyInstance from "@/lib/ky";
 import { findVariant } from "@/lib/utils";
+import type { CheckoutInitiateValues } from "@/lib/validations";
 import type { AddToCartValues } from "@/types/cart";
-import type { DirectCheckoutSession } from "@/types/checkout";
+import type {
+  DirectCheckoutSession,
+  PayUInitiateResponse,
+} from "@/types/checkout";
 
 export function useCartCheckout() {
   const [pending, setPending] = useState(false);
@@ -61,6 +66,26 @@ export function useQuickCheckout() {
 
     onError() {
       toast.error("Failed to start quick checkout. Please try again.");
+    },
+  });
+}
+
+export function useInitiatePayment() {
+  return useMutation({
+    mutationFn: async (payload: CheckoutInitiateValues) => {
+      return kyInstance
+        .post("/api/checkout/initiate", { json: payload })
+        .json<PayUInitiateResponse>();
+    },
+    onSuccess: (data) => {
+      redirectToPayU(data);
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError: (error: any) => {
+      const msg = error?.response
+        ? "Checkout initiation failed. Please try again."
+        : "Network error. Please check your connection.";
+      toast.error(msg);
     },
   });
 }
