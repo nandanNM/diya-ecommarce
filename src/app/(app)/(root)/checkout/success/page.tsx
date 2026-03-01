@@ -24,7 +24,13 @@ export default function CheckoutSuccessPage() {
   });
 
   useEffect(() => {
-    // Optionally trigger confetti or other success effects here
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    return () => {
+      window.onpopstate = null;
+    };
   }, []);
 
   if (!orderId) {

@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 import { FailedOrderTicket } from "@/components/checkout/failed-order-ticket";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,6 @@ export default function CheckoutFailedPage() {
   const searchParams = useSearchParams();
   const txnId = searchParams.get("txnId");
   const orderId = searchParams.get("orderId") || "N/A";
-
   const { data: attempt } = useQuery({
     queryKey: ["payment-attempt", txnId],
     queryFn: () =>
@@ -26,6 +26,16 @@ export default function CheckoutFailedPage() {
     attempt?.error ||
     searchParams.get("reason") ||
     "Payment was declined by the bank or cancelled by user.";
+
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
