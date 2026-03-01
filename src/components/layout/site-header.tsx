@@ -96,7 +96,7 @@ export default function SiteHeader() {
 
               <Link
                 className="p-0 text-foreground transition-transform hover:scale-110"
-                href={!isPending && session ? "/profile" : "/signup"}
+                href={!isPending && session ? "#" : "/signup"}
               >
                 <UserRound className="size-4" />
               </Link>

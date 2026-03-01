@@ -4,26 +4,43 @@ import Link from "next/link";
 import SignUpForm from "@/components/forms/sign-up-form";
 
 export const metadata: Metadata = {
-  title: "Sign Up",
+  title: "Sign Up | Diya",
 };
 
 export default function SignupPage() {
   return (
-    <main className="flex h-screen items-center justify-center p-5">
-      <div className="max-h-160w-full flex h-full max-w-5xl overflow-hidden rounded-2xl bg-card shadow-2xl">
-        <div className="w-full space-y-10 overflow-y-auto p-10 md:w-1/2">
-          <div className="space-y-1 text-center">
-            <h1 className="text-3xl font-bold">Sign up to Diya</h1>
-            <p className="text-muted-foreground">
-              A place where even <span className="italic">you</span> can find a
-              Candale.
+    <main className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8">
+        <div className="flex flex-col items-center text-center">
+          <Link href="/" className="group flex items-center gap-2 no-underline">
+            <div className="mb-1 text-primary transition-transform duration-500 group-hover:scale-110">
+              <img className="h-12 w-12" src="/logo.svg" alt="Diya Logo" />
+            </div>
+            <span className="font-nickainley text-3xl font-bold tracking-[0.2em] text-foreground">
+              Diya
+            </span>
+          </Link>
+          <h1 className="mt-8 text-2xl font-bold tracking-tight text-foreground">
+            Create your account
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Join Diya and find your favorite items.
+          </p>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-border/40 bg-card p-8 shadow-xl shadow-primary/5 transition-all duration-300 hover:shadow-primary/10">
+          <SignUpForm />
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="font-medium text-primary underline-offset-4 hover:underline"
+              >
+                Log in instead
+              </Link>
             </p>
-          </div>
-          <div className="space-y-5">
-            <SignUpForm />
-            <Link href="/login" className="block text-center hover:underline">
-              Already have an account? Log in
-            </Link>
           </div>
         </div>
       </div>

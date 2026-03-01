@@ -1,5 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
@@ -37,18 +38,28 @@ export default function LoginForm() {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-        {error && <p className="text-center text-destructive">{error}</p>}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        {error && (
+          <div className="rounded-lg bg-destructive/10 p-3 text-center text-sm font-medium text-destructive">
+            {error}
+          </div>
+        )}
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
+            <FormItem className="space-y-1">
+              <FormLabel className="text-[10px] font-bold tracking-widest text-muted-foreground/70 uppercase">
+                Email Address
+              </FormLabel>
               <FormControl>
-                <Input placeholder="email.." {...field} />
+                <Input
+                  placeholder="Enter your email"
+                  className="h-11 border-border/50 bg-background/50 focus:bg-background"
+                  {...field}
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-[10px]" />
             </FormItem>
           )}
         />
@@ -56,17 +67,27 @@ export default function LoginForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
+            <FormItem className="space-y-1">
+              <FormLabel className="text-[10px] font-bold tracking-widest text-muted-foreground/70 uppercase">
+                Password
+              </FormLabel>
               <FormControl>
-                <PasswordInput placeholder="password" {...field} />
+                <PasswordInput
+                  placeholder="••••••••"
+                  className="h-11 border-border/50 bg-background/50 focus:bg-background"
+                  {...field}
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-[10px]" />
             </FormItem>
           )}
         />
-        <LoadingButton loading={isPending} className="w-full" type="submit">
-          Log in
+        <LoadingButton
+          loading={isPending}
+          className="h-11 w-full text-[12px] font-bold tracking-[0.2em] uppercase"
+          type="submit"
+        >
+          {isPending ? "Authenticating..." : "Log in"}
         </LoadingButton>
       </form>
     </Form>
