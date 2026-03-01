@@ -7,7 +7,7 @@ export interface PaymentAttempt {
   gatewayTxnId?: string | null;
   mode?: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  rawResponse?: any;
+  metaData?: any;
   createdAt?: string;
   updatedAt?: string;
 }

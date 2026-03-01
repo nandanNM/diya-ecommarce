@@ -13,19 +13,24 @@ import type {
   PayUInitiateRequest,
 } from "@/types/checkout";
 
-export function useCartCheckout() {
+export function useCartCheckout(options?: { onSuccess?: () => void }) {
+  const router = useRouter();
   const [pending, setPending] = useState(false);
 
   async function startCheckoutFlow() {
     setPending(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("Checkout successful! (Mocked)");
-      setPending(false);
+      const response = await kyInstance
+        .post("/api/checkout/validate")
+        .json<{ valid: boolean }>();
+
+      if (response.valid) {
+        options?.onSuccess?.();
+        router.push("/checkout");
+      }
     } catch {
       setPending(false);
-      toast.error("Failed to load checkout. Please try again.");
     }
   }
 

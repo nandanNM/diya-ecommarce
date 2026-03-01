@@ -66,7 +66,7 @@ export async function POST(req: Request) {
             status: data.status,
             gatewayTxnId: data.mihpayid ?? null,
             mode: data.mode ?? null,
-            rawResponse: data,
+            metaData: data,
             updatedAt: new Date(),
           })
           .where(eq(paymentAttempt.id, attempt.id));

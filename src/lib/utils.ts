@@ -66,3 +66,12 @@ export function generateTransactionId(): string {
   const randomPart = Math.floor(1000 + Math.random() * 9000); // 4 digit random
   return `TXN-${timePart}${randomPart}`;
 }
+
+export async function copyToClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
+}

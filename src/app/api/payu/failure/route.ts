@@ -36,7 +36,7 @@ export async function POST(req: Request) {
           gatewayTxnId: data.mihpayid ?? null,
           mode: data.mode ?? null,
           error: data.error_Message || data.error || "Payment failed",
-          rawResponse: data,
+          metaData: data,
           updatedAt: new Date(),
         })
         .where(eq(paymentAttempt.id, attempt.id));

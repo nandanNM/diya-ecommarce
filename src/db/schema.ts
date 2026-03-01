@@ -361,7 +361,7 @@ export const paymentAttempt = pgTable("paymentAttempt", {
   gatewayTxnId: varchar("gatewayTxnId", { length: 255 }),
   mode: varchar("mode", { length: 50 }),
   error: text("error"),
-  rawResponse: jsonb("rawResponse"),
+  metaData: jsonb("metaData"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });

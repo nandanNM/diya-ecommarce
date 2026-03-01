@@ -133,15 +133,12 @@ export default function ShoppingCartButton({
                 </p>
               )}
             </div>
-            {/* <div className="w-full">
-              <WhatsAppCartCheckoutButton
-                cartItems={items}
-                subtotal={subtotal}
-                disabled={cartQuery.data?.items.length === 0}
-                className="w-full rounded"
-              />
-            </div> */}
-            <CheckoutButton size="lg" className="w-full" />
+            <CheckoutButton
+              disabled={!totalQuantity}
+              size="lg"
+              className="w-full"
+              onSuccess={() => setSheetOpen(false)}
+            />
           </div>
         </SheetContent>
       </Sheet>
