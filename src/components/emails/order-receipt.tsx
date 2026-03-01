@@ -15,18 +15,12 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
+import { SUPPORT_EMAIL } from "@/lib/constants";
 import { formatCurrency } from "@/lib/utils";
 import type { Order, OrderItem } from "@/types/order";
 
-// Extending the base Order type for the email template if needed,
-// but the current Order type already has what we need, except tax
-// which is a decimal in DB but optional string in our type.
-interface OrderWithTax extends Order {
-  tax?: string | null;
-}
-
 interface OrderReceiptEmailProps {
-  order: OrderWithTax;
+  order: Order;
   customerEmail: string;
 }
 
@@ -216,17 +210,26 @@ export const OrderReceiptEmail = ({
 
         <Section style={footer}>
           <Text style={footerText}>
-            Thank you for shopping with Diya. We appreciate your business!
+            Thank you for choosing <strong>Diya</strong>. We truly appreciate
+            your trust in us and are committed to delivering quality products
+            and service.
           </Text>
           <Text style={{ ...footerText, marginTop: "15px" }}>
-            If you have any questions about your order, please visit{" "}
-            <Link href={`${baseUrl}/orders`} style={footerLink}>
-              Account Settings
-            </Link>{" "}
-            or contact our support team.
+            You can track your order and manage your account anytime by visiting{" "}
+            <Link href={`${baseUrl}`} style={footerLink}>
+              Diya
+            </Link>
+          </Text>
+          <Text style={{ ...footerText, marginTop: "15px" }}>
+            If you need assistance, our support team is here to help. Please
+            contact us at{" "}
+            <Link href={`mailto:${SUPPORT_EMAIL}`} style={footerLink}>
+              {SUPPORT_EMAIL}
+            </Link>
+            .
           </Text>
           <Text style={{ ...footerText, marginTop: "25px" }}>
-            Copyright © 2026 Diya E-commerce. All rights reserved.
+            Copyright © 2026 Diya. All rights reserved.
           </Text>
         </Section>
       </Container>

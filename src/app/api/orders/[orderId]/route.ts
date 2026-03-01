@@ -97,8 +97,7 @@ export async function GET(
         shippingAddress: shippingAddr ?? null,
       },
     });
-  } catch (error) {
-    console.error("Fetch Single Order Error:", error);
+  } catch {
     return NextResponse.json(
       { message: "Failed to fetch order details" },
       { status: 500 }

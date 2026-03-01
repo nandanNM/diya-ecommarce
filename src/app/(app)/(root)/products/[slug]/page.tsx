@@ -25,7 +25,6 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const product = await getProductCached(slug);
 
   if (!product) notFound();
-  console.log(product);
   const mainImage = product.media?.items?.[0]?.image;
 
   return {

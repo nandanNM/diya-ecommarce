@@ -13,3 +13,5 @@ export const SUPPORT_ADDRESS = "Kalyani, Nadia, West Bengal, 741235, India";
 // SHIPPING
 export const SHIPPING_COST = 60;
 export const FREE_SHIPPING_THRESHOLD_ITEMS = 2;
+
+export const ORDER_UPDATE_ADMIN_EMAILS = ["diya.home14@gmail.com"];

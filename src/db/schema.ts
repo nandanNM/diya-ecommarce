@@ -134,19 +134,18 @@ export const product = pgTable("product", {
   additionalInfoSections: jsonb("additionalInfoSections").$type<
     { title: string; description: string }[]
   >(),
-  productOptions:
-    jsonb("productOptions").$type<
-      {
-        name: string;
-        optionType: string;
-        choices: {
-          value: string;
-          description: string;
-          inStock: boolean;
-          visible: boolean;
-        }[];
-      }[]
-    >(),
+  productOptions: jsonb("productOptions").$type<
+    {
+      name: string;
+      optionType: string;
+      choices: {
+        value: string;
+        description: string;
+        inStock: boolean;
+        visible: boolean;
+      }[];
+    }[]
+  >(),
   discount: jsonb("discount").$type<{
     type: "percent" | "amount" | "none";
     value: number;
@@ -313,6 +312,7 @@ export const shipment = pgTable("shipment", {
   shippedAt: timestamp("shippedAt"),
   deliveredAt: timestamp("deliveredAt"),
   notes: text("notes"),
+  metadata: jsonb("metadata"),
 });
 export const coupon = pgTable("coupon", {
   ...baseSchema,

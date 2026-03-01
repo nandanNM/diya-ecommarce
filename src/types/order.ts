@@ -18,9 +18,10 @@ export interface Order {
   fulfillmentStatus?: string | null;
   total: string;
   subtotal: string;
-  shippingCost?: string;
+  tax?: string | null;
+  shippingCost?: string | null;
   discount: string | null;
-  createdAt: string;
+  createdAt: string | Date;
   items: OrderItem[];
   shippingAddress?: {
     fullName: string;
