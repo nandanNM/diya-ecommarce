@@ -10,7 +10,7 @@ import type { CheckoutInitiateValues } from "@/lib/validations";
 import type { AddToCartValues } from "@/types/cart";
 import type {
   DirectCheckoutSession,
-  PayUInitiateResponse,
+  PayUInitiateRequest,
 } from "@/types/checkout";
 
 export function useCartCheckout() {
@@ -75,17 +75,16 @@ export function useInitiatePayment() {
     mutationFn: async (payload: CheckoutInitiateValues) => {
       return kyInstance
         .post("/api/checkout/initiate", { json: payload })
-        .json<PayUInitiateResponse>();
+        .json<PayUInitiateRequest>();
     },
     onSuccess: (data) => {
       redirectToPayU(data);
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
-      const msg = error?.response
-        ? "Checkout initiation failed. Please try again."
-        : "Network error. Please check your connection.";
-      toast.error(msg);
+      toast.error(
+        error.message || "Checkout initiation failed. Please try again."
+      );
     },
   });
 }

@@ -54,3 +54,15 @@ export function slugify(input: string): string {
     .replace(/ /g, "-")
     .replace(/[^a-z0-9-]/g, "");
 }
+
+export function generateOrderId(): string {
+  const timePart = Date.now().toString().slice(-6);
+  const randomPart = Math.floor(100 + Math.random() * 900);
+  return `ORD-${timePart}${randomPart}`;
+}
+
+export function generateTransactionId(): string {
+  const timePart = Date.now();
+  const randomPart = Math.floor(1000 + Math.random() * 9000); // 4 digit random
+  return `TXN-${timePart}${randomPart}`;
+}

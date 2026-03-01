@@ -16,7 +16,7 @@ export async function DELETE(
     const session = await auth.api.getSession({ headers: await headers() });
     const userId = session?.user?.id;
     const cookieStore = await cookies();
-    const sessionId = cookieStore.get("diya-cart-sessionId")?.value;
+    const sessionId = cookieStore.get("diya-sessionId")?.value;
 
     const item = await db.query.cartItem.findFirst({
       where: eq(cartItem.id, id),

@@ -28,11 +28,11 @@ export async function POST(req: NextRequest) {
     const userId = session?.user.id;
 
     const cookieStore = cookies();
-    let sessionId = (await cookieStore).get("diya-cart-sessionId")?.value;
+    let sessionId = (await cookieStore).get("diya-sessionId")?.value;
 
     if (!userId && !sessionId) {
       sessionId = uuidv7();
-      (await cookieStore).set("diya-cart-sessionId", sessionId, {
+      (await cookieStore).set("diya-sessionId", sessionId, {
         httpOnly: true,
         path: "/",
       });

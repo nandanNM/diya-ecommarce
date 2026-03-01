@@ -13,6 +13,8 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
+import { baseSchema, user } from "./auth-schema";
+
 // ENUMS
 export const roleEnum = pgEnum("role", ["customer", "admin", "manager"]);
 export const orderStatusEnum = pgEnum("orderStatus", [
@@ -41,7 +43,6 @@ export const discountTypeEnum = pgEnum("discountType", [
   "percentage",
   "fixed_amount",
 ]);
-
 export const shipmentStatusEnum = pgEnum("shipmentStatus", [
   "pending",
   "ordered",
@@ -57,8 +58,8 @@ export const fulfillmentStatusEnum = pgEnum("fulfillmentStatus", [
   "returned",
   "cancelled",
 ]);
-import { baseSchema, user } from "./auth-schema";
 
+// USER & ADDRESS
 export const address = pgTable("address", {
   ...baseSchema,
   userId: uuid("userId")
@@ -76,7 +77,7 @@ export const address = pgTable("address", {
   label: varchar("label", { length: 50 }),
 });
 
-// media
+// MEDIA
 export const media = pgTable(
   "media",
   {
@@ -95,7 +96,7 @@ export const media = pgTable(
   })
 );
 
-// catalog
+// CATALOG & COLLECTIONS
 export const category = pgTable(
   "category",
   {
@@ -115,29 +116,37 @@ export const category = pgTable(
   })
 );
 
+export const collection = pgTable("collection", {
+  ...baseSchema,
+  name: varchar("name", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  description: text("description"),
+  image: varchar("image", { length: 1000 }),
+  position: integer("position").default(0),
+  isActive: boolean("isActive").default(true),
+});
+
 export const product = pgTable("product", {
   ...baseSchema,
   name: varchar("name", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   description: text("description"),
   additionalInfoSections: jsonb("additionalInfoSections").$type<
-    {
-      title: string;
-      description: string;
-    }[]
+    { title: string; description: string }[]
   >(),
-  productOptions: jsonb("productOptions").$type<
-    {
-      name: string;
-      optionType: string;
-      choices: {
-        value: string;
-        description: string;
-        inStock: boolean;
-        visible: boolean;
-      }[];
-    }[]
-  >(),
+  productOptions:
+    jsonb("productOptions").$type<
+      {
+        name: string;
+        optionType: string;
+        choices: {
+          value: string;
+          description: string;
+          inStock: boolean;
+          visible: boolean;
+        }[];
+      }[]
+    >(),
   discount: jsonb("discount").$type<{
     type: "percent" | "amount" | "none";
     value: number;
@@ -154,6 +163,23 @@ export const product = pgTable("product", {
     onDelete: "set null",
   }),
 });
+
+export const productCollections = pgTable(
+  "productCollections",
+  {
+    productId: uuid("productId")
+      .notNull()
+      .references(() => product.id, { onDelete: "cascade" }),
+    collectionId: uuid("collectionId")
+      .notNull()
+      .references(() => collection.id, { onDelete: "cascade" }),
+    position: integer("position").default(0),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (t) => ({
+    pk: index("product_collection_idx").on(t.productId, t.collectionId),
+  })
+);
 
 export const productVariant = pgTable("productVariant", {
   ...baseSchema,
@@ -198,7 +224,7 @@ export const order = pgTable(
     orderNumber: varchar("orderNumber", { length: 50 }).notNull().unique(),
     userId: uuid("userId").references(() => user.id, { onDelete: "set null" }),
     // used to look up guest orders via cookie
-    guestOrderToken: uuid("guestOrderToken").unique(),
+    guestOrderToken: uuid("guestOrderToken"),
     status: orderStatusEnum("status").default("pending").notNull(),
     paymentStatus: paymentStatusEnum("paymentStatus")
       .default("pending")
@@ -314,9 +340,7 @@ export const couponUsage = pgTable("couponUsage", {
   couponId: uuid("couponId")
     .notNull()
     .references(() => coupon.id, { onDelete: "cascade" }),
-  userId: uuid("userId")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
+  userId: uuid("userId").references(() => user.id, { onDelete: "cascade" }),
   orderId: uuid("orderId")
     .notNull()
     .references(() => order.id, { onDelete: "cascade" }),
@@ -330,7 +354,7 @@ export const paymentAttempt = pgTable("paymentAttempt", {
   orderId: uuid("orderId")
     .notNull()
     .references(() => order.id, { onDelete: "cascade" }),
-  txnid: varchar("txnid", { length: 255 }).notNull().unique(),
+  txnId: varchar("txnid", { length: 255 }).notNull().unique(),
   gateway: varchar("gateway", { length: 50 }).notNull().default("payu"),
   amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
   status: varchar("status", { length: 50 }).default("pending"),

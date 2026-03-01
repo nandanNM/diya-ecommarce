@@ -15,6 +15,7 @@ import {
   useRemoveCartItem,
   useUpdateCartItemQuantity,
 } from "@/hooks/cart";
+import { FREE_SHIPPING_THRESHOLD_ITEMS, SHIPPING_COST } from "@/lib/constants";
 import { cn, formatCurrency } from "@/lib/utils";
 import type { CartItem } from "@/types/cart";
 
@@ -103,7 +104,11 @@ export default function ShoppingCartButton({
 
               <div className="flex justify-between text-sm">
                 <span>Delivery Charge:</span>
-                <span>{totalQuantity === 1 ? formatCurrency(60) : "Free"}</span>
+                <span>
+                  {totalQuantity >= FREE_SHIPPING_THRESHOLD_ITEMS
+                    ? "Free"
+                    : formatCurrency(SHIPPING_COST)}
+                </span>
               </div>
 
               <div className="flex justify-between pt-2 text-lg font-bold">
@@ -111,14 +116,20 @@ export default function ShoppingCartButton({
                 <span>
                   {formatCurrency(
                     (cartQuery.data?.subtotal as number) +
-                      (totalQuantity === 1 ? 60 : 0)
+                      (totalQuantity >= FREE_SHIPPING_THRESHOLD_ITEMS
+                        ? 0
+                        : SHIPPING_COST)
                   )}
                 </span>
               </div>
 
-              {totalQuantity === 1 && (
+              {totalQuantity < FREE_SHIPPING_THRESHOLD_ITEMS && (
                 <p className="mt-1 text-center text-xs font-medium text-green-600">
-                  Add 1 more item for FREE delivery!
+                  Add {FREE_SHIPPING_THRESHOLD_ITEMS - totalQuantity} more{" "}
+                  {FREE_SHIPPING_THRESHOLD_ITEMS - totalQuantity === 1
+                    ? "item"
+                    : "items"}{" "}
+                  for FREE delivery!
                 </p>
               )}
             </div>

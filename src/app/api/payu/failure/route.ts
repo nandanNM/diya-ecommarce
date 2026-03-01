@@ -2,72 +2,52 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 import { db } from "@/db";
-import { order, paymentAttempt } from "@/db/schema";
-import { payuCallbackSchema } from "@/lib/validations";
+import { paymentAttempt } from "@/db/schema";
 import { payuService } from "@/services/payu.service";
+import type { PayuCallback } from "@/types/payu";
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const data = Object.fromEntries(formData.entries());
-
-    const validation = payuCallbackSchema.safeParse(data);
-    if (!validation.success) {
-      return NextResponse.json(
-        { message: "Invalid callback data" },
-        { status: 400 }
-      );
-    }
-
-    const payload = validation.data;
+    const data = Object.fromEntries(
+      formData.entries()
+    ) as unknown as PayuCallback;
     const salt = process.env.PAYU_MERCHANT_SALT!;
 
-    const isValid = payuService.verifyHash(payload, salt);
-    if (!isValid) {
-      return NextResponse.json(
-        { message: "Hash verification failed" },
-        { status: 400 }
+    // Verify Hash
+    const isValidHash = payuService.verifyResponseHash(data, salt);
+
+    if (!isValidHash) {
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=invalid`
       );
     }
 
+    // Find and Update Payment Attempt
     const attempt = await db.query.paymentAttempt.findFirst({
-      where: eq(paymentAttempt.txnid, payload.txnid),
+      where: eq(paymentAttempt.txnId, data.txnid),
     });
 
-    if (!attempt) {
-      return NextResponse.json(
-        { message: "Attempt not found" },
-        { status: 404 }
-      );
+    if (attempt) {
+      await db
+        .update(paymentAttempt)
+        .set({
+          status: data.status,
+          gatewayTxnId: data.mihpayid ?? null,
+          mode: data.mode ?? null,
+          error: data.error_Message || data.error || "Payment failed",
+          rawResponse: data,
+          updatedAt: new Date(),
+        })
+        .where(eq(paymentAttempt.id, attempt.id));
     }
-
-    const orderRow = await db.query.order.findFirst({
-      where: eq(order.id, attempt.orderId),
-    });
-
-    await db
-      .update(paymentAttempt)
-      .set({
-        status: "failure",
-        error: payload.error_Message || "Payment failed",
-        gatewayTxnId: payload.mihpayid,
-        rawResponse: payload,
-        updatedAt: new Date(),
-      })
-      .where(eq(paymentAttempt.id, attempt.id));
-
-    const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL!;
-    const orderNum = orderRow?.orderNumber || "unknown";
 
     return NextResponse.redirect(
-      `${redirectUrl}/checkout/failed?order=${orderNum}&reason=${encodeURIComponent(
-        payload.error_Message || "Payment was declined or cancelled"
-      )}`,
-      { status: 303 }
+      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/failed?txnId=${data.txnid}&orderId=${attempt?.orderId || ""}`
     );
   } catch {
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL!}/checkout`
+      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=error`
     );
   }
 }

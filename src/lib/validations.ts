@@ -125,19 +125,19 @@ export const guestShippingSchema = z.object({
   city: requiredString.min(2, "City is required"),
   state: requiredString.min(2, "State is required"),
   postalCode: requiredString.regex(/^[1-9][0-9]{5}$/, "Invalid PIN code"),
-  country: requiredString.default("India"),
+  country: requiredString,
 });
 
 export type GuestShippingValues = z.infer<typeof guestShippingSchema>;
 
 export const checkoutInitiateSchema = z.object({
   shippingDetails: guestShippingSchema,
-  // cart-based
   cartId: z.string().uuid().optional(),
-  // direct buy
   isDirect: z.boolean().optional(),
   variantId: z.string().uuid().optional(),
   quantity: z.number().int().min(1).optional(),
+  totalAmount: z.number().optional(),
+  discount: z.number().optional(),
   couponCode: z.string().optional(),
 });
 

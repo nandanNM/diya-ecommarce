@@ -43,7 +43,7 @@ export const payuService = {
 
   // sha512 reverse: salt|status||||||udf5..udf1|email|firstname|productinfo|amount|txnid|key
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  verifyHash(params: any, salt: string): boolean {
+  verifyResponseHash(params: any, salt: string): boolean {
     const {
       status,
       udf5 = "",

@@ -32,8 +32,8 @@ export async function POST(req: Request) {
 
     if (!existingCoupon) {
       return NextResponse.json(
-        { message: "Invalid or expired coupon code" },
-        { status: 404 }
+        { success: false, message: "Invalid or expired coupon code" },
+        { status: 400 }
       );
     }
 
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       existingCoupon.usageCount >= existingCoupon.usageLimit
     ) {
       return NextResponse.json(
-        { message: "This coupon has reached its limit" },
+        { success: false, message: "This coupon has reached its limit" },
         { status: 400 }
       );
     }
@@ -51,6 +51,7 @@ export async function POST(req: Request) {
     if (subtotal < parseFloat(existingCoupon.minPurchaseAmount || "0")) {
       return NextResponse.json(
         {
+          success: false,
           message: `Minimum purchase of ₹${existingCoupon.minPurchaseAmount} required`,
         },
         { status: 400 }
@@ -75,6 +76,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({
+      success: true,
       couponId: existingCoupon.id,
       code: existingCoupon.code,
       discountAmount: Number(discountAmount.toFixed(2)),
@@ -82,7 +84,7 @@ export async function POST(req: Request) {
     });
   } catch {
     return NextResponse.json(
-      { message: "Internal server error" },
+      { success: false, message: "Internal server error" },
       { status: 500 }
     );
   }

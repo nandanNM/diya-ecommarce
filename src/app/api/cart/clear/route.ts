@@ -14,7 +14,7 @@ export async function DELETE() {
 
     const userId = session?.user.id;
     const cookieStore = await cookies();
-    const sessionId = cookieStore.get("diya-cart-sessionId")?.value;
+    const sessionId = cookieStore.get("diya-sessionId")?.value;
 
     let existingCart;
 

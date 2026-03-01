@@ -1,45 +1,36 @@
 import { eq } from "drizzle-orm";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { v7 as uuidv7 } from "uuid";
 
 import { db } from "@/db";
-import { cart, cartItem, order, payment, paymentAttempt } from "@/db/schema";
-import { payuCallbackSchema } from "@/lib/validations";
+import { order, payment, paymentAttempt } from "@/db/schema";
 import { payuService } from "@/services/payu.service";
+import type { PayuCallback } from "@/types/payu";
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const data = Object.fromEntries(formData.entries());
-
-    const validation = payuCallbackSchema.safeParse(data);
-    if (!validation.success) {
-      return NextResponse.json(
-        { message: "Invalid callback data" },
-        { status: 400 }
-      );
-    }
-
-    const payload = validation.data;
+    const data = Object.fromEntries(
+      formData.entries()
+    ) as unknown as PayuCallback;
     const salt = process.env.PAYU_MERCHANT_SALT!;
 
-    const isValid = payuService.verifyHash(payload, salt);
-    if (!isValid) {
-      return NextResponse.json(
-        { message: "Hash verification failed" },
-        { status: 400 }
+    const isValidHash = payuService.verifyResponseHash(data, salt);
+
+    if (!isValidHash) {
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=invalid`
       );
     }
 
+    //  Find Payment Attempt & Order
     const attempt = await db.query.paymentAttempt.findFirst({
-      where: eq(paymentAttempt.txnid, payload.txnid),
+      where: eq(paymentAttempt.txnId, data.txnid),
     });
 
     if (!attempt) {
-      return NextResponse.json(
-        { message: "Attempt not found" },
-        { status: 404 }
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`
       );
     }
 
@@ -48,93 +39,67 @@ export async function POST(req: Request) {
     });
 
     if (!orderRow) {
-      return NextResponse.json({ message: "Order not found" }, { status: 404 });
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`
+      );
     }
 
-    if (orderRow.paymentStatus !== "paid") {
+    // Process Success
+    if (data.status === "success") {
       await db.transaction(async (tx) => {
+        // Update payment attempt
         await tx
           .update(paymentAttempt)
           .set({
-            status: "success",
-            gatewayTxnId: payload.mihpayid,
-            mode: payload.mode,
-            rawResponse: payload,
+            status: data.status,
+            gatewayTxnId: data.mihpayid ?? null,
+            mode: data.mode ?? null,
+            rawResponse: data,
             updatedAt: new Date(),
           })
           .where(eq(paymentAttempt.id, attempt.id));
 
+        // Update order status
         await tx
           .update(order)
           .set({
             paymentStatus: "paid",
             status: "processing",
-            updatedAt: new Date(),
           })
-          .where(eq(order.id, orderRow.id));
+          .where(eq(order.id, attempt.orderId));
 
+        // Create formal payment record
         await tx.insert(payment).values({
           id: uuidv7(),
-          orderId: orderRow.id,
-          userId: orderRow.userId,
+          orderId: attempt.orderId,
+          userId: orderRow.userId, // Using userId from orderRow
           gateway: "payu",
-          gatewayTransactionId: payload.mihpayid,
-          amount: payload.amount,
-          currency: "INR",
+          gatewayTransactionId: data.mihpayid,
+          amount: data.amount,
           status: "paid",
-          paymentMethod: payload.mode,
-          metadata: payload,
+          paymentMethod: data.mode,
+          metadata: data,
         });
-
-        if (orderRow.userId) {
-          const userCart = await tx.query.cart.findFirst({
-            where: eq(cart.userId, orderRow.userId),
-          });
-          if (userCart) {
-            await tx.delete(cartItem).where(eq(cartItem.cartId, userCart.id));
-          }
-        } else {
-          // guest cart cleanup
-          const cookieStore = await cookies();
-          const sessionId = cookieStore.get("diya-cart-sessionId")?.value;
-          if (sessionId) {
-            const guestCart = await tx.query.cart.findFirst({
-              where: eq(cart.sessionId, sessionId),
-            });
-            if (guestCart) {
-              await tx
-                .delete(cartItem)
-                .where(eq(cartItem.cartId, guestCart.id));
-            }
-          }
-        }
       });
     }
 
-    const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL!;
+    const res = NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?orderId=${attempt.orderId}`
+    );
 
-    if (!orderRow.userId && orderRow.guestOrderToken) {
-      const res = NextResponse.redirect(
-        `${redirectUrl}/guest/orders?order=${orderRow.orderNumber}`,
-        { status: 303 }
-      );
-      (await cookies()).set(
-        "diya-guest-order-token",
-        orderRow.guestOrderToken,
-        {
-          httpOnly: true,
-          path: "/",
-          maxAge: 60 * 60 * 24 * 7, // 1 week
-        }
-      );
-      return res;
+    if (orderRow.guestOrderToken) {
+      res.cookies.set("diya-sessionId", orderRow.guestOrderToken, {
+        path: "/",
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
     }
 
-    return NextResponse.redirect(
-      `${redirectUrl}/orders?order=${orderRow.orderNumber}&success=1`,
-      { status: 303 }
-    );
+    return res;
   } catch {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL!}/orders`);
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=error`
+    );
   }
 }

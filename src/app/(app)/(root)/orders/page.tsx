@@ -6,37 +6,7 @@ import { useRouter } from "next/navigation";
 
 import kyInstance from "@/lib/ky";
 import { formatCurrency } from "@/lib/utils";
-
-interface OrderItem {
-  id: string;
-  name: string | null;
-  slug: string | null;
-  sku: string | null;
-  selectedOptions: Record<string, string> | null;
-  quantity: number;
-  price: string;
-  subtotal: string;
-}
-
-interface Order {
-  id: string;
-  orderNumber: string;
-  status: string;
-  paymentStatus: string;
-  fulfillmentStatus: string | null;
-  subtotal: string;
-  total: string;
-  discount: string | null;
-  createdAt: string;
-  items: OrderItem[];
-  shippingAddress: {
-    fullName: string;
-    addressLine1: string;
-    city: string;
-    state: string;
-    postalCode: string;
-  } | null;
-}
+import type { Order } from "@/types/order";
 
 const STATUS_COLORS: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800",

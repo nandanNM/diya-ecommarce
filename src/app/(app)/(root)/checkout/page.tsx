@@ -14,19 +14,14 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { OrderSummarySkeleton } from "@/components/checkout/order-summary-skeleton";
-import { SavedAddressesDialog } from "@/components/checkout/saved-addresses-dialog";
-import { SelectedAddressCard } from "@/components/checkout/selected-address-card";
 import CheckoutForm from "@/components/forms/checkout-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/ui/loading-button";
 import { useCart } from "@/hooks/cart";
-import { useInitiatePayment } from "@/hooks/checkout";
-import { authClient } from "@/lib/auth-client";
+import { FREE_SHIPPING_THRESHOLD_ITEMS, SHIPPING_COST } from "@/lib/constants";
 import kyInstance from "@/lib/ky";
-import type { GuestShippingValues } from "@/lib/validations";
-import type { Address } from "@/types";
 import type {
   CouponApplyResponse,
   DirectCheckoutSession,
@@ -65,7 +60,6 @@ export default function Checkout() {
   const [appliedCoupon, setAppliedCoupon] =
     useState<CouponApplyResponse | null>(null);
   const [couponError, setCouponError] = useState<string | null>(null);
-  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
 
   const displayItems = useMemo((): DisplayItem[] => {
     if (isDirect && directData) {
@@ -101,18 +95,13 @@ export default function Checkout() {
           .json<CouponApplyResponse>();
       },
       onSuccess: (data) => {
-        if (data.success) {
-          setAppliedCoupon(data);
-          setCouponCode("");
-          toast.success("Coupon applied!");
-        } else {
-          toast.error(data.message || "Invalid coupon");
-        }
+        setAppliedCoupon(data);
+        setCouponCode("");
+        toast.success("Coupon applied!");
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onError: (error: any) => {
-        const msg = error.response?.json()?.message || "Invalid coupon";
-        toast.error(msg);
+        toast.error(error.message || "Invalid coupon");
         setAppliedCoupon(null);
       },
     }
@@ -123,26 +112,14 @@ export default function Checkout() {
     setCouponError(null);
   };
 
+  const totalQuantity = displayItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
   const discount = appliedCoupon?.discountAmount ?? 0;
-  const shipping = 0;
+  const shipping =
+    totalQuantity >= FREE_SHIPPING_THRESHOLD_ITEMS ? 0 : SHIPPING_COST;
   const total = subtotal - discount + shipping;
-
-  const { data: session } = authClient.useSession();
-  const paymentMutation = useInitiatePayment();
-
-  const handleSavedAddressPayment = (values: GuestShippingValues) => {
-    paymentMutation.mutate({
-      shippingDetails: {
-        ...values,
-        email: session?.user.email ?? values.email,
-      },
-      isDirect,
-      variantId: variantId || undefined,
-      quantity,
-      cartId: cartData?.id,
-      couponCode: appliedCoupon?.code,
-    });
-  };
 
   const isLoading = isCartLoading || (isDirect && isDirectLoading);
 
@@ -174,51 +151,31 @@ export default function Checkout() {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
           <div className="lg:col-span-2">
-            {selectedAddress ? (
-              <SelectedAddressCard
-                address={selectedAddress}
-                onChange={() => setSelectedAddress(null)}
-                renderAction={(addr) => (
-                  <div className="mt-4">
-                    <LoadingButton
-                      onClick={() => handleSavedAddressPayment(addr)}
-                      loading={paymentMutation.isPending}
-                      disabled={
-                        !displayItems.length || paymentMutation.isPending
-                      }
-                      className="w-full py-6 text-lg font-semibold shadow-lg"
-                    >
-                      Pay ₹{total.toFixed(2)} with PayU
-                    </LoadingButton>
+            <Card className="overflow-hidden border-primary/20 shadow-sm">
+              <CardHeader className="bg-primary/5 pb-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-primary" />
+                    <h2 className="text-lg font-semibold tracking-tight">
+                      Shipping Details
+                    </h2>
                   </div>
-                )}
-              />
-            ) : (
-              <Card className="overflow-hidden border-primary/20 shadow-sm">
-                <CardHeader className="bg-primary/5 pb-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5 text-primary" />
-                      <h2 className="text-lg font-semibold tracking-tight">
-                        Shipping Details
-                      </h2>
-                    </div>
-                    <SavedAddressesDialog onSelect={setSelectedAddress} />
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <CheckoutForm
-                    selectedAddress={null}
-                    cartId={cartData?.id}
-                    isDirect={isDirect}
-                    variantId={variantId || undefined}
-                    quantity={quantity}
-                    couponCode={appliedCoupon?.code}
-                    total={total}
-                  />
-                </CardContent>
-              </Card>
-            )}
+                  {/* <SavedAddressesDialog onSelect={setSelectedAddress} /> */}
+                </div>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <CheckoutForm
+                  selectedAddress={null}
+                  cartId={cartData?.id}
+                  isDirect={isDirect}
+                  variantId={variantId || undefined}
+                  quantity={quantity}
+                  couponCode={appliedCoupon?.code}
+                  total={total}
+                  isLoading={isLoading}
+                />
+              </CardContent>
+            </Card>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -356,6 +313,12 @@ export default function Checkout() {
                       <span className="text-muted-foreground">Subtotal</span>
                       <span className="font-medium">
                         ₹{subtotal.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Shipping</span>
+                      <span className="font-medium">
+                        {shipping > 0 ? `₹${shipping.toFixed(2)}` : "FREE"}
                       </span>
                     </div>
                     {discount > 0 && (

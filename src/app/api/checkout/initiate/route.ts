@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gte, lte, sql } from "drizzle-orm";
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { v7 as uuidv7 } from "uuid";
@@ -7,6 +7,8 @@ import { db } from "@/db";
 import {
   cart,
   cartItem,
+  coupon,
+  couponUsage,
   order,
   orderItem,
   orderShippingAddress,
@@ -14,6 +16,8 @@ import {
   productVariant,
 } from "@/db/schema";
 import { auth } from "@/lib/auth";
+import { FREE_SHIPPING_THRESHOLD_ITEMS, SHIPPING_COST } from "@/lib/constants";
+import { generateOrderId, generateTransactionId } from "@/lib/utils";
 import { checkoutInitiateSchema } from "@/lib/validations";
 import { payuService } from "@/services/payu.service";
 
@@ -32,7 +36,14 @@ export async function POST(req: Request) {
       );
     }
 
-    const { shippingDetails, isDirect, variantId, quantity } = validation.data;
+    const {
+      shippingDetails,
+      isDirect,
+      variantId,
+      quantity,
+      totalAmount,
+      couponCode,
+    } = validation.data;
 
     const session = await auth.api.getSession({ headers: await headers() });
     const userId = session?.user?.id ?? null;
@@ -73,7 +84,7 @@ export async function POST(req: Request) {
       ];
     } else {
       const cookieStore = await cookies();
-      const sessionId = cookieStore.get("diya-cart-sessionId")?.value;
+      const sessionId = cookieStore.get("diya-sessionId")?.value;
 
       let existingCart;
       if (userId) {
@@ -120,7 +131,95 @@ export async function POST(req: Request) {
       0
     );
 
-    const txnid = `txn_${uuidv7()}`;
+    const totalQuantity = lineItems.reduce((sum, i) => sum + i.quantity, 0);
+    const shippingCost =
+      totalQuantity >= FREE_SHIPPING_THRESHOLD_ITEMS ? 0 : SHIPPING_COST;
+
+    let discountAmount = 0;
+    let appliedCouponId: string | null = null;
+
+    if (couponCode) {
+      const now = new Date();
+      const existingCoupon = await db.query.coupon.findFirst({
+        where: and(
+          eq(coupon.code, couponCode.toUpperCase()),
+          eq(coupon.isActive, true),
+          gte(coupon.endDate, now),
+          lte(coupon.startDate, now)
+        ),
+      });
+
+      if (!existingCoupon) {
+        return NextResponse.json(
+          { message: "Invalid or expired coupon code" },
+          { status: 400 }
+        );
+      }
+
+      if (subtotalAmount < Number(existingCoupon.minPurchaseAmount)) {
+        return NextResponse.json(
+          {
+            message: `Minimum purchase of ${existingCoupon.minPurchaseAmount} required for this coupon`,
+          },
+          { status: 400 }
+        );
+      }
+
+      if (
+        existingCoupon.usageLimit &&
+        (existingCoupon.usageCount ?? 0) >= existingCoupon.usageLimit
+      ) {
+        return NextResponse.json(
+          { message: "Coupon usage limit reached" },
+          { status: 400 }
+        );
+      }
+
+      if (existingCoupon.discountType === "percentage") {
+        discountAmount =
+          (subtotalAmount * Number(existingCoupon.discountValue)) / 100;
+        if (
+          existingCoupon.maxDiscountAmount &&
+          discountAmount > Number(existingCoupon.maxDiscountAmount)
+        ) {
+          discountAmount = Number(existingCoupon.maxDiscountAmount);
+        }
+      } else {
+        discountAmount = Number(existingCoupon.discountValue);
+      }
+      appliedCouponId = existingCoupon.id;
+    }
+
+    const calculatedTotal = Math.max(
+      0,
+      subtotalAmount - discountAmount + shippingCost
+    );
+
+    // Price validation from frontend
+    if (totalAmount !== undefined) {
+      const diff = Math.abs(calculatedTotal - totalAmount);
+      if (diff > 0.01) {
+        return NextResponse.json(
+          {
+            message: "Price mismatch. Please refresh your cart and try again.",
+            serverTotal: calculatedTotal.toFixed(2),
+            frontendTotal: totalAmount.toFixed(2),
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    const txnId = generateTransactionId();
+
+    const cookieStore = await cookies();
+    let sessionId = cookieStore.get("diya-sessionId")?.value;
+
+    if (!userId && !sessionId) {
+      sessionId = uuidv7();
+    }
+
+    const guestOrderToken = userId ? null : sessionId;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { orderRow, attemptRow } = await db.transaction(async (tx) => {
@@ -128,16 +227,35 @@ export async function POST(req: Request) {
         .insert(order)
         .values({
           id: uuidv7(),
-          orderNumber: `ORD-${Date.now()}-${Math.floor(
-            1000 + Math.random() * 9000
-          )}`,
+          orderNumber: generateOrderId(),
           userId,
+          guestOrderToken,
           status: "pending",
           paymentStatus: "pending",
           subtotal: subtotalAmount.toFixed(2),
-          total: subtotalAmount.toFixed(2),
+          discount: discountAmount.toFixed(2),
+          shippingCost: shippingCost.toFixed(2),
+          total: calculatedTotal.toFixed(2),
         })
         .returning();
+
+      if (appliedCouponId) {
+        await tx.insert(couponUsage).values({
+          id: uuidv7(),
+          couponId: appliedCouponId,
+          userId: userId || null,
+          orderId: newOrder.id,
+          discountAmount: discountAmount.toFixed(2),
+        });
+
+        // Update usage count
+        await tx
+          .update(coupon)
+          .set({
+            usageCount: sql`${coupon.usageCount} + 1`,
+          })
+          .where(eq(coupon.id, appliedCouponId));
+      }
 
       await tx.insert(orderItem).values(
         lineItems.map((item) => ({
@@ -170,9 +288,9 @@ export async function POST(req: Request) {
         .values({
           id: uuidv7(),
           orderId: newOrder.id,
-          txnid,
-          gateway: "payu",
-          amount: subtotalAmount.toFixed(2),
+          txnId,
+          gateway: "payU",
+          amount: calculatedTotal.toFixed(2),
           status: "pending",
         })
         .returning();
@@ -182,24 +300,48 @@ export async function POST(req: Request) {
 
     const payuParams = {
       key: process.env.PAYU_MERCHANT_KEY!,
-      txnid,
-      amount: subtotalAmount.toFixed(2),
-      productinfo: `Order ${orderRow.orderNumber}`,
-      firstname: shippingDetails.fullName.split(" ")[0],
+      txnid: txnId,
+      amount: calculatedTotal.toFixed(2),
+      productinfo: orderRow.orderNumber,
+      firstname: shippingDetails.fullName.split(" ")[0] || "User",
       email: shippingDetails.email,
       phone: shippingDetails.phone,
+      udf1: orderRow.id,
+      udf2: userId || "guest",
+      udf3: appliedCouponId || "",
     };
 
     const salt = process.env.PAYU_MERCHANT_SALT!;
-    const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL!;
-
     const payload = payuService.buildPayload(payuParams, salt, {
-      surl: `${redirectUrl}/api/payu/success`,
-      furl: `${redirectUrl}/api/payu/failure`,
+      surl: `${process.env.NEXT_PUBLIC_SITE_URL}/api/payu/success`,
+      furl: `${process.env.NEXT_PUBLIC_SITE_URL}/api/payu/failure`,
       payuUrl: process.env.NEXT_PUBLIC_PAYU_URL!,
     });
 
-    return NextResponse.json(payload);
+    const responsePayload = {
+      ...payload,
+      productInfo: payload.productinfo,
+      firstName: payload.firstname,
+      addressLine1: shippingDetails.addressLine1,
+      addressLine2: shippingDetails.addressLine2,
+      city: shippingDetails.city,
+      state: shippingDetails.state,
+      country: shippingDetails.country,
+      zipcode: shippingDetails.postalCode,
+    };
+
+    const res = NextResponse.json(responsePayload);
+
+    if (guestOrderToken) {
+      res.cookies.set("diya-sessionId", guestOrderToken, {
+        path: "/",
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
+    }
+
+    return res;
   } catch {
     return NextResponse.json(
       { message: "Failed to initiate checkout" },

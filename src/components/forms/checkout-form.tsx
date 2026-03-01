@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState, useTransition } from "react";
+import { ShieldCheck } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -22,13 +23,13 @@ import LoadingButton from "../ui/loading-button";
 interface CheckoutFormProps {
   selectedAddress?: GuestShippingValues | null;
   prefillEmail?: string;
-  // Checkout data
   cartId?: string;
   isDirect?: boolean;
   variantId?: string;
   quantity?: number;
   couponCode?: string;
   total?: number;
+  isLoading?: boolean;
 }
 
 export default function CheckoutForm({
@@ -39,14 +40,12 @@ export default function CheckoutForm({
   variantId,
   quantity,
   couponCode,
-  total,
+  isLoading,
 }: CheckoutFormProps) {
-  const [error, setError] = useState<string>("");
   const mutation = useInitiatePayment();
 
   const form = useForm<GuestShippingValues>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(guestShippingSchema) as any,
+    resolver: zodResolver(guestShippingSchema),
     defaultValues: {
       fullName: "",
       email: prefillEmail ?? "",
@@ -94,8 +93,6 @@ export default function CheckoutForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
-        {error && <p className="text-center text-destructive">{error}</p>}
-
         <FormField
           control={form.control}
           name="fullName"
@@ -228,11 +225,15 @@ export default function CheckoutForm({
 
         <LoadingButton
           loading={mutation.isPending}
-          className="w-full"
+          disabled={isLoading || mutation.isPending}
+          className="text-md w-full font-bold shadow-lg"
           size="lg"
           type="submit"
         >
-          {total ? `Pay ₹${total.toFixed(2)}` : "Continue to Payment"}
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5" />
+            <span>Place Order</span>
+          </div>
         </LoadingButton>
       </form>
     </Form>
