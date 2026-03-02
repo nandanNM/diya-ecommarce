@@ -81,10 +81,6 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 279.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹279.00",
-      },
       currency: "INR",
     },
     productOptions: [],
@@ -173,10 +169,6 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 269.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹269.00",
-      },
       currency: "INR",
     },
     productOptions: [],
@@ -258,10 +250,6 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 239.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹239.00",
-      },
       currency: "INR",
     },
     productOptions: [],
@@ -351,10 +339,6 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 239.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹239.00",
-      },
       currency: "INR",
     },
     productOptions: [],
@@ -436,10 +420,7 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 249.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹249.00",
-      },
+
       currency: "INR",
     },
     productOptions: [],
@@ -515,10 +496,6 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 260.0,
       discountedPrice: 199.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "199.00",
-      },
       currency: "INR",
     },
     productOptions: [

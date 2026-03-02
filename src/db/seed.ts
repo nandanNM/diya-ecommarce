@@ -43,7 +43,7 @@ async function main() {
             ? String(item.priceData.discountedPrice)
             : null,
           currency: item.priceData?.currency ?? "INR",
-          brand: item.brand ?? "Flickers & Flame",
+          brand: item.brand ?? "Diya",
           ribbon: item.ribbon ?? null,
           isActive: true,
           isFeatured: false,
@@ -122,7 +122,7 @@ async function main() {
                 price: String(
                   item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
                 ),
-                costPrice: "150.00",
+                costPrice: "00.00",
                 stockQuantity: item.stock?.quantity ?? 10,
                 trackInventory: true,
                 optionValues: {
