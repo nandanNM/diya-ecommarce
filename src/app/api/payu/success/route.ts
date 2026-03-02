@@ -19,6 +19,8 @@ import { mailService } from "@/services/mail.service";
 import { payuService } from "@/services/payu.service";
 import type { PayuCallback } from "@/types/payu";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -240,8 +242,7 @@ export async function POST(req: Request) {
     }
 
     return res;
-  } catch (error) {
-    console.error("PAYU_SUCCESS_CALLBACK_ERROR:", error);
+  } catch {
     const errorUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=error`;
     return new NextResponse(
       `<html>

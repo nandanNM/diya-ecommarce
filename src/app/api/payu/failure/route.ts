@@ -6,6 +6,8 @@ import { paymentAttempt } from "@/db/schema";
 import { payuService } from "@/services/payu.service";
 import type { PayuCallback } from "@/types/payu";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();

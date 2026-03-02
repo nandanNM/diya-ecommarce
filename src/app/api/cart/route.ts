@@ -95,8 +95,7 @@ export async function GET() {
     };
 
     return NextResponse.json({ cart: responseCart });
-  } catch (error) {
-    console.error("CART_FETCH_ERROR:", error);
+  } catch {
     return NextResponse.json(
       { message: "Failed to fetch cart" },
       { status: 500 }

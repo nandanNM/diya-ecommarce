@@ -5,6 +5,9 @@ import { ratelimit } from "@/lib/ratelimit";
 
 export async function proxy(request: NextRequest) {
   // Only apply to API routes
+  if (request.nextUrl.pathname.startsWith("/api/payu")) {
+    return NextResponse.next();
+  }
   if (request.nextUrl.pathname.startsWith("/api")) {
     const identifier =
       request.headers.get("x-forwarded-for")?.split(",")[0] ??
