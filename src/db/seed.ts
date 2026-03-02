@@ -8,7 +8,7 @@ import { db } from "@/db";
 import { category, media, product, productVariant } from "@/db/schema";
 
 async function main() {
-  console.log("🌱 Seeding database with Flickers & Flame products...");
+  console.log("🌱 Seeding database with Diya products...");
 
   try {
     // 1️⃣ Upsert Category
@@ -106,44 +106,69 @@ async function main() {
 
       // 4️⃣ Insert Variants
       if (item.productOptions && item.productOptions.length > 0) {
-        // Multiple variants (like SAADA color options)
-        const option = item.productOptions[0];
+        // build all combinations of choices across every option
+        const combinations: Array<
+          Record<string, { description: string; value: string }>
+        > = [];
 
-        if (option.choices && option.choices.length > 0) {
-          for (const choice of option.choices) {
-            await db
-              .insert(productVariant)
-              .values({
-                id: uuidv7(),
-                productId,
-                sku: `${item.slug.toUpperCase()}-${choice.description
-                  .replace(/\s+/g, "-")
-                  .toUpperCase()}`,
-                price: String(
-                  item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
-                ),
-                costPrice: "00.00",
-                stockQuantity: item.stock?.quantity ?? 10,
-                trackInventory: true,
-                optionValues: {
-                  [option.name]: choice.description,
-                },
-              })
-              .onConflictDoUpdate({
-                target: productVariant.sku,
-                set: {
-                  optionValues: {
-                    [option.name]: choice.description,
-                  },
-                  price: String(
-                    item.priceData?.discountedPrice ??
-                      item.priceData?.price ??
-                      0
-                  ),
-                  stockQuantity: item.stock?.quantity ?? 10,
-                },
-              });
+        const build = (
+          idx: number,
+          current: Record<string, { description: string; value: string }>
+        ) => {
+          if (idx === item.productOptions!.length) {
+            combinations.push({ ...current });
+            return;
           }
+
+          const opt = item.productOptions![idx];
+          for (const choice of opt.choices) {
+            current[opt.name] = {
+              description: choice.description,
+              value: choice.value,
+            };
+            build(idx + 1, current);
+          }
+        };
+
+        build(0, {} as Record<string, { description: string; value: string }>);
+
+        for (const combo of combinations) {
+          // compute sku fragment and price modifier
+          const skuSuffix = Object.values(combo)
+            .map((c) => c.description.replace(/\s+/g, "-").toUpperCase())
+            .join("-");
+
+          let price =
+            item.priceData?.discountedPrice ?? item.priceData?.price ?? 0;
+          // material adjustment: wooden adds 13
+          if (combo["Wick"]?.value === "wooden") {
+            price += 13;
+          }
+
+          await db
+            .insert(productVariant)
+            .values({
+              id: uuidv7(),
+              productId,
+              sku: `${item.slug.toUpperCase()}-${skuSuffix}`,
+              price: String(price),
+              costPrice: "00.00",
+              stockQuantity: item.stock?.quantity ?? 10,
+              trackInventory: true,
+              optionValues: Object.fromEntries(
+                Object.entries(combo).map(([k, v]) => [k, v.description])
+              ),
+            })
+            .onConflictDoUpdate({
+              target: productVariant.sku,
+              set: {
+                optionValues: Object.fromEntries(
+                  Object.entries(combo).map(([k, v]) => [k, v.description])
+                ),
+                price: String(price),
+                stockQuantity: item.stock?.quantity ?? 10,
+              },
+            });
         }
       } else {
         // Single default variant
@@ -156,7 +181,7 @@ async function main() {
             price: String(
               item.priceData?.discountedPrice ?? item.priceData?.price ?? 0
             ),
-            costPrice: "150.00",
+            costPrice: "108.00",
             stockQuantity: item.stock?.quantity ?? 10,
             trackInventory: true,
             optionValues: {},

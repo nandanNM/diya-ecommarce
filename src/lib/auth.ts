@@ -28,7 +28,7 @@ export const auth = betterAuth({
     },
   },
   advanced: {
-    cookiePrefix: "better-auth",
+    cookiePrefix: "diya-auth",
     useSecureCookies: process.env.NODE_ENV === "production",
     crossSubDomainCookies: {
       enabled: false,

@@ -83,7 +83,26 @@ export const ALL_PRODUCTS: Product[] = [
       discountedPrice: 279.0,
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 5,
@@ -171,7 +190,26 @@ export const ALL_PRODUCTS: Product[] = [
       discountedPrice: 269.0,
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 10,
@@ -252,7 +290,26 @@ export const ALL_PRODUCTS: Product[] = [
       discountedPrice: 239.0,
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 50,
@@ -341,7 +398,26 @@ export const ALL_PRODUCTS: Product[] = [
       discountedPrice: 239.0,
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 50,
@@ -423,7 +499,26 @@ export const ALL_PRODUCTS: Product[] = [
 
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 50,
@@ -499,6 +594,24 @@ export const ALL_PRODUCTS: Product[] = [
       currency: "INR",
     },
     productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
       {
         name: "Color Options",
         optionType: OptionType.color,
