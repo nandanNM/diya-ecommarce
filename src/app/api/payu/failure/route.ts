@@ -19,7 +19,10 @@ export async function POST(req: Request) {
 
     if (!isValidHash) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=invalid`,
+        new URL(
+          "/checkout?payment=invalid",
+          process.env.NEXT_PUBLIC_SITE_URL
+        ).toString(),
         303
       );
     }
@@ -43,13 +46,20 @@ export async function POST(req: Request) {
         .where(eq(paymentAttempt.id, attempt.id));
     }
 
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/failed?txnId=${data.txnid}&orderId=${attempt?.orderId || ""}`,
-      303
+    const destinationUrl = new URL(
+      "/checkout/failed",
+      process.env.NEXT_PUBLIC_SITE_URL
     );
+    destinationUrl.searchParams.set("txnId", data.txnid);
+    destinationUrl.searchParams.set("orderId", attempt?.orderId || "");
+
+    return NextResponse.redirect(destinationUrl.toString(), 303);
   } catch {
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=error`,
+      new URL(
+        "/checkout?payment=error",
+        process.env.NEXT_PUBLIC_SITE_URL
+      ).toString(),
       303
     );
   }

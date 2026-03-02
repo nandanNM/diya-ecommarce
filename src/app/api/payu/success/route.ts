@@ -31,7 +31,10 @@ export async function POST(req: Request) {
 
     if (!isValidHash) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=invalid`,
+        new URL(
+          "/orders?payment=invalid",
+          process.env.NEXT_PUBLIC_SITE_URL
+        ).toString(),
         303
       );
     }
@@ -43,7 +46,10 @@ export async function POST(req: Request) {
 
     if (!attempt) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`,
+        new URL(
+          "/orders?payment=notfound",
+          process.env.NEXT_PUBLIC_SITE_URL
+        ).toString(),
         303
       );
     }
@@ -54,7 +60,10 @@ export async function POST(req: Request) {
 
     if (!orderRow) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`,
+        new URL(
+          "/orders?payment=notfound",
+          process.env.NEXT_PUBLIC_SITE_URL
+        ).toString(),
         303
       );
     }
@@ -197,10 +206,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const res = NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?orderId=${attempt.orderId}`,
-      303
+    const destinationUrl = new URL(
+      "/checkout/success",
+      process.env.NEXT_PUBLIC_SITE_URL
     );
+    destinationUrl.searchParams.set("orderId", attempt.orderId);
+
+    const res = NextResponse.redirect(destinationUrl.toString(), 303);
 
     if (orderRow.guestOrderToken) {
       res.cookies.set("diya-sessionId", orderRow.guestOrderToken, {
@@ -215,7 +227,10 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("PAYU_SUCCESS_CALLBACK_ERROR:", error);
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=error`,
+      new URL(
+        "/orders?payment=error",
+        process.env.NEXT_PUBLIC_SITE_URL
+      ).toString(),
       303
     );
   }
