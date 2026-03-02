@@ -31,7 +31,8 @@ export async function POST(req: Request) {
 
     if (!isValidHash) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=invalid`
+        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=invalid`,
+        303
       );
     }
 
@@ -42,7 +43,8 @@ export async function POST(req: Request) {
 
     if (!attempt) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`
+        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`,
+        303
       );
     }
 
@@ -52,7 +54,8 @@ export async function POST(req: Request) {
 
     if (!orderRow) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`
+        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`,
+        303
       );
     }
 
@@ -195,7 +198,8 @@ export async function POST(req: Request) {
     }
 
     const res = NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?orderId=${attempt.orderId}`
+      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?orderId=${attempt.orderId}`,
+      303
     );
 
     if (orderRow.guestOrderToken) {
@@ -208,9 +212,11 @@ export async function POST(req: Request) {
     }
 
     return res;
-  } catch {
+  } catch (error) {
+    console.error("PAYU_SUCCESS_CALLBACK_ERROR:", error);
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=error`
+      `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=error`,
+      303
     );
   }
 }

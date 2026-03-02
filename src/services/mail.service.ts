@@ -13,7 +13,7 @@ export const mailService = {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "Apnadiya <noreply@orders.apnadiya.in>",
+      from: "Apnadiya <orders.apnadiya.in>",
       to: [customerEmail, ...ORDER_UPDATE_ADMIN_EMAILS],
       subject: `Order Confirmation - #${order.orderNumber}`,
       react: OrderReceiptEmail({ order, customerEmail }),

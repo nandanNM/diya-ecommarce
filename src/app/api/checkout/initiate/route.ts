@@ -342,7 +342,8 @@ export async function POST(req: Request) {
     }
 
     return res;
-  } catch {
+  } catch (error) {
+    console.error("CHECKOUT_INITIATE_ERROR:", error);
     return NextResponse.json(
       { message: "Failed to initiate checkout" },
       { status: 500 }

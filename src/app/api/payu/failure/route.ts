@@ -19,7 +19,8 @@ export async function POST(req: Request) {
 
     if (!isValidHash) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=invalid`
+        `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=invalid`,
+        303
       );
     }
 
@@ -43,11 +44,13 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/failed?txnId=${data.txnid}&orderId=${attempt?.orderId || ""}`
+      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/failed?txnId=${data.txnid}&orderId=${attempt?.orderId || ""}`,
+      303
     );
   } catch {
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=error`
+      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=error`,
+      303
     );
   }
 }
