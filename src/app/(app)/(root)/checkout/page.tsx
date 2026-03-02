@@ -10,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { OrderSummarySkeleton } from "@/components/checkout/order-summary-skeleton";
@@ -36,7 +36,7 @@ interface DisplayItem {
   selectedOptions: Record<string, string>;
 }
 
-export default function Checkout() {
+function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -343,5 +343,24 @@ export default function Checkout() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Checkout() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-liner-to-b flex min-h-screen items-center justify-center from-background to-muted/20">
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+            <p className="animate-pulse font-medium text-muted-foreground">
+              Loading checkout...
+            </p>
+          </div>
+        </div>
+      }
+    >
+      <CheckoutContent />
+    </Suspense>
   );
 }

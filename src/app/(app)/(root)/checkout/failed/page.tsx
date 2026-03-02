@@ -1,17 +1,21 @@
 "use client";
 
+// this page relies on client-only hooks like useSearchParams which
+// require a CSR bailout; disable static prerendering.
+export const dynamic = "force-dynamic";
+
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 
 import { FailedOrderTicket } from "@/components/checkout/failed-order-ticket";
 import { Button } from "@/components/ui/button";
 import kyInstance from "@/lib/ky";
 import type { PaymentAttempt } from "@/types/payment";
 
-export default function CheckoutFailedPage() {
+function CheckoutFailedContent() {
   const searchParams = useSearchParams();
   const txnId = searchParams.get("txnId");
   const orderId = searchParams.get("orderId") || "N/A";
@@ -57,5 +61,22 @@ export default function CheckoutFailedPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutFailedPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-[50vh] flex-col items-center justify-center gap-4">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+          <p className="animate-pulse font-medium text-muted-foreground">
+            Loading order details...
+          </p>
+        </div>
+      }
+    >
+      <CheckoutFailedContent />
+    </Suspense>
   );
 }

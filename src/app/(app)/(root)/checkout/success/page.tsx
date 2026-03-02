@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 
 import { IntegratedOrderTicket } from "@/components/checkout/integrated-order-ticket";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import kyInstance from "@/lib/ky";
 import type { Order } from "@/types/order";
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
 
@@ -97,5 +97,26 @@ export default function CheckoutSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="mt-20 flex min-h-[70vh] items-center justify-center px-4">
+          <Card className="w-full max-w-md py-10 text-center">
+            <CardContent>
+              <Loader2 className="mx-auto h-10 w-10 animate-spin text-primary" />
+              <p className="mt-4 font-medium text-muted-foreground">
+                Loading order details...
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      }
+    >
+      <CheckoutSuccessContent />
+    </Suspense>
   );
 }
