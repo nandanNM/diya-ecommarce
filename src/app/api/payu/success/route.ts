@@ -19,6 +19,8 @@ import { mailService } from "@/services/mail.service";
 import { payuService } from "@/services/payu.service";
 import type { PayuCallback } from "@/types/payu";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -30,8 +32,15 @@ export async function POST(req: Request) {
     const isValidHash = payuService.verifyResponseHash(data, salt);
 
     if (!isValidHash) {
-      return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=invalid`
+      const invalidUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=invalid`;
+      return new NextResponse(
+        `<html>
+          <head><meta http-equiv="refresh" content="0;url=${invalidUrl}"></head>
+          <body>
+            <script>window.location.href="${invalidUrl}"</script>
+          </body>
+        </html>`,
+        { status: 200, headers: { "Content-Type": "text/html" } }
       );
     }
 
@@ -41,8 +50,15 @@ export async function POST(req: Request) {
     });
 
     if (!attempt) {
-      return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`
+      const notFoundUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`;
+      return new NextResponse(
+        `<html>
+          <head><meta http-equiv="refresh" content="0;url=${notFoundUrl}"></head>
+          <body>
+            <script>window.location.href="${notFoundUrl}"</script>
+          </body>
+        </html>`,
+        { status: 200, headers: { "Content-Type": "text/html" } }
       );
     }
 
@@ -51,8 +67,15 @@ export async function POST(req: Request) {
     });
 
     if (!orderRow) {
-      return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`
+      const notFoundUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`;
+      return new NextResponse(
+        `<html>
+          <head><meta http-equiv="refresh" content="0;url=${notFoundUrl}"></head>
+          <body>
+            <script>window.location.href="${notFoundUrl}"</script>
+          </body>
+        </html>`,
+        { status: 200, headers: { "Content-Type": "text/html" } }
       );
     }
 
@@ -194,8 +217,19 @@ export async function POST(req: Request) {
       );
     }
 
-    const res = NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?orderId=${attempt.orderId}`
+    const finalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?orderId=${attempt.orderId}`;
+
+    const res = new NextResponse(
+      `<html>
+        <head><meta http-equiv="refresh" content="0;url=${finalUrl}"></head>
+        <body>
+          <script>window.location.href="${finalUrl}"</script>
+        </body>
+      </html>`,
+      {
+        status: 200,
+        headers: { "Content-Type": "text/html" },
+      }
     );
 
     if (orderRow.guestOrderToken) {
@@ -203,14 +237,21 @@ export async function POST(req: Request) {
         path: "/",
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24 * 30, // 30 days
+        maxAge: 60 * 60 * 24 * 30,
       });
     }
 
     return res;
   } catch {
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=error`
+    const errorUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=error`;
+    return new NextResponse(
+      `<html>
+        <head><meta http-equiv="refresh" content="0;url=${errorUrl}"></head>
+        <body>
+          <script>window.location.href="${errorUrl}"</script>
+        </body>
+      </html>`,
+      { status: 200, headers: { "Content-Type": "text/html" } }
     );
   }
 }
