@@ -30,12 +30,15 @@ export async function POST(req: Request) {
     const isValidHash = payuService.verifyResponseHash(data, salt);
 
     if (!isValidHash) {
-      return NextResponse.redirect(
-        new URL(
-          "/orders?payment=invalid",
-          process.env.NEXT_PUBLIC_SITE_URL
-        ).toString(),
-        303
+      const invalidUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=invalid`;
+      return new NextResponse(
+        `<html>
+          <head><meta http-equiv="refresh" content="0;url=${invalidUrl}"></head>
+          <body>
+            <script>window.location.href="${invalidUrl}"</script>
+          </body>
+        </html>`,
+        { status: 200, headers: { "Content-Type": "text/html" } }
       );
     }
 
@@ -45,12 +48,15 @@ export async function POST(req: Request) {
     });
 
     if (!attempt) {
-      return NextResponse.redirect(
-        new URL(
-          "/orders?payment=notfound",
-          process.env.NEXT_PUBLIC_SITE_URL
-        ).toString(),
-        303
+      const notFoundUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`;
+      return new NextResponse(
+        `<html>
+          <head><meta http-equiv="refresh" content="0;url=${notFoundUrl}"></head>
+          <body>
+            <script>window.location.href="${notFoundUrl}"</script>
+          </body>
+        </html>`,
+        { status: 200, headers: { "Content-Type": "text/html" } }
       );
     }
 
@@ -59,12 +65,15 @@ export async function POST(req: Request) {
     });
 
     if (!orderRow) {
-      return NextResponse.redirect(
-        new URL(
-          "/orders?payment=notfound",
-          process.env.NEXT_PUBLIC_SITE_URL
-        ).toString(),
-        303
+      const notFoundUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=notfound`;
+      return new NextResponse(
+        `<html>
+          <head><meta http-equiv="refresh" content="0;url=${notFoundUrl}"></head>
+          <body>
+            <script>window.location.href="${notFoundUrl}"</script>
+          </body>
+        </html>`,
+        { status: 200, headers: { "Content-Type": "text/html" } }
       );
     }
 
@@ -206,32 +215,42 @@ export async function POST(req: Request) {
       );
     }
 
-    const destinationUrl = new URL(
-      "/checkout/success",
-      process.env.NEXT_PUBLIC_SITE_URL
-    );
-    destinationUrl.searchParams.set("orderId", attempt.orderId);
+    const finalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?orderId=${attempt.orderId}`;
 
-    const res = NextResponse.redirect(destinationUrl.toString(), 303);
+    const res = new NextResponse(
+      `<html>
+        <head><meta http-equiv="refresh" content="0;url=${finalUrl}"></head>
+        <body>
+          <script>window.location.href="${finalUrl}"</script>
+        </body>
+      </html>`,
+      {
+        status: 200,
+        headers: { "Content-Type": "text/html" },
+      }
+    );
 
     if (orderRow.guestOrderToken) {
       res.cookies.set("diya-sessionId", orderRow.guestOrderToken, {
         path: "/",
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24 * 30, // 30 days
+        maxAge: 60 * 60 * 24 * 30,
       });
     }
 
     return res;
   } catch (error) {
     console.error("PAYU_SUCCESS_CALLBACK_ERROR:", error);
-    return NextResponse.redirect(
-      new URL(
-        "/orders?payment=error",
-        process.env.NEXT_PUBLIC_SITE_URL
-      ).toString(),
-      303
+    const errorUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/orders?payment=error`;
+    return new NextResponse(
+      `<html>
+        <head><meta http-equiv="refresh" content="0;url=${errorUrl}"></head>
+        <body>
+          <script>window.location.href="${errorUrl}"</script>
+        </body>
+      </html>`,
+      { status: 200, headers: { "Content-Type": "text/html" } }
     );
   }
 }

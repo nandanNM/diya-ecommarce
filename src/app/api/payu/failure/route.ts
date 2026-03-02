@@ -18,12 +18,15 @@ export async function POST(req: Request) {
     const isValidHash = payuService.verifyResponseHash(data, salt);
 
     if (!isValidHash) {
-      return NextResponse.redirect(
-        new URL(
-          "/checkout?payment=invalid",
-          process.env.NEXT_PUBLIC_SITE_URL
-        ).toString(),
-        303
+      const invalidUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=invalid`;
+      return new NextResponse(
+        `<html>
+          <head><meta http-equiv="refresh" content="0;url=${invalidUrl}"></head>
+          <body>
+            <script>window.location.href="${invalidUrl}"</script>
+          </body>
+        </html>`,
+        { status: 200, headers: { "Content-Type": "text/html" } }
       );
     }
 
@@ -46,21 +49,30 @@ export async function POST(req: Request) {
         .where(eq(paymentAttempt.id, attempt.id));
     }
 
-    const destinationUrl = new URL(
-      "/checkout/failed",
-      process.env.NEXT_PUBLIC_SITE_URL
-    );
-    destinationUrl.searchParams.set("txnId", data.txnid);
-    destinationUrl.searchParams.set("orderId", attempt?.orderId || "");
+    const finalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/failed?txnId=${data.txnid}&orderId=${attempt?.orderId || ""}`;
 
-    return NextResponse.redirect(destinationUrl.toString(), 303);
+    return new NextResponse(
+      `<html>
+        <head><meta http-equiv="refresh" content="0;url=${finalUrl}"></head>
+        <body>
+          <script>window.location.href="${finalUrl}"</script>
+        </body>
+      </html>`,
+      {
+        status: 200,
+        headers: { "Content-Type": "text/html" },
+      }
+    );
   } catch {
-    return NextResponse.redirect(
-      new URL(
-        "/checkout?payment=error",
-        process.env.NEXT_PUBLIC_SITE_URL
-      ).toString(),
-      303
+    const errorUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/checkout?payment=error`;
+    return new NextResponse(
+      `<html>
+        <head><meta http-equiv="refresh" content="0;url=${errorUrl}"></head>
+        <body>
+          <script>window.location.href="${errorUrl}"</script>
+        </body>
+      </html>`,
+      { status: 200, headers: { "Content-Type": "text/html" } }
     );
   }
 }
