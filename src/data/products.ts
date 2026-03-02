@@ -79,8 +79,8 @@ export const ALL_PRODUCTS: Product[] = [
       ],
     },
     priceData: {
-      price: 399.0,
-      discountedPrice: 279.0,
+      price: 259.0,
+      discountedPrice: 207.0,
       currency: "INR",
     },
     productOptions: [
@@ -186,8 +186,8 @@ export const ALL_PRODUCTS: Product[] = [
       ],
     },
     priceData: {
-      price: 399.0,
-      discountedPrice: 269.0,
+      price: 269.0,
+      discountedPrice: 215.0,
       currency: "INR",
     },
     productOptions: [
