@@ -1,6 +1,8 @@
-import { Metadata } from "next";
-import ContactForm from "./_components/contact-form";
+import type { Metadata } from "next";
+
 import { SUPPORT_ADDRESS, SUPPORT_EMAIL, SUPPORT_PHONE } from "@/lib/constants";
+
+import ContactForm from "./_components/contact-form";
 
 export const metadata: Metadata = {
   title: "Contact Us",

@@ -1,9 +1,10 @@
+import { CreditCardIcon } from "lucide-react";
+
+import type { ButtonProps } from "@/components/ui/button";
+import LoadingButton from "@/components/ui/loading-button";
 import { useQuickCheckout as useQuickBuy } from "@/hooks/checkout";
 import { cn } from "@/lib/utils";
-import { CreditCardIcon } from "lucide-react";
-import LoadingButton from "@/components/ui/loading-button";
-import { ButtonProps } from "@/components/ui/button";
-import { Product } from "@/lib/types";
+import type { Product } from "@/types/product";
 
 interface BuyNowButtonProps extends ButtonProps {
   product: Product;
@@ -18,12 +19,14 @@ export default function BuyNowButton({
   className,
   ...props
 }: BuyNowButtonProps) {
-  const { startCheckoutFlow, pending } = useQuickBuy();
+  const quickBuyQuery = useQuickBuy();
 
   return (
     <LoadingButton
-      onClick={() => startCheckoutFlow({ product, quantity, selectedOptions })}
-      loading={pending}
+      onClick={() =>
+        quickBuyQuery.mutate({ product, quantity, selectedOptions })
+      }
+      loading={quickBuyQuery.isPending}
       variant="secondary"
       className={cn("flex gap-3 py-6", className)}
       {...props}

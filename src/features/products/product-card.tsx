@@ -1,8 +1,8 @@
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-import { Heart } from "lucide-react";
 import Link from "next/link";
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
   "group relative aspect-3/4 w-full cursor-pointer overflow-hidden rounded-2xl transition-all duration-500 ease-in-out",
@@ -16,23 +16,18 @@ export interface ProductCardProps
   extends
     React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof cardVariants> {
-  imageUrl: string;
+  imageUrl: string | null;
   category: string;
   href?: string;
-  onLike?: (e: React.MouseEvent) => void;
-  isLiked?: boolean;
 }
 
 const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
-  (
-    { className, imageUrl, category, href, onLike, isLiked = false, ...props },
-    ref
-  ) => {
+  ({ className, imageUrl, category, href, ...props }, ref) => {
     return (
       <Link href={href || "#"}>
         <div ref={ref} className={cn(cardVariants({ className }))} {...props}>
           <img
-            src={imageUrl}
+            src={imageUrl ? imageUrl : ""}
             alt={category}
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
           />

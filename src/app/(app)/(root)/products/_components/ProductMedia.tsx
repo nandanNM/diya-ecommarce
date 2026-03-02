@@ -1,9 +1,10 @@
+import { PlayIcon } from "lucide-react";
+import { useState } from "react";
+import Zoom from "react-medium-image-zoom";
+
 import IKImage from "@/components/common/ik-image";
 import { cn } from "@/lib/utils";
-import { MediaItem } from "@/lib/types";
-import { PlayIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import Zoom from "react-medium-image-zoom";
+import type { MediaItem } from "@/types/product";
 
 interface ProductMediaProps {
   media: MediaItem[] | undefined;
@@ -11,10 +12,6 @@ interface ProductMediaProps {
 
 export default function ProductMedia({ media }: ProductMediaProps) {
   const [selectedMedia, setSelectedMedia] = useState(media?.[0]);
-
-  useEffect(() => {
-    setSelectedMedia(media?.[0]);
-  }, [media]);
 
   if (!media?.length) return null;
 
@@ -82,7 +79,7 @@ function MediaPreview({ mediaItem, isSelected, onSelect }: MediaPreviewProps) {
     <div
       className={cn(
         "relative cursor-pointer bg-secondary",
-        isSelected && "outline outline-1 outline-primary"
+        isSelected && "outline-1 outline-primary"
       )}
     >
       <IKImage

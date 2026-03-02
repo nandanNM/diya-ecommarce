@@ -1,52 +1,40 @@
 "use client";
 
-import type React from "react";
-
-import { useState, useEffect, useRef } from "react";
-import {
-  Pen,
-  PaintBucket,
-  Home,
-  Ruler,
-  PenTool,
-  Building2,
-  Award,
-  Users,
-  Calendar,
-  CheckCircle,
-  Sparkles,
-  Star,
-  ArrowRight,
-  Zap,
-  TrendingUp,
-  FlaskConical,
-  FlaskConicalIcon,
-  Leaf,
-  LeafIcon,
-  Music2Icon,
-  Brain,
-  Hand,
-  TrendingDown,
-} from "lucide-react";
+import { buildSrc, Video } from "@imagekit/next";
 import {
   motion,
-  useScroll,
-  useTransform,
   useInView,
+  useScroll,
   useSpring,
+  useTransform,
   type Variants,
 } from "framer-motion";
-import { buildSrc, Video } from "@imagekit/next";
+import {
+  ArrowRight,
+  Award,
+  Brain,
+  Building2,
+  Calendar,
+  CheckCircle,
+  FlaskConicalIcon,
+  Hand,
+  LeafIcon,
+  Music2Icon,
+  Sparkles,
+  Star,
+  TrendingDown,
+  Users,
+  Zap,
+} from "lucide-react";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 export default function AboutUsSPage() {
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
   const isStatsInView = useInView(statsRef, { once: false, amount: 0.3 });
 
-  // Parallax effect for decorative elements
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -56,10 +44,6 @@ export default function AboutUsSPage() {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 50]);
   const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 20]);
   const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -20]);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -162,7 +146,6 @@ export default function AboutUsSPage() {
       ref={sectionRef}
       className="relative w-full overflow-hidden px-4 py-8 text-foreground"
     >
-      {/* Decorative background elements */}
       <motion.div
         className="absolute top-20 left-10 h-64 w-64 rounded-full bg-[#88734C]/5 blur-3xl"
         style={{ y: y1, rotate: rotate1 }}
@@ -231,13 +214,15 @@ export default function AboutUsSPage() {
           className="mx-auto mb-16 max-w-2xl text-center text-muted-foreground"
           variants={itemVariants}
         >
-          We are a team of engineering students who realized that in the race of deadlines, we forgot how to pause. DIYA is our small attempt to engineer “Sukoon” (peace) into everyday life. Led by 
-          {" "}<b className="font-bold">Manjesh Bhaskar</b>
-          , we blend creativity, simplicity, and thoughtful design to build experiences that help you slow down, breathe, and feel at home.
+          We are a team of engineering students who realized that in the race of
+          deadlines, we forgot how to pause. DIYA is our small attempt to
+          engineer “Sukoon” (peace) into everyday life. Led by{" "}
+          <b className="font-bold">Manjesh Bhaskar</b>, we blend creativity,
+          simplicity, and thoughtful design to build experiences that help you
+          slow down, breathe, and feel at home.
         </motion.p>
 
         <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">
-          {/* Left Column */}
           <div className="space-y-16">
             {services
               .filter((service) => service.position === "left")
@@ -255,8 +240,7 @@ export default function AboutUsSPage() {
               ))}
           </div>
 
-          {/* Center Image */}
-          <div className="order-first mb-8 flex items-center justify-center md:order-none md:mb-0">
+          <div className="order-first mb-8 flex items-center justify-center md:order-0 md:mb-0">
             <motion.div
               className="relative w-full max-w-xs"
               variants={itemVariants}
@@ -283,27 +267,6 @@ export default function AboutUsSPage() {
                     src: `/testimonial/about-us.mp4/ik-thumbnail.jpg`,
                   })}
                 />
-                {/* <video
-                  src="https://ik.imagekit.io/codernandan/testimonial/about-us.mp4"
-                  about="About Us"
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  loop
-                /> */}
-                {/* <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-[#202e44]/50 to-transparent flex items-end justify-center p-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.9 }}
-                >
-                  <motion.button
-                    className="bg-white text-[#202e44] px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Our Portfolio <ArrowRight className="w-4 h-4" />
-                  </motion.button>
-                </motion.div> */}
               </motion.div>
               <motion.div
                 className="absolute inset-0 z-[-1] -m-3 rounded-md border-4 border-[#A9BBC8]"
@@ -312,7 +275,6 @@ export default function AboutUsSPage() {
                 transition={{ duration: 0.8, delay: 0.6 }}
               ></motion.div>
 
-              {/* Floating accent elements */}
               <motion.div
                 className="absolute -top-4 -right-8 h-16 w-16 rounded-full bg-[#88734C]/10"
                 initial={{ opacity: 0, y: 20 }}
@@ -328,7 +290,6 @@ export default function AboutUsSPage() {
                 style={{ y: y2 }}
               ></motion.div>
 
-              {/* Additional decorative elements */}
               <motion.div
                 className="absolute -top-10 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-[#88734C]"
                 animate={{
@@ -357,7 +318,6 @@ export default function AboutUsSPage() {
             </motion.div>
           </div>
 
-          {/* Right Column */}
           <div className="space-y-16">
             {services
               .filter((service) => service.position === "right")
@@ -376,7 +336,6 @@ export default function AboutUsSPage() {
           </div>
         </div>
 
-        {/* Stats Section */}
         <motion.div
           ref={statsRef}
           className="mt-24 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
@@ -396,7 +355,6 @@ export default function AboutUsSPage() {
           ))}
         </motion.div>
 
-        {/* CTA Section */}
         <motion.div
           className="mt-20 flex flex-col items-center justify-between gap-6 rounded-xl bg-card p-8 text-card-foreground shadow-lg md:flex-row"
           initial={{ opacity: 0, y: 30 }}
@@ -408,7 +366,7 @@ export default function AboutUsSPage() {
               Ready to transform your space?
             </h3>
             <p className="text-muted-foreground">
-              Let's create something beautiful together.
+              Let&apos;s create something beautiful together.
             </p>
           </div>
           <Link href="/">
@@ -504,7 +462,6 @@ interface StatCounterProps {
 function StatCounter({ icon, value, label, suffix, delay }: StatCounterProps) {
   const countRef = useRef(null);
   const isInView = useInView(countRef, { once: false });
-  const [hasAnimated, setHasAnimated] = useState(false);
 
   const springValue = useSpring(0, {
     stiffness: 50,
@@ -512,14 +469,12 @@ function StatCounter({ icon, value, label, suffix, delay }: StatCounterProps) {
   });
 
   useEffect(() => {
-    if (isInView && !hasAnimated) {
+    if (isInView) {
       springValue.set(value);
-      setHasAnimated(true);
-    } else if (!isInView && hasAnimated) {
+    } else {
       springValue.set(0);
-      setHasAnimated(false);
     }
-  }, [isInView, value, springValue, hasAnimated]);
+  }, [isInView, value, springValue]);
 
   const displayValue = useTransform(springValue, (latest) =>
     Math.floor(latest)

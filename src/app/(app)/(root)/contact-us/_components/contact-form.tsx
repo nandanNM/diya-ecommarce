@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import LoadingButton from "@/components/ui/loading-button";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,7 +57,7 @@ export default function ContactForm() {
       } else {
         throw new Error(result.message || "Something went wrong");
       }
-    } catch (error) {
+    } catch {
       toast.error(
         "There was a problem sending your message. Please try again."
       );

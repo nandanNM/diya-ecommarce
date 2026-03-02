@@ -1,9 +1,16 @@
-import { useCartCheckout } from "@/hooks/checkout";
+import type { ButtonProps } from "@/components/ui/button";
 import LoadingButton from "@/components/ui/loading-button";
-import { ButtonProps } from "@/components/ui/button";
+import { useCartCheckout } from "@/hooks/checkout";
 
-export default function CheckoutButton(props: ButtonProps) {
-  const { startCheckoutFlow, pending } = useCartCheckout();
+interface CheckoutButtonProps extends ButtonProps {
+  onSuccess?: () => void;
+}
+
+export default function CheckoutButton({
+  onSuccess,
+  ...props
+}: CheckoutButtonProps) {
+  const { startCheckoutFlow, pending } = useCartCheckout({ onSuccess });
 
   return (
     <LoadingButton onClick={startCheckoutFlow} loading={pending} {...props}>

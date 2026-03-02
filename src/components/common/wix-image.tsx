@@ -1,4 +1,4 @@
-import { ImgHTMLAttributes } from "react";
+import type { ImgHTMLAttributes } from "react";
 
 interface WixImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   mediaIdentifier: string;

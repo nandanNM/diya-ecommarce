@@ -1,9 +1,8 @@
 import { ALL_PRODUCTS } from "@/data/products";
-import { Product } from "@/lib/types";
+import type { Product } from "@/types/product";
 
 export function getProductBySlugMock(slug: string): Promise<Product | null> {
   return new Promise((resolve) => {
-    // Simulate network delay
     setTimeout(() => {
       const product = ALL_PRODUCTS.find((p) => p.slug === slug);
       resolve(product || null);

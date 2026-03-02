@@ -1,8 +1,8 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -34,7 +34,7 @@ export default function NewsletterForm() {
       } else {
         throw new Error(result.message || "Something went wrong");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to subscribe. Please try again.");
     } finally {
       setIsSubmitting(false);

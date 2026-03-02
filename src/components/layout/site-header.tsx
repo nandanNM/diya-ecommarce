@@ -1,29 +1,30 @@
 "use client";
 
+import { Menu, UserRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
+
+import SearchBar from "@/components/search-bar";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
   SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import ShoppingCartButton from "@/features/cart/shopping-cart-button";
-import SearchBar from "@/components/search-bar";
 import { MAIN_NAV } from "@/config/site";
-import { useState } from "react";
-// import { ThemeSwitch } from "../theme-switch-button";
+import ShoppingCartButton from "@/features/cart/shopping-cart-button";
+import { authClient } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
 
 export default function SiteHeader() {
-   const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session, isPending } = authClient.useSession();
 
   return (
     <div className="font-outfit flex w-full flex-col">
-      {/* 1. ANNOUNCEMENT BAR */}
       <div className="w-full overflow-hidden border-b border-primary bg-primary py-2 whitespace-nowrap select-none lg:py-2.5">
         <div className="animate-marquee inline-block">
           {[1, 2, 3, 4].map((i) => (
@@ -40,11 +41,8 @@ export default function SiteHeader() {
 
       <header className="w-full">
         <div className="container mx-auto px-4 lg:px-10">
-          {/* 2. TOP SECTION (Exact Mobile Layout) */}
           <div className="flex h-14 items-center justify-between">
-            {/* LEFT: Hamburger (Mobile) / Search (Desktop) */}
             <div className="flex flex-1 items-center justify-start">
-              {/* Mobile Toggle */}
               <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
                 <SheetTrigger asChild>
                   <Button
@@ -69,47 +67,43 @@ export default function SiteHeader() {
                         className="border-b border-border/40 px-8 py-4 text-[12px] font-bold tracking-[0.15em] text-muted-foreground"
                       >
                         {item.name}
-
                       </Link>
                     ))}
                   </nav>
                 </SheetContent>
               </Sheet>
 
-              {/* Desktop Search */}
               <div className="hidden lg:flex">
                 <SearchBar />
               </div>
-            
-
+            </div>
+            <Link
+              href="/"
+              className="group flex items-center gap-2 no-underline"
+            >
+              <div className="mb-1 text-primary transition-transform duration-500 group-hover:scale-105">
+                <img className="size-10" src="/logo.svg" alt="Diya Logo" />
               </div>
-              {/* CENTER: Logo (Centered on all screens) */}
-              <Link
-                href="/"
-                className="group flex items-center gap-2 no-underline"
-              >
-                <div className="mb-1 text-primary transition-transform duration-500 group-hover:scale-105">
-                  <img className="size-10" src="/logo.svg" />
-                </div>
-                <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
-                  Diya
-                </span>
-              </Link>
+              <span className="lg:text-5.5 font-nickainley text-[20px] leading-none font-bold tracking-[0.25em] text-foreground lg:tracking-[0.3em]">
+                Diya
+              </span>
+            </Link>
 
-            {/* RIGHT: Search + Cart (Mobile) / User + Cart (Desktop) */}
             <div className="flex flex-1 items-center justify-end gap-3 lg:gap-6">
               <div className="lg:hidden">
                 <SearchBar />
               </div>
-              {/* <ThemeSwitch/> */}
-              <ShoppingCartButton
-                initialData={null}
+
+              <Link
                 className="p-0 text-foreground transition-transform hover:scale-110"
-              />
+                href={!isPending && session ? "#" : "/signup"}
+              >
+                <UserRound className="size-4" />
+              </Link>
+              <ShoppingCartButton className="p-0 text-foreground transition-transform hover:scale-110" />
             </div>
           </div>
 
-          {/* 3. DESKTOP NAVIGATION (Hidden on Mobile) */}
           <nav className="hidden justify-center py-2 lg:flex">
             <ul className="flex items-center gap-14">
               {MAIN_NAV.map((item) => {
@@ -134,7 +128,6 @@ export default function SiteHeader() {
                       />
                     </Link>
 
-                    {/* Submenu Dropdown */}
                     {item.submenu && (
                       <ul className="invisible absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
                         <div className="min-w-50 border border-border bg-popover py-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">

@@ -1,4 +1,4 @@
-import { Cabin, Outfit, IBM_Plex_Mono } from "next/font/google";
+import { Cabin, IBM_Plex_Mono, Outfit } from "next/font/google";
 import localFont from "next/font/local";
 
 export const fontCabin = Cabin({

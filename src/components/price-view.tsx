@@ -16,7 +16,7 @@ const PriceView = ({ price, discountedPrice, className }: Props) => {
         {price && discountedPrice && price > discountedPrice && (
           <span
             className={cn(
-              "line-through text-xs font-medium text-zinc-500",
+              "text-xs font-medium text-zinc-500 line-through",
               className
             )}
           >

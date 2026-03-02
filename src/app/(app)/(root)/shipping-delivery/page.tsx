@@ -1,5 +1,6 @@
+import type { Metadata } from "next";
+
 import { SHIPPING_DELIVERY } from "@/config/site";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Shipping and Delivery Policy",
