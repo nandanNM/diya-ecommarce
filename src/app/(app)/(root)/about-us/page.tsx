@@ -27,7 +27,6 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import type React from "react";
 import { useEffect, useRef } from "react";
 
 export default function AboutUsSPage() {
@@ -36,7 +35,6 @@ export default function AboutUsSPage() {
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
   const isStatsInView = useInView(statsRef, { once: false, amount: 0.3 });
 
-  // Parallax effect for decorative elements
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -148,7 +146,6 @@ export default function AboutUsSPage() {
       ref={sectionRef}
       className="relative w-full overflow-hidden px-4 py-8 text-foreground"
     >
-      {/* Decorative background elements */}
       <motion.div
         className="absolute top-20 left-10 h-64 w-64 rounded-full bg-[#88734C]/5 blur-3xl"
         style={{ y: y1, rotate: rotate1 }}
@@ -226,7 +223,6 @@ export default function AboutUsSPage() {
         </motion.p>
 
         <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">
-          {/* Left Column */}
           <div className="space-y-16">
             {services
               .filter((service) => service.position === "left")
@@ -244,8 +240,7 @@ export default function AboutUsSPage() {
               ))}
           </div>
 
-          {/* Center Image */}
-          <div className="order-first mb-8 flex items-center justify-center md:order-none md:mb-0">
+          <div className="order-first mb-8 flex items-center justify-center md:order-0 md:mb-0">
             <motion.div
               className="relative w-full max-w-xs"
               variants={itemVariants}
@@ -280,7 +275,6 @@ export default function AboutUsSPage() {
                 transition={{ duration: 0.8, delay: 0.6 }}
               ></motion.div>
 
-              {/* Floating accent elements */}
               <motion.div
                 className="absolute -top-4 -right-8 h-16 w-16 rounded-full bg-[#88734C]/10"
                 initial={{ opacity: 0, y: 20 }}
@@ -296,7 +290,6 @@ export default function AboutUsSPage() {
                 style={{ y: y2 }}
               ></motion.div>
 
-              {/* Additional decorative elements */}
               <motion.div
                 className="absolute -top-10 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-[#88734C]"
                 animate={{
@@ -325,7 +318,6 @@ export default function AboutUsSPage() {
             </motion.div>
           </div>
 
-          {/* Right Column */}
           <div className="space-y-16">
             {services
               .filter((service) => service.position === "right")
@@ -344,7 +336,6 @@ export default function AboutUsSPage() {
           </div>
         </div>
 
-        {/* Stats Section */}
         <motion.div
           ref={statsRef}
           className="mt-24 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
@@ -364,7 +355,6 @@ export default function AboutUsSPage() {
           ))}
         </motion.div>
 
-        {/* CTA Section */}
         <motion.div
           className="mt-20 flex flex-col items-center justify-between gap-6 rounded-xl bg-card p-8 text-card-foreground shadow-lg md:flex-row"
           initial={{ opacity: 0, y: 30 }}

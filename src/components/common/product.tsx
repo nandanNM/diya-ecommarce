@@ -2,7 +2,8 @@
 import Link from "next/link";
 
 import AddToCartButton from "@/features/cart/add-to-cart-button";
-import type { Product as ProductType } from "@/lib/types";
+import { formatCurrency } from "@/lib/utils";
+import type { Product as ProductType } from "@/types/product";
 
 import IKImage from "./ik-image";
 
@@ -16,7 +17,7 @@ export default function Product({ product }: ProductProps) {
 
   return (
     <Link href={`/products/${product.slug}`} className="group block space-y-3">
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-100">
+      <div className="relative aspect-3/4 w-full overflow-hidden bg-gray-100">
         <IKImage
           src={mainImage}
           alt={mainAlt}
@@ -45,15 +46,21 @@ export default function Product({ product }: ProductProps) {
         <h3 className="leading-tight font-medium tracking-wide uppercase">
           {product.name}
         </h3>
-        {product.priceData?.formatted && (
+        {product.priceData && (
           <div className="flex gap-2">
             {product.priceData.price !== product.priceData.discountedPrice && (
               <span className="text-muted-foreground line-through">
-                {product.priceData.formatted.price}
+                {formatCurrency(
+                  product.priceData.price,
+                  product.priceData.currency
+                )}
               </span>
             )}
             <span className="font-medium">
-              {product.priceData.formatted.discountedPrice}
+              {formatCurrency(
+                product.priceData.discountedPrice,
+                product.priceData.currency
+              )}
             </span>
           </div>
         )}

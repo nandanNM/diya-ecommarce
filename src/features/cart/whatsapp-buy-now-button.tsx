@@ -1,8 +1,8 @@
 import type { ButtonProps } from "@/components/ui/button";
 import LoadingButton from "@/components/ui/loading-button";
 import { SUPPORT_WHATSAPP } from "@/lib/constants";
-import type { Product } from "@/lib/types";
 import { cn, formatCurrency } from "@/lib/utils";
+import type { Product } from "@/types/product";
 
 interface WhatsAppCheckoutButtonProps extends ButtonProps {
   product: Product;

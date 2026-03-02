@@ -32,9 +32,6 @@ export default function IKImage({
   transformation = [],
   ...props
 }: IKImageProps) {
-  // If a full URL is provided in src or path that is NOT an ImageKit URL,
-  // we should handle it gracefully, possibly using standard img tag if it's external.
-
   const imageSrc = path || src || "";
   const isExternal =
     imageSrc.startsWith("http") && !imageSrc.includes("ik.imagekit.io");
@@ -55,13 +52,11 @@ export default function IKImage({
 
   const IKImageComponent = ImageKitImage as unknown as React.ElementType;
 
-  // Construct transformation array safely
   const activeTransformation = [...transformation];
   if (width || height) {
     activeTransformation.push({ width, height });
   }
 
-  // If it's an ImageKit URL or relative path
   return (
     <ImageKitProvider urlEndpoint={propUrlEndpoint || urlEndpoint}>
       {imageSrc.startsWith("http") ? (

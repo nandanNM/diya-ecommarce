@@ -1,4 +1,4 @@
-import { ShoppingCartIcon, X } from "lucide-react";
+import { Loader2, ShoppingCartIcon, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -10,10 +10,16 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import WhatsAppCartCheckoutButton from "@/features/cart/whatsapp-checkout-button";
+import {
+  useCart,
+  useRemoveCartItem,
+  useUpdateCartItemQuantity,
+} from "@/hooks/cart";
+import { FREE_SHIPPING_THRESHOLD_ITEMS, SHIPPING_COST } from "@/lib/constants";
 import { cn, formatCurrency } from "@/lib/utils";
-import type { CartItem } from "@/store/useCartStore";
-import useCartStore from "@/store/useCartStore";
+import type { CartItem } from "@/types/cart";
+
+import CheckoutButton from "./checkout-button";
 
 interface ShoppingCartButtonProps {
   className?: string;
@@ -24,11 +30,12 @@ export default function ShoppingCartButton({
 }: ShoppingCartButtonProps) {
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  const { items, getTotalPrice } = useCartStore();
-
-  const totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
-
-  const subtotal = getTotalPrice();
+  const cartQuery = useCart(null);
+  const totalQuantity =
+    cartQuery.data?.items?.reduce(
+      (acc, item) => acc + (item.quantity || 0),
+      0
+    ) || 0;
 
   return (
     <>
@@ -57,16 +64,11 @@ export default function ShoppingCartButton({
             </SheetTitle>
           </SheetHeader>
           <div className="flex grow flex-col space-y-5 overflow-y-auto pt-1">
-            <ul className="space-y-5">
-              {items.map((item) => (
-                <ShoppingCartItem
-                  key={item.cartItemId}
-                  item={item}
-                  onProductLinkClicked={() => setSheetOpen(false)}
-                />
-              ))}
-            </ul>
-            {!items.length && (
+            {cartQuery.isLoading || cartQuery.isPending ? (
+              <div className="flex grow items-center justify-center">
+                <Loader2 className="animate-spin" />
+              </div>
+            ) : cartQuery.data?.items.length === 0 ? (
               <div className="flex grow items-center justify-center text-center">
                 <div className="space-y-1.5">
                   <p className="text-lg font-semibold">Your cart is empty</p>
@@ -79,6 +81,16 @@ export default function ShoppingCartButton({
                   </Link>
                 </div>
               </div>
+            ) : (
+              <ul className="space-y-5">
+                {cartQuery.data?.items.map((item) => (
+                  <ShoppingCartItem
+                    key={item.cartItemId}
+                    item={item}
+                    onProductLinkClicked={() => setSheetOpen(false)}
+                  />
+                ))}
+              </ul>
             )}
           </div>
           <div className="space-y-4">
@@ -86,36 +98,47 @@ export default function ShoppingCartButton({
               <div className="flex justify-between text-sm">
                 <span>Subtotal amount:</span>
                 <span className="font-semibold">
-                  {formatCurrency(subtotal)}
+                  {formatCurrency(cartQuery.data?.subtotal)}
                 </span>
               </div>
 
               <div className="flex justify-between text-sm">
                 <span>Delivery Charge:</span>
-                <span>{totalQuantity === 1 ? formatCurrency(60) : "Free"}</span>
+                <span>
+                  {totalQuantity >= FREE_SHIPPING_THRESHOLD_ITEMS
+                    ? "Free"
+                    : formatCurrency(SHIPPING_COST)}
+                </span>
               </div>
 
               <div className="flex justify-between pt-2 text-lg font-bold">
                 <span>Total:</span>
                 <span>
-                  {formatCurrency(subtotal + (totalQuantity === 1 ? 60 : 0))}
+                  {formatCurrency(
+                    (cartQuery.data?.subtotal as number) +
+                      (totalQuantity >= FREE_SHIPPING_THRESHOLD_ITEMS
+                        ? 0
+                        : SHIPPING_COST)
+                  )}
                 </span>
               </div>
 
-              {totalQuantity === 1 && (
+              {totalQuantity < FREE_SHIPPING_THRESHOLD_ITEMS && (
                 <p className="mt-1 text-center text-xs font-medium text-green-600">
-                  Add 1 more item for FREE delivery!
+                  Add {FREE_SHIPPING_THRESHOLD_ITEMS - totalQuantity} more{" "}
+                  {FREE_SHIPPING_THRESHOLD_ITEMS - totalQuantity === 1
+                    ? "item"
+                    : "items"}{" "}
+                  for FREE delivery!
                 </p>
               )}
             </div>
-            <div className="w-full">
-              <WhatsAppCartCheckoutButton
-                cartItems={items}
-                subtotal={subtotal}
-                disabled={!items.length}
-                className="w-full rounded"
-              />
-            </div>
+            <CheckoutButton
+              disabled={!totalQuantity}
+              size="lg"
+              className="w-full"
+              onSuccess={() => setSheetOpen(false)}
+            />
           </div>
         </SheetContent>
       </Sheet>
@@ -131,28 +154,23 @@ function ShoppingCartItem({
   item,
   onProductLinkClicked,
 }: ShoppingCartItemProps) {
-  const { addItem, removeItem, deleteCartProduct } = useCartStore();
+  const updateQuantityMutation = useUpdateCartItemQuantity();
+  const removeItemMutation = useRemoveCartItem();
 
   const product = item.product;
   const cartItemId = item.cartItemId;
   const slug = product.slug;
 
   const quantityLimitReached =
-    !!product.stock?.quantity && item.quantity >= product.stock.quantity;
+    !!product.stockQuantity && item.quantity >= product.stockQuantity;
 
-  const price =
-    product.priceData?.discountedPrice || product.priceData?.price || 0;
-
+  const price = product.discountedPrice;
   return (
     <li className="flex items-center gap-3">
       <div className="relative size-fit flex-none">
         <Link href={`/products/${slug}`} onClick={onProductLinkClicked}>
           <IKImage
-            src={
-              product.media?.mainMedia?.image?.url ||
-              product.media?.items?.[0]?.image?.url ||
-              ""
-            }
+            src={product.imageUrl || ""}
             width={110}
             height={110}
             alt={product.name}
@@ -161,7 +179,7 @@ function ShoppingCartItem({
         </Link>
         <button
           className="absolute -top-1 -right-1 rounded-full border bg-background p-0.5"
-          onClick={() => deleteCartProduct(cartItemId)}
+          onClick={() => removeItemMutation.mutate(cartItemId)}
         >
           <X className="size-4" />
         </button>
@@ -189,7 +207,12 @@ function ShoppingCartItem({
             size="icon"
             className="h-8 w-8 rounded-full"
             disabled={item.quantity === 1}
-            onClick={() => removeItem(cartItemId)}
+            onClick={() =>
+              updateQuantityMutation.mutate({
+                itemId: cartItemId,
+                newQuantity: !item.quantity ? 0 : item.quantity - 1,
+              })
+            }
           >
             -
           </Button>
@@ -199,7 +222,12 @@ function ShoppingCartItem({
             size="icon"
             className="h-8 w-8 rounded-full"
             disabled={quantityLimitReached}
-            onClick={() => addItem(product, 1, item.selectedOptions)}
+            onClick={() =>
+              updateQuantityMutation.mutate({
+                itemId: cartItemId,
+                newQuantity: !item.quantity ? 0 : item.quantity + 1,
+              })
+            }
           >
             +
           </Button>

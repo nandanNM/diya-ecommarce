@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { cache, Suspense } from "react";
 
 import Product from "@/components/common/product";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getProductBySlugMock } from "@/lib/product-api";
+import {
+  getProductBySlug,
+  getRelatedProducts,
+} from "@/lib/actions/product.actions";
 import { delay } from "@/lib/utils";
 
 import ProductDetails from "../_components/ProductDetails";
@@ -12,14 +15,16 @@ import ProductDetails from "../_components/ProductDetails";
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+const getProductCached = cache(async (slug: string) => {
+  return getProductBySlug(slug);
+});
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params;
   const { slug } = params;
-  const product = await getProductBySlugMock(slug);
+  const product = await getProductCached(slug);
 
   if (!product) notFound();
-
   const mainImage = product.media?.items?.[0]?.image;
 
   return {
@@ -45,7 +50,7 @@ export default async function Page(props: PageProps) {
   const { slug } = params;
   await delay(100);
 
-  const product = await getProductBySlugMock(slug);
+  const product = await getProductCached(slug);
 
   if (!product?._id) notFound();
 
@@ -61,13 +66,7 @@ export default async function Page(props: PageProps) {
 }
 
 async function RelatedProducts({ currentSlug }: { currentSlug: string }) {
-  // Assuming getAllProductsMock is available or defaulting to import ALL_PRODUCTS directly if not exported
-  const { ALL_PRODUCTS } = await import("@/data/products");
-
-  const relatedProducts = ALL_PRODUCTS.filter((p) => p.slug !== currentSlug)
-    // Simple shuffle
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 4);
+  const relatedProducts = await getRelatedProducts(currentSlug);
 
   if (relatedProducts.length === 0) return null;
 
@@ -87,7 +86,7 @@ function RelatedProductsLoadingSkeleton() {
   return (
     <div className="flex grid-cols-2 flex-col gap-5 pt-12 sm:grid lg:grid-cols-4">
       {Array.from({ length: 4 }).map((_, i) => (
-        <Skeleton key={i} className="h-[26rem] w-full" />
+        <Skeleton key={i} className="h-80 w-full" />
       ))}
     </div>
   );

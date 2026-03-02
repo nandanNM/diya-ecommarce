@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import type { Product, Variant } from "./types";
+import type { Product, Variant } from "../types/product";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -30,19 +30,48 @@ export function checkInStock(
 export function findVariant(
   product: Product,
   selectedOptions: Record<string, string>
-) {
-  if (!product.productOptions?.length) return null;
+): Variant | null {
+  if (!product.variants || product.variants.length === 0) return null;
 
-  // Since we don't have real variants in the mock data,
-  // we'll return a mock variable or null based on logic.
-  // For now, let's just return a basic mock variant if stock exists.
-  return {
-    _id: "mock-variant-id",
-    choices: selectedOptions,
-    stock: product.stock,
-    priceData: product.priceData,
-    variant: {
-      priceData: product.priceData,
-    },
-  } as Variant;
+  const choiceKeys = Object.keys(selectedOptions);
+
+  return (
+    product.variants.find((v) => {
+      const variantChoices = v.choices || {};
+      const variantKeys = Object.keys(variantChoices);
+      // Strict match: must have same number of options and identical values
+      return (
+        variantKeys.length === choiceKeys.length &&
+        choiceKeys.every((key) => variantChoices[key] === selectedOptions[key])
+      );
+    }) ?? null
+  );
+}
+
+export function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
+
+export function generateOrderId(): string {
+  const timePart = Date.now().toString().slice(-6);
+  const randomPart = Math.floor(100 + Math.random() * 900);
+  return `ORD-${timePart}${randomPart}`;
+}
+
+export function generateTransactionId(): string {
+  const timePart = Date.now();
+  const randomPart = Math.floor(1000 + Math.random() * 9000); // 4 digit random
+  return `TXN-${timePart}${randomPart}`;
+}
+
+export async function copyToClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
 }

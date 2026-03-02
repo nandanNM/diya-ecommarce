@@ -1,14 +1,15 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, Search, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { ALL_PRODUCTS } from "@/data/products";
 import AddToCartButton from "@/features/cart/add-to-cart-button";
-import type { Product } from "@/lib/types";
+import kyInstance from "@/lib/ky";
+import type { Product } from "@/types/product";
 
 import PriceView from "./price-view";
 import { Button } from "./ui/button";
@@ -23,33 +24,24 @@ import { Input } from "./ui/input";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
-  const fetchProducts = useCallback(() => {
-    if (!search) {
-      setProducts([]);
-      return;
-    }
-
-    setLoading(true);
-    setTimeout(() => {
-      const filtered = ALL_PRODUCTS.filter((product) =>
-        product.name.toLowerCase().includes(search.toLowerCase())
-      );
-      setProducts(filtered);
-      setLoading(false);
-    }, 500);
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(search), 400);
+    return () => clearTimeout(timer);
   }, [search]);
 
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      fetchProducts();
-    }, 300);
-
-    return () => clearTimeout(debounceTimer);
-  }, [search, fetchProducts]);
+  const { data: products = [], isLoading: loading } = useQuery({
+    queryKey: ["products-search", debouncedSearch],
+    queryFn: async () => {
+      if (!debouncedSearch) return [];
+      return kyInstance
+        .get(`/api/products/search?q=${encodeURIComponent(debouncedSearch)}`)
+        .json<Product[]>();
+    },
+    enabled: !!debouncedSearch,
+  });
 
   return (
     <Dialog open={showSearch} onOpenChange={setShowSearch}>
@@ -66,7 +58,7 @@ const SearchBar = () => {
           <Search className="h-5.5 w-5.5 stroke-[1.2]" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="!top-1/2 flex h-[90vh] !-translate-y-1/2 flex-col overflow-hidden sm:max-w-2xl">
+      <DialogContent className="top-1/2! flex h-[90vh] -translate-y-1/2! flex-col overflow-hidden sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="mb-3">Product Searchbar</DialogTitle>
           <form className="relative" onSubmit={(e) => e.preventDefault()}>
@@ -125,7 +117,7 @@ const SearchBar = () => {
                         <Link
                           href={`/products/${product?.slug}`}
                           onClick={() => setShowSearch(false)}
-                          className="group relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border border-primary/20 md:h-24 md:w-24"
+                          className="group relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-primary/20 md:h-24 md:w-24"
                         >
                           {product?.media?.items?.[0]?.image?.url && (
                             <Image
@@ -137,7 +129,7 @@ const SearchBar = () => {
                             />
                           )}
                         </Link>
-                        <div className="flex-grow px-4 py-2">
+                        <div className="grow px-4 py-2">
                           <div className="flex items-start justify-between">
                             <Link
                               href={`/products/${product?.slug}`}

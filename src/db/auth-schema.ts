@@ -1,23 +1,42 @@
 import { relations } from "drizzle-orm";
-import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  bigint,
+  boolean,
+  index,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
+import { v7 } from "uuid";
 
-export const user = pgTable("user", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
-  emailVerified: boolean("emailVerified").default(false).notNull(),
-  image: text("image"),
+export const baseSchema = {
+  id: uuid("id").primaryKey().$default(v7),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt")
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+};
+
+export const user = pgTable("user", {
+  ...baseSchema,
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("emailVerified").default(false).notNull(),
+  phoneNumber: bigint("phoneNumber", { mode: "number" }).unique(),
+  image: text("image"),
+  role: text("role"),
+  banned: boolean("banned").default(false),
+  banReason: text("banReason"),
+  banExpires: timestamp("banExpires"),
+  isActive: boolean("isActive").default(true),
 });
 
 export const session = pgTable(
   "session",
   {
-    id: text("id").primaryKey(),
+    id: text("id").primaryKey(), // Keep it text only because drizzle doesn't support uuid for session id
     expiresAt: timestamp("expiresAt").notNull(),
     token: text("token").notNull().unique(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -26,20 +45,21 @@ export const session = pgTable(
       .notNull(),
     ipAddress: text("ipAddress"),
     userAgent: text("userAgent"),
-    userId: text("userId")
+    userId: uuid("userId") //use uuid type for foreign key references
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
+    impersonatedBy: text("impersonatedBy"),
   },
-  (table) => [index("session_userId_idx").on(table.userId)]
+  (table) => [index("sessionUserIdIdx").on(table.userId)]
 );
 
 export const account = pgTable(
   "account",
   {
-    id: text("id").primaryKey(),
-    accountId: text("accountId").notNull(),
+    ...baseSchema,
+    accountId: text("accountId").notNull().unique(),
     providerId: text("providerId").notNull(),
-    userId: text("userId")
+    userId: uuid("userId")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     accessToken: text("accessToken"),
@@ -49,28 +69,18 @@ export const account = pgTable(
     refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt"),
     scope: text("scope"),
     password: text("password"),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt")
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
   },
-  (table) => [index("account_userId_idx").on(table.userId)]
+  (table) => [index("accountUserIdIdx").on(table.userId)]
 );
-
 export const verification = pgTable(
   "verification",
   {
-    id: text("id").primaryKey(),
+    ...baseSchema,
     identifier: text("identifier").notNull(),
     value: text("value").notNull(),
     expiresAt: timestamp("expiresAt").notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt")
-      .defaultNow()
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
   },
-  (table) => [index("verification_identifier_idx").on(table.identifier)]
+  (table) => [index("verificationIdentifierIdx").on(table.identifier)]
 );
 
 export const userRelations = relations(user, ({ many }) => ({

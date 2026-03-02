@@ -77,11 +77,6 @@ export const metadata: Metadata = {
   },
 };
 
-// export const META_THEME_COLORS = {
-//   light: "#ffffff",
-//   dark: "#09090b",
-// };
-
 export const MAIN_NAV: NavItem[] = [
   {
     name: "HOME",

@@ -11,24 +11,22 @@ import { cn } from "@/lib/utils";
 export default function TestimonialsCarousel() {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [isHovered, setIsHovered] = React.useState(false);
-  const [direction, setDirection] = React.useState(1); // 1 = next (right to left), -1 = prev (left to right)
+  const [direction, setDirection] = React.useState(1);
 
-  // Infinite loop navigation
   const handlePrevious = () => {
-    setDirection(-1); // Moving left to right
+    setDirection(-1);
     setCurrentIndex(
       (prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length
     );
   };
 
   const handleNext = () => {
-    setDirection(1); // Moving right to left
+    setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
   };
 
   const handleImageClick = (index: number) => {
     if (index === currentIndex) return;
-    // Determine direction based on which side was clicked
     const diff = index - currentIndex;
     if (diff > 0 || diff < -TESTIMONIALS.length / 2) {
       setDirection(1);
@@ -38,7 +36,6 @@ export default function TestimonialsCarousel() {
     setCurrentIndex(index);
   };
 
-  // Get visible items (center + 2 on each side)
   const getVisibleItems = () => {
     const visible = [];
     for (let i = -2; i <= 2; i++) {
@@ -49,7 +46,6 @@ export default function TestimonialsCarousel() {
     return visible;
   };
 
-  // Calculate image properties based on position
   const getImageProps = (position: number) => {
     const absPos = Math.abs(position);
 
@@ -89,7 +85,6 @@ export default function TestimonialsCarousel() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Ghost Navigation Arrows */}
           <motion.button
             onClick={handlePrevious}
             initial={false}
@@ -124,7 +119,6 @@ export default function TestimonialsCarousel() {
             />
           </motion.button>
 
-          {/* Carousel Images */}
           <div className="relative mb-10 flex h-[120px] items-center justify-center overflow-visible md:mb-16 md:h-[180px]">
             <div className="relative flex items-center justify-center gap-2 md:gap-4">
               <AnimatePresence initial={false} custom={direction}>
@@ -134,12 +128,7 @@ export default function TestimonialsCarousel() {
                   const isActive = position === 0;
                   const testimonial = TESTIMONIALS[index];
 
-                  // Calculate slide distance based on position with proper spacing
-                  const getSlideX = (pos: number) => {
-                    // Use average for responsive behavior
-                    const spacing = 155;
-                    return pos * spacing;
-                  };
+                  const getSlideX = (pos: number) => pos * 155;
 
                   return (
                     <motion.button
@@ -195,7 +184,6 @@ export default function TestimonialsCarousel() {
             </div>
           </div>
 
-          {/* Testimonial Content with AnimatePresence */}
           <div className="mt-6 flex flex-col items-center px-4 md:mt-8">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -219,7 +207,6 @@ export default function TestimonialsCarousel() {
                 }}
                 className="flex w-full flex-col items-center"
               >
-                {/* Rating Stars */}
                 <div className="mb-5 flex gap-1 md:mb-7">
                   {[...Array(5)].map((_, i) => (
                     <motion.div
@@ -244,14 +231,12 @@ export default function TestimonialsCarousel() {
                   ))}
                 </div>
 
-                {/* Testimonial Text */}
                 <div className="flex min-h-[100px] items-center justify-center overflow-hidden md:min-h-[130px]">
                   <p className="mb-6 max-w-2xl px-2 text-center text-[15px] leading-relaxed font-normal text-muted-foreground md:mb-8 md:px-8 md:text-[17px] lg:text-[19px]">
                     {TESTIMONIALS[currentIndex].text}
                   </p>
                 </div>
 
-                {/* Divider Line */}
                 <motion.div
                   initial={{ width: 0, opacity: 0 }}
                   animate={{ width: 48, opacity: 1 }}
@@ -263,7 +248,6 @@ export default function TestimonialsCarousel() {
                   className="mb-4 h-[1px] bg-border md:mb-5"
                 />
 
-                {/* Author Name */}
                 <cite className="text-[10px] font-medium tracking-[0.2em] text-foreground uppercase not-italic md:text-[11px] md:tracking-[0.25em]">
                   -- {TESTIMONIALS[currentIndex].name}
                 </cite>

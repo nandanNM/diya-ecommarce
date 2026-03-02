@@ -1,11 +1,11 @@
-import type { Product } from "@/lib/types";
-import { OptionType } from "@/lib/types";
+import { OptionType, type Product } from "@/types/product";
 
 export const ALL_PRODUCTS: Product[] = [
   {
     _id: "1",
     name: "PAHLI BAARISH (PETRICHOR) SCENTED CANDLE",
     slug: "pahli-baarish",
+    visible: true,
     description: `<div style="font-family: 'Lato', sans-serif; color: #333; line-height: 1.6;">
         <p style="margin-bottom: 15px;">
             Bottled directly from the first monsoon shower. Designed with a blend of pure Petrichor and Evening Rain oils, this candle captures that exact moment when cool water hits dry earth.
@@ -81,13 +81,28 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 279.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹279.00",
-      },
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 5,
@@ -97,6 +112,7 @@ export const ALL_PRODUCTS: Product[] = [
     _id: "2",
     name: "WAADI (MOUNTAIN MIST) SCENTED CANDLE",
     slug: "waadi",
+    visible: true,
     description: `<div style="font-family: 'Lato', sans-serif; color: #333; line-height: 1.6;">
         <p style="margin-bottom: 15px;">
             A direct ticket to the Himalayas. Infused with the sharp freshness of Pine needles and the cooling scent of Mountain Mist, this candle recreates the absolute silence of a deep valley.
@@ -172,13 +188,28 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 269.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹269.00",
-      },
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 10,
@@ -188,6 +219,7 @@ export const ALL_PRODUCTS: Product[] = [
     _id: "3",
     name: "LAVENDER (SLEEP LULLABY) SCENTED CANDLE",
     slug: "lavender",
+    visible: true,
     description: `<div style="font-family: 'Lato', sans-serif; color: #333; line-height: 1.6;">
         <p style="margin-bottom: 15px;">
             Your personal "Off" button. Infused with pure French Lavender essential oils, this candle is designed to help you unwind, de-stress, and drift into a deep, peaceful sleep.
@@ -256,13 +288,28 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 239.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹239.00",
-      },
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 50,
@@ -272,6 +319,7 @@ export const ALL_PRODUCTS: Product[] = [
     _id: "4",
     name: "MOGRA (EVENING BLOOM) SCENTED CANDLE",
     slug: "mogra",
+    visible: true,
     description: `<div style="font-family: 'Lato', sans-serif; color: #333; line-height: 1.6;">
         <p style="margin-bottom: 15px;">
             The classic scent of an Indian summer evening. Capturing the heady, intoxicating fragrance of fresh Jasmine flowers blooming at dusk, this candle feels like a warm hug or a traditional celebration.
@@ -348,13 +396,28 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 239.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹239.00",
-      },
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 50,
@@ -364,6 +427,7 @@ export const ALL_PRODUCTS: Product[] = [
     _id: "5",
     name: "PARIJAAT (AUTUMN NOSTALGIA) SCENTED CANDLE",
     slug: "parijaat",
+    visible: true,
     description: `<div style="font-family: 'Lato', sans-serif; color: #333; line-height: 1.6;">
         <p style="margin-bottom: 15px;">
             The fleeting magic of October mornings. Capturing the delicate, honey-sweet scent of Night-Flowering Jasmine (Shiuli), this candle evokes memories of crisp air, dew-covered grass, and the arrival of Durga Puja.
@@ -432,13 +496,29 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 399.0,
       discountedPrice: 249.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "₹249.00",
-      },
+
       currency: "INR",
     },
-    productOptions: [],
+    productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
+    ],
     stock: {
       inStock: true,
       quantity: 50,
@@ -448,6 +528,7 @@ export const ALL_PRODUCTS: Product[] = [
     _id: "6",
     name: "SAADA (UNSCENTED) CUSTOM CANDLE",
     slug: "saada",
+    visible: true,
     description: `<div style="font-family: 'Lato', sans-serif; color: #333; line-height: 1.6;">
         <p style="margin-bottom: 15px;">
             <b>Saada</b> means Simple. Sometimes, you don't need a scent; you just need the light. This is our purest creation—completely fragrance-free, designed to add a warm glow without overpowering your space.
@@ -510,13 +591,27 @@ export const ALL_PRODUCTS: Product[] = [
     priceData: {
       price: 260.0,
       discountedPrice: 199.0,
-      formatted: {
-        price: "₹399.00",
-        discountedPrice: "199.00",
-      },
       currency: "INR",
     },
     productOptions: [
+      {
+        name: "Wick",
+        optionType: OptionType.drop_down,
+        choices: [
+          {
+            description: "Cotton",
+            value: "cotton",
+            inStock: true,
+            visible: true,
+          },
+          {
+            description: "Wooden",
+            value: "wooden",
+            inStock: true,
+            visible: true,
+          },
+        ],
+      },
       {
         name: "Color Options",
         optionType: OptionType.color,
@@ -525,31 +620,37 @@ export const ALL_PRODUCTS: Product[] = [
             description: "Ivory White",
             value: "#FFFFF0",
             inStock: true,
+            visible: true,
           },
           {
             description: "Cococa Brown",
             value: "#D2691E",
             inStock: true,
+            visible: true,
           },
           {
             description: "Coral Read",
             value: "#F86F65",
             inStock: true,
+            visible: true,
           },
           {
             description: "Diya Orange",
             value: "#F6C394",
             inStock: true,
+            visible: true,
           },
           {
             description: "Holllow Purple",
             value: "#AA9698",
             inStock: true,
+            visible: true,
           },
           {
             description: "Olive Green",
             value: "#858D68",
             inStock: true,
+            visible: true,
           },
         ],
       },
