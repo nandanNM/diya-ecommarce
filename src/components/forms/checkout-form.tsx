@@ -128,7 +128,7 @@ export default function CheckoutForm({
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder="9876543210" {...field} />
+                <Input placeholder="+91 XXXXXXXXXX" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
