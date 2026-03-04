@@ -12,15 +12,22 @@ export const mailService = {
       return { success: false, error: "RESEND_API_KEY is missing" };
     }
 
-    const { data, error } = await resend.emails.send({
-      from: "Apnadiya <orders@orders.apnadiya.in>",
-      to: [customerEmail, ...ORDER_UPDATE_ADMIN_EMAILS],
-      subject: `Order Confirmation - #${order.orderNumber}`,
-      react: OrderReceiptEmail({ order, customerEmail }),
-    });
-    if (error) {
-      return { success: false, error };
+    try {
+      const { data, error } = await resend.emails.send({
+        from: "Apnadiya <orders@orders.apnadiya.in>",
+        to: [customerEmail, ...ORDER_UPDATE_ADMIN_EMAILS],
+        subject: `Order Confirmation - #${order.orderNumber}`,
+        react: OrderReceiptEmail({ order, customerEmail }),
+      });
+      if (error) {
+        // eslint-disable-next-line no-console
+        console.log("[MAIL:ERROR]", error);
+        return { success: false, error };
+      }
+      return { success: true, data };
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log("[MAIL:ERROR]", e);
     }
-    return { success: true, data };
   },
 };
