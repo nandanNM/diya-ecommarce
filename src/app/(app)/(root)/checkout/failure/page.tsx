@@ -1,13 +1,14 @@
 "use client";
 
-import { AlertCircle, ArrowRight } from "lucide-react";
+import { AlertCircle, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-export default function CheckoutFailurePage() {
+function CheckoutFailureContent() {
   const searchParams = useSearchParams();
   const payment = searchParams.get("payment");
 
@@ -15,7 +16,7 @@ export default function CheckoutFailurePage() {
   if (payment === "invalid") {
     message = "The payment was invalid or the response could not be verified.";
   } else if (payment === "notfound") {
-    message = "We couldn’t locate your order. Please check in a moment.";
+    message = "We couldn't locate your order. Please check in a moment.";
   } else if (payment === "error") {
     message = "Something went wrong during checkout. Please try again later.";
   }
@@ -36,5 +37,26 @@ export default function CheckoutFailurePage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function CheckoutFailurePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="mt-20 flex min-h-[70vh] items-center justify-center px-4">
+          <Card className="w-full max-w-md py-10 text-center">
+            <CardContent>
+              <Loader2 className="mx-auto h-10 w-10 animate-spin text-primary" />
+              <p className="mt-4 font-medium text-muted-foreground">
+                Loading payment status...
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      }
+    >
+      <CheckoutFailureContent />
+    </Suspense>
   );
 }
