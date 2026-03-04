@@ -32,7 +32,9 @@ export const delhiveryService = {
         success: true,
         data,
       };
-    } catch {
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log("[SHIPMENT:ERROR]", e);
       return {
         success: false,
       };
